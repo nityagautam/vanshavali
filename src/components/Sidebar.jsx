@@ -2,7 +2,7 @@ import { useState } from 'react';
 import AddMemberForm from './AddMemberForm';
 
 const TOOLS = [
-  { id: 'info',   icon: 'ℹ', label: 'About'  },
+  { id: 'info',   icon: 'i', label: 'About'  },
   { id: 'add',    icon: '＋', label: 'Add Member'    },
   { id: 'export', icon: '↓',  label: 'Export JSON'   },
   { id: 'print',  icon: '⎙',  label: 'Print' },

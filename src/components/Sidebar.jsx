@@ -2,10 +2,10 @@ import { useState } from 'react';
 import AddMemberForm from './AddMemberForm';
 
 const TOOLS = [
-  { id: 'info',   icon: 'ℹ', label: 'Dynasty Info'  },
+  { id: 'info',   icon: 'ℹ', label: 'About'  },
   { id: 'add',    icon: '＋', label: 'Add Member'    },
   { id: 'export', icon: '↓',  label: 'Export JSON'   },
-  { id: 'print',  icon: '⎙',  label: 'Print Lineage' },
+  { id: 'print',  icon: '⎙',  label: 'Print' },
 ];
 
 export default function Sidebar({ people, familyData, meta, onAddMember }) {
@@ -159,7 +159,7 @@ function DynastyInfoPanel({ meta, people }) {
 
       {/* Banner */}
       <div className="dip-banner">
-        <div className="dip-dynasty-name">{meta.dynasty} Dynasty</div>
+        <div className="dip-dynasty-name">About: {meta.dynasty}</div>
         {meta.pageTitle && <div className="dip-page-title">{meta.pageTitle}</div>}
       </div>
 

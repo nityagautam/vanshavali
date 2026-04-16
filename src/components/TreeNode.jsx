@@ -83,7 +83,7 @@ export default function TreeNode({ person, personMap, childrenMap, selectedId, o
         <>
           <div className="node-stem" />
           <ul>
-            {children.map((child, index) => (
+            {children.map((child) => (
               <TreeNode
                 key={child.id}
                 person={child}

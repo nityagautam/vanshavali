@@ -491,17 +491,6 @@ button {
   position: relative;
 }
 
-/* Horizontal line across siblings */
-.org-tree ul::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: var(--line-width);
-  background: var(--line-color);
-}
-
 .org-tree li {
   display: flex;
   flex-direction: column;
@@ -510,46 +499,85 @@ button {
   position: relative;
 }
 
-/* Each li has a vertical connector up to the horizontal line */
+/*
+ * Curved connectors — each li draws L-shaped boxes using borders + border-radius:
+ *
+ *   Default (middle / last child):
+ *     ::before  left arm (left-edge → center) + curved corner + vertical drop
+ *               uses border-top + border-right + border-top-right-radius
+ *     ::after   right arm (center → right-edge), flat top
+ *
+ *   First child (╭─ shape):
+ *     ::before  right arm (center → right-edge) + curved corner + vertical drop
+ *               uses border-top + border-left + border-top-left-radius
+ *     ::after   hidden
+ *
+ *   Last child (─╮ shape):
+ *     default ::before (left arm + rounded corner + vertical drop)
+ *     ::after  hidden
+ *
+ *   Only child  →  plain vertical, no horizontal
+ */
+
+/* Default (middle children): left arm + straight vertical drop, no rounding */
 .org-tree li::before {
+  box-sizing: content-box;
   content: '';
   position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: var(--line-width);
+  top: -28px;            /* lift into ul's padding-top space so border-top meets node-stem */
+  left: 0;
+  right: 50%;
+  width: auto;
   height: 28px;
-  background: var(--line-color);
+  border-top: var(--line-width) solid var(--line-color);
+  border-right: var(--line-width) solid var(--line-color);
 }
 
-/* Only child: no horizontal line needed */
-.org-tree li:only-child::before {
-  top: 0;
-}
-
-/* First child: horizontal line only goes right from center */
-.org-tree ul:not(:has(li:nth-child(2)))::before {
-  display: none;
-}
-
-.org-tree li:first-child::after,
-.org-tree li:last-child::after {
+/* Right arm for middle children (flat) */
+.org-tree li::after {
+  box-sizing: content-box;
   content: '';
   position: absolute;
-  top: 0;
-  height: var(--line-width);
-  background: var(--cream);
-  z-index: 1;
+  top: -28px;            /* same level as ::before border-top */
+  left: 50%;
+  right: 0;
+  width: auto;
+  height: 0;
+  border-top: var(--line-width) solid var(--line-color);
+}
+
+/* First child: right arm + curved top-left corner + vertical drop */
+.org-tree li:first-child::before {
+  left: 50%;
+  right: 0;
+  border-right: none;
+  border-left: var(--line-width) solid var(--line-color);
+  border-top-left-radius: 8px;
 }
 
 .org-tree li:first-child::after {
-  left: 0;
-  width: calc(50% + 0px);
+  display: none;
 }
 
+/* Last child: left arm + curved top-right corner + vertical drop */
+.org-tree li:last-child::before {
+  border-top-right-radius: 8px;
+}
+
+/* Last child: no right arm needed */
 .org-tree li:last-child::after {
-  right: 0;
-  width: calc(50% + 0px);
+  display: none;
+}
+
+/* Only child: plain centered vertical, no horizontal arms */
+.org-tree li:only-child::before {
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  width: var(--line-width);
+  border: none;
+  border-radius: 0;
+  background: var(--line-color);
 }
 
 .org-tree li:only-child::after {
@@ -564,6 +592,7 @@ button {
   margin: 0 auto;
   flex-shrink: 0;
 }
+
 
 /* ── Single node wrapper (no spouse) ── */
 .single-node {

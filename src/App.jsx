@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import initialData from './data/family.json';
 import FamilyTree from './components/FamilyTree';
 import DetailPanel from './components/DetailPanel';
@@ -9,6 +9,11 @@ export default function App() {
   const [people, setPeople]           = useState(initialData.people);
   const [selectedPerson, setSelected] = useState(null);
   const [search, setSearch]           = useState('');
+  const [zoom, setZoom]               = useState(1);
+  const canvasRef                     = useRef(null);
+
+  const clampZoom = useCallback(z => Math.min(1.5, Math.max(0.25, +z.toFixed(2))), []);
+  const adjustZoom = useCallback(delta => setZoom(z => clampZoom(z + delta)), [clampZoom]);
 
   const meta = initialData.meta;
 
@@ -19,6 +24,32 @@ export default function App() {
   useEffect(() => {
     document.title = meta.pageTitle || `Vanshavali — ${meta.dynasty} Dynasty`;
   }, [meta.pageTitle, meta.dynasty]);
+
+  // Ctrl+Scroll to zoom on the canvas
+  useEffect(() => {
+    const el = canvasRef.current;
+    if (!el) return;
+    const onWheel = (e) => {
+      if (e.ctrlKey || e.metaKey) {
+        e.preventDefault();
+        adjustZoom(-e.deltaY * 0.001);
+      }
+    };
+    el.addEventListener('wheel', onWheel, { passive: false });
+    return () => el.removeEventListener('wheel', onWheel);
+  }, [adjustZoom]);
+
+  // Keyboard shortcuts: Ctrl+= zoom in, Ctrl+- zoom out, Ctrl+0 reset
+  useEffect(() => {
+    const onKey = (e) => {
+      if (!e.ctrlKey && !e.metaKey) return;
+      if (e.key === '=' || e.key === '+') { e.preventDefault(); adjustZoom(+0.1); }
+      if (e.key === '-')                  { e.preventDefault(); adjustZoom(-0.1); }
+      if (e.key === '0')                  { e.preventDefault(); setZoom(1); }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [adjustZoom]);
 
   const personMap = useMemo(
     () => Object.fromEntries(people.map(p => [p.id, p])),
@@ -106,8 +137,10 @@ export default function App() {
               </div>
             </div>
 
+            <div style={{ flex: 1 }} />
+
             {search && highlightIds && (
-              <div className="toolbar-info">
+              <div className="toolbar-info" style={{ marginLeft: 0 }}>
                 {highlightIds.size} result{highlightIds.size !== 1 ? 's' : ''}
                 <button onClick={() => setSearch('')}
                   style={{ marginLeft: 8, color: 'var(--saffron)', fontSize: '0.75rem', textDecoration: 'underline', background: 'none', border: 'none', cursor: 'pointer' }}>
@@ -115,9 +148,18 @@ export default function App() {
                 </button>
               </div>
             )}
+
+            <div className="zoom-controls">
+              <button className="zoom-btn" onClick={() => adjustZoom(-0.1)} title="Zoom out (Ctrl+−)">−</button>
+              <button className="zoom-level" onClick={() => setZoom(1)} title="Reset zoom (Ctrl+0)">
+                {Math.round(zoom * 100)}%
+              </button>
+              <button className="zoom-btn" onClick={() => adjustZoom(+0.1)} title="Zoom in (Ctrl+=)">+</button>
+            </div>
           </div>
 
-          <div className="tree-canvas">
+          <div className="tree-canvas" ref={canvasRef}>
+            <div style={{ zoom }}>
             <FamilyTree
               people={people}
               personMap={personMap}
@@ -125,6 +167,7 @@ export default function App() {
               onSelect={handleSelect}
               highlightIds={highlightIds}
             />
+            </div>
           </div>
         </div>
 

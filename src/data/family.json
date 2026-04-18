@@ -316,15 +316,15 @@
       "died": null,
       "alive": false,
       "parentId": "shri-suryadeen",
-      "spouseIds": ["shrimati-koilidevi"],
+      "spouseIds": ["shrimati-koyalidevi"],
       "occupation": null,
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
       "bio": null,
       "tags": ["elder", "verified-source"]
     },
     {
-      "id": "shrimati-koilidevi",
-      "name": "श्रीमती KOYALI DEVI",
+      "id": "shrimati-koyalidevi",
+      "name": "श्रीमती कोयली देवी",
       "gender": "female",
       "born": null,
       "died": null,
@@ -383,7 +383,7 @@
     },
     {
       "id": "lakshman-prasad-wife",
-      "name": "श्रीमती लाला देवी / रामवती",
+      "name": "श्रीमती लाला / रामवती",
       "gender": "female",
       "born": "JAN 1931",
       "died": "21 JAN 2025",

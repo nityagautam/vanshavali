@@ -205,6 +205,34 @@
       "tags": ["elder", "verified-source"]
     },
     {
+      "id": "ram-adheen",
+      "name": "राम अधीन",
+      "gender": "male",
+      "born": null,
+      "died": null,
+      "alive": false,
+      "parentId": "shri-benimadhav",
+      "spouseIds": [],
+      "occupation": null,
+      "location": null,
+      "bio": null,
+      "tags": ["verified-source"]
+    },
+    {
+      "id": "ram-sewak",
+      "name": "राम सेवक",
+      "gender": "male",
+      "born": null,
+      "died": null,
+      "alive": false,
+      "parentId": "shri-benimadhav",
+      "spouseIds": [],
+      "occupation": null,
+      "location": null,
+      "bio": null,
+      "tags": ["verified-source"]
+    },
+    {
       "id": "shri-gangaram",
       "name": "श्री गंगा राम",
       "gender": "male",
@@ -308,7 +336,7 @@
       "name": "श्री लक्ष्मण प्रसाद",
       "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=lakshman-prasad&backgroundColor=d1d4f9",
       "gender": "male",
-      "born": "Mar 1943",
+      "born": "Mar 1926",
       "died": "23 April 2011",
       "alive": false,
       "parentId": "shri-vishweshwarram",
@@ -335,10 +363,10 @@
     },
     {
       "id": "lakshman-prasad-wife",
-      "name": "श्रीमती — [to be named]",
+      "name": "श्रीमती LALA DEVI / RAMVATI",
       "gender": "female",
-      "born": "JAN 1905",
-      "died": "DEC 2025",
+      "born": "JAN 1931",
+      "died": "21 JAN 2025",
       "alive": false,
       "parentId": null,
       "spouseIds": ["lakshman-prasad"],
@@ -433,21 +461,6 @@
       "bio": null,
       "tags": ["wise"]
     },
-
-    {
-      "id": "ram-adheen",
-      "name": "राम अधीन",
-      "gender": "male",
-      "born": null,
-      "died": null,
-      "alive": false,
-      "parentId": "shri-benimadhav",
-      "spouseIds": [],
-      "occupation": null,
-      "location": null,
-      "bio": null,
-      "tags": ["verified-source"]
-    },
     {
       "id": "mahadev-ra",
       "name": "महादेव",
@@ -470,21 +483,6 @@
       "died": null,
       "alive": null,
       "parentId": "ram-adheen",
-      "spouseIds": [],
-      "occupation": null,
-      "location": null,
-      "bio": null,
-      "tags": ["verified-source"]
-    },
-
-    {
-      "id": "ram-sewak",
-      "name": "राम सेवक",
-      "gender": "male",
-      "born": null,
-      "died": null,
-      "alive": false,
-      "parentId": "shri-benimadhav",
       "spouseIds": [],
       "occupation": null,
       "location": null,

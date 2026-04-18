@@ -296,7 +296,7 @@
     },
     {
       "id": "shri-suryadeen",
-      "name": "श्री सूर्य दीन गौतम",
+      "name": "श्री सूर्यदीन गौतम",
       "gender": "male",
       "born": null,
       "died": null,
@@ -391,7 +391,7 @@
       "parentId": null,
       "spouseIds": ["lakshman-prasad"],
       "bio": "Please fill in the actual name and details.",
-      "tags": ["placeholder"]
+      "tags": ["elder"]
     },
     {
       "id": "yagya-narayan",

@@ -4,13 +4,23 @@
     "dynasty": "गौतम (Gautam)",
     "gotra": "गौतम गोत्र",
     "subgotra": "चंपारण (Champaran)",
-    "title": "मिश्र/मिश्रा (Mishra)",
+    "title/aaspad": "मिश्र/मिश्रा (Mishra)",
     "info": {
         "गोत्र": "गौतम गोत्र",
         "sub-गोत्र": "चंपारण (Champaran)",
         "ब्राह्मण": "सरयूपारीण (Saryuparin)",
-        "शिखा": "बाम (Vaam)",
-        "पाद": ""
+        "aaspad": "मिश्र/मिश्रा (Mishra)",
+        "वर्ण": "ब्राह्मण (Brahman)",
+        "शिखा": "दाया (right side)",
+        "पाद": "दक्षिण (South)",
+        "ईष्ट देवता": "शिव (Shiva)",
+        "वेद": "ऋग्वेद (Rigveda)",
+        "उपवेद": "...",
+        "कुलदेवता": "",
+        "कुलदेवी": "",
+        "पितृदेवता": "",
+        "पितृदेवी": "",
+        "संबंधित": ""
     },
     "location": {
       "village": "Ghurehata",
@@ -310,10 +320,24 @@
       "died": null,
       "alive": false,
       "parentId": "shri-suryadeen",
-      "spouseIds": [],
+      "spouseIds": ["shrimati-koilidevi"],
       "occupation": null,
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
       "bio": null,
+      "tags": ["elder", "verified-source"]
+    },
+    {
+      "id": "shrimati-koilidevi",
+      "name": "श्रीमती KOYALI DEVI",
+      "gender": "female",
+      "born": null,
+      "died": null,
+      "alive": false,
+      "parentId": null,
+      "spouseIds": ["shri-vishweshwarram"],
+      "occupation": null,
+      "location": "Ghurehata, Mauganj, Rewa, M.P.",
+      "bio": "Hails from Baghaun(Known for first white tiger 'Mohan'), Sidhi; Daughter from Pandey Pariwar",
       "tags": ["elder", "verified-source"]
     },
     {
@@ -372,36 +396,6 @@
       "spouseIds": ["lakshman-prasad"],
       "bio": "Please fill in the actual name and details.",
       "tags": ["placeholder"]
-    },
-    {
-      "id": "keshari-prasad",
-      "name": "श्री केशरी प्रसाद गौतम",
-      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=army&backgroundColor=d1d4f9",
-      "gender": "male",
-      "born": "13 FEB 1967",
-      "died": null,
-      "alive": true,
-      "parentId": "lakshman-prasad",
-      "spouseIds": ["prafulla-devi"],
-      "occupation": "Retired Captain, Indian Army",
-      "location": "Ghurehata, Mauganj, Rewa, M.P.",
-      "bio": "Served as Captain in the Indian Army. A distinguished member of the Gautam family who contributed to verifying the family lineage records.",
-      "tags": ["verified-source", "RETD CAPTAIN", "ExArmy"]
-    },
-    {
-      "id": "prafulla-devi",
-      "name": "श्रीमती प्रफुल्ला देवी गौतम",
-      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=prafulla-devi&backgroundColor=d1d4f9",
-      "gender": "female",
-      "born": "1 JAN 1968",
-      "died": null,
-      "alive": true,
-      "parentId": null,
-      "spouseIds": ["keshari-prasad"],
-      "occupation": "Farmer",
-      "location": "Ghurehata, Mauganj, Rewa, M.P.",
-      "bio": "Served home with 6 children.",
-      "tags": ["wise"]
     },
     {
       "id": "yagya-narayan",
@@ -786,7 +780,7 @@
     },
     {
       "id": "deepak-sp",
-      "name": "दीपक",
+      "name": "दीप नारायण",
       "gender": "male",
       "born": null,
       "died": null,
@@ -828,7 +822,7 @@
     },
     {
       "id": "anand-sp",
-      "name": "आनंद",
+      "name": "आनंद नारायण",
       "gender": "male",
       "born": null,
       "died": null,
@@ -870,7 +864,7 @@
     },
     {
       "id": "anant-sp",
-      "name": "अनंत",
+      "name": "अनंत नारायण",
       "gender": "male",
       "born": null,
       "died": null,
@@ -910,7 +904,36 @@
       "bio": null,
       "tags": ["placeholder"]
     },
-
+    {
+      "id": "keshari-prasad",
+      "name": "श्री केशरी प्रसाद गौतम",
+      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=army&backgroundColor=d1d4f9",
+      "gender": "male",
+      "born": "13 FEB 1967",
+      "died": null,
+      "alive": true,
+      "parentId": "lakshman-prasad",
+      "spouseIds": ["prafulla-devi"],
+      "occupation": "Retired Captain, Indian Army",
+      "location": "Ghurehata, Mauganj, Rewa, M.P.",
+      "bio": "Served as Captain in the Indian Army. A distinguished member of the Gautam family who contributed to verifying the family lineage records.",
+      "tags": ["verified-source", "RETD CAPTAIN", "ExArmy"]
+    },
+    {
+      "id": "prafulla-devi",
+      "name": "श्रीमती प्रफुल्ला देवी गौतम",
+      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=prafulla-devi&backgroundColor=d1d4f9",
+      "gender": "female",
+      "born": "1 JAN 1968",
+      "died": null,
+      "alive": true,
+      "parentId": null,
+      "spouseIds": ["keshari-prasad"],
+      "occupation": "Farmer",
+      "location": "Ghurehata, Mauganj, Rewa, M.P.",
+      "bio": "Served home with 6 children.",
+      "tags": ["wise"]
+    },
     {
       "id": "sudha-mishra",
       "name": "सुधा मिश्रा (शुक्ला)",

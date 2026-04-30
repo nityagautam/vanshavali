@@ -1,6 +1,20 @@
 import Avatar from './Avatar';
 import { getTagStyle } from '../utils/tagColor';
 
+// Fields already rendered explicitly — excluded from the dynamic "extra" section
+const KNOWN_FIELDS = new Set([
+  'id', 'name', 'gender', 'born', 'died', 'alive', 'dom',
+  'parentId', 'motherId', 'spouseIds', 'occupation',
+  'location', 'bio', 'tags', 'photo',
+]);
+
+function toLabel(key) {
+  return key
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .replace(/[_-]/g, ' ')
+    .replace(/\b\w/g, c => c.toUpperCase());
+}
+
 export default function DetailPanel({ person, personMap, people, onClose, onSelect }) {
   const formatDate = (d) => {
     if (!d) return null;
@@ -10,6 +24,12 @@ export default function DetailPanel({ person, personMap, people, onClose, onSele
 
   const born     = formatDate(person.born);
   const died     = formatDate(person.died);
+  const dom      = formatDate(person.dom);
+
+  // Collect any extra fields not in the known set
+  const extraFields = Object.entries(person).filter(
+    ([key, val]) => !KNOWN_FIELDS.has(key) && val !== null && val !== undefined && val !== ''
+  );
   const spouses  = (person.spouseIds || []).map(id => personMap[id]).filter(Boolean);
   const children = people.filter(p => p.parentId === person.id);
   const father   = person.parentId ? personMap[person.parentId] : null;
@@ -67,6 +87,12 @@ export default function DetailPanel({ person, personMap, people, onClose, onSele
               <span className="value">{died}</span>
             </div>
           )}
+          {dom && (
+            <div className="detail-row">
+              <span className="label">Married</span>
+              <span className="value">{dom}</span>
+            </div>
+          )}
           {person.occupation && !isPlaceholder && (
             <div className="detail-row">
               <span className="label">Occupation</span>
@@ -79,7 +105,15 @@ export default function DetailPanel({ person, personMap, people, onClose, onSele
               <span className="value">{person.location}</span>
             </div>
           )}
-          {!born && !died && !person.occupation && !person.location && (
+          {extraFields.map(([key, val]) => (
+            <div key={key} className="detail-row">
+              <span className="label">{toLabel(key)}</span>
+              <span className="value">
+                {Array.isArray(val) ? val.join(', ') : String(val)}
+              </span>
+            </div>
+          ))}
+          {!born && !died && !dom && !person.occupation && !person.location && extraFields.length === 0 && (
             <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
               No details yet. Update <code>family.json</code> to add information.
             </div>

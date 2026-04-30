@@ -9,7 +9,7 @@ export default function App() {
   const [people, setPeople]           = useState(initialData.people);
   const [selectedPerson, setSelected] = useState(null);
   const [search, setSearch]           = useState('');
-  const [zoom, setZoom]               = useState(1);
+  const [zoom, setZoom]               = useState(0.25);
   const canvasRef                     = useRef(null);
 
   const clampZoom = useCallback(z => Math.min(1.5, Math.max(0.25, +z.toFixed(2))), []);
@@ -24,6 +24,13 @@ export default function App() {
   useEffect(() => {
     document.title = meta.pageTitle || `Vanshavali — ${meta.dynasty} Dynasty`;
   }, [meta.pageTitle, meta.dynasty]);
+
+  // Center horizontal scroll on mount so the root of the tree is centred
+  useEffect(() => {
+    const el = canvasRef.current;
+    if (!el) return;
+    el.scrollLeft = (el.scrollWidth - el.clientWidth) / 2;
+  }, []);
 
   // Ctrl+Scroll to zoom on the canvas
   useEffect(() => {
@@ -133,7 +140,7 @@ export default function App() {
               <div className="legend-item"><div className="legend-dot female" /> Female</div>
               <div className="legend-item"><div className="legend-line" /> Parent–Child</div>
               <div className="legend-item">
-                <span style={{ color: 'var(--gold)', fontSize: '0.9rem' }}>⸗</span>&nbsp;Married
+                <span style={{ color: 'var(--gold)', fontSize: '0.9rem' }}>⚭</span>&nbsp;Married
               </div>
             </div>
 

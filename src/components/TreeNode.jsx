@@ -21,41 +21,62 @@ export default function TreeNode({ person, personMap, childrenMap, selectedId, o
 
   return (
     <li>
-      {/* Couple row: person + spouses */}
-      <div className="couple-row">
-        <PersonCard
-          person={person}
-          selected={selectedId === person.id}
-          highlighted={isHighlighted && !isDimmed}
-          dimmed={isDimmed}
-          onClick={() => onSelect(person)}
-        />
-        {spouses.map(spouse => (
-          <div key={spouse.id} style={{ display: 'flex', alignItems: 'center' }}>
-            <div className="marriage-line">
-              <span style={{ fontSize: '0.8rem', color: 'var(--gold)', padding: '0 2px' }}>⸗</span>
-            </div>
+      {spouses.length > 0 ? (
+        /* ── Couple bubble ── */
+        <div className={`couple-bubble ${isDimmed ? 'dimmed' : ''} ${isHighlighted && !isDimmed ? 'highlighted' : ''}`}>
+          <div className="couple-bubble-inner">
             <PersonCard
-              person={spouse}
-              selected={selectedId === spouse.id}
+              person={person}
+              selected={selectedId === person.id}
               highlighted={isHighlighted && !isDimmed}
-              dimmed={isDimmed}
-              onClick={() => onSelect(spouse)}
-              isSpouse
+              dimmed={false}
+              onClick={() => onSelect(person)}
             />
+            {spouses.map(spouse => (
+              <div key={spouse.id} className="couple-bubble-pair">
+                <div className="couple-badge">⚭</div>
+                <PersonCard
+                  person={spouse}
+                  selected={selectedId === spouse.id}
+                  highlighted={isHighlighted && !isDimmed}
+                  dimmed={false}
+                  onClick={() => onSelect(spouse)}
+                  isSpouse
+                />
+              </div>
+            ))}
           </div>
-        ))}
-        {hasChildren && (
-          <button
-            className="card-collapse-btn"
-            onClick={e => { e.stopPropagation(); setCollapsed(c => !c); }}
-            title={collapsed ? 'Expand children' : 'Collapse children'}
-            style={{ position: 'relative', bottom: 'auto', left: 'auto', transform: 'none', marginLeft: 4 }}
-          >
-            {collapsed ? '+' : '−'}
-          </button>
-        )}
-      </div>
+          {hasChildren && (
+            <button
+              className="card-collapse-btn couple-collapse-btn"
+              onClick={e => { e.stopPropagation(); setCollapsed(c => !c); }}
+              title={collapsed ? 'Expand children' : 'Collapse children'}
+            >
+              {collapsed ? '+' : '−'}
+            </button>
+          )}
+        </div>
+      ) : (
+        /* ── Single person ── */
+        <div className="single-node">
+          <PersonCard
+            person={person}
+            selected={selectedId === person.id}
+            highlighted={isHighlighted && !isDimmed}
+            dimmed={isDimmed}
+            onClick={() => onSelect(person)}
+          />
+          {hasChildren && (
+            <button
+              className="card-collapse-btn"
+              onClick={e => { e.stopPropagation(); setCollapsed(c => !c); }}
+              title={collapsed ? 'Expand children' : 'Collapse children'}
+            >
+              {collapsed ? '+' : '−'}
+            </button>
+          )}
+        </div>
+      )}
 
       {/* Children subtree */}
       {hasChildren && !collapsed && (

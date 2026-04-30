@@ -17,7 +17,7 @@ export default function Avatar({ person, size = 'sm', className = '' }) {
   const initials = isPlaceholder
     ? '?'
     : hasDevanagari
-    ? 'श्री'
+    ? (person.gender === 'female' ? 'श्रीमती' : 'श्री')
     : person.name
         .replace(/^(Late |Shri |Devi |Shrimati |Smt\. ?)/gi, '')
         .split(' ')
@@ -27,9 +27,10 @@ export default function Avatar({ person, size = 'sm', className = '' }) {
         .join('');
 
   const px = size === 'lg' ? 96 : 36;
+  const isSrimati = hasDevanagari && person.gender === 'female' && !isPlaceholder;
   const fontSize = size === 'lg'
-    ? (hasDevanagari ? '1.1rem' : '2rem')
-    : (hasDevanagari ? '0.55rem' : '1rem');
+    ? (isSrimati ? '0.85rem' : hasDevanagari ? '1.1rem' : '2rem')
+    : (isSrimati ? '0.42rem' : hasDevanagari ? '0.55rem' : '1rem');
 
   const showImg = person.photo && !imgError && !isPlaceholder;
 

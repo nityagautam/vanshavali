@@ -141,7 +141,8 @@ export default function PrintView({ people, meta }) {
 
   // All object-type meta entries (skip location — already rendered as string above)
   const COVER_SKIP = new Set(['pageTitle', 'dynasty', 'gotra', 'subgotra', 'title',
-                               'description', 'lastUpdated', 'disclaimer', 'maintainer', 'blog', 'location']);
+                               'description', 'lastUpdated', 'disclaimer', 'disclaimerHindi',
+                               'maintainer', 'blog', 'location']);
   const metaObjects = Object.entries(meta).filter(
     ([k, v]) => !COVER_SKIP.has(k) && v && typeof v === 'object' && !Array.isArray(v)
   );
@@ -151,10 +152,15 @@ export default function PrintView({ people, meta }) {
 
       {/* Cover / Dynasty Header */}
       <div className="pv-cover">
-        {meta.disclaimer && (
+        {(meta.disclaimerHindi || meta.disclaimer) && (
           <div className="pv-cover-disclaimer">
-            <span className="pv-disclaimer-label">⚠ Disclaimer</span>
-            {meta.disclaimer}
+            <span className="pv-disclaimer-label">⚠ अस्वीकरण / Disclaimer</span>
+            {meta.disclaimerHindi && (
+              <p className="pv-disclaimer-para pv-disclaimer-hindi">{meta.disclaimerHindi}</p>
+            )}
+            {meta.disclaimer && (
+              <p className="pv-disclaimer-para">{meta.disclaimer}</p>
+            )}
           </div>
         )}
         {meta.maintainer && (

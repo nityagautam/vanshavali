@@ -471,9 +471,11 @@ button {
   flex: 1;
   overflow: auto;
   padding: 40px 32px 80px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+}
+
+.tree-canvas > * {
+  margin: 0 auto;
+  width: fit-content;
 }
 
 /* ── Org-chart Tree ── */
@@ -563,12 +565,82 @@ button {
   flex-shrink: 0;
 }
 
-/* ── Couple Row ── */
+/* ── Single node wrapper (no spouse) ── */
+.single-node {
+  position: relative;
+  display: inline-flex;
+}
+
+/* ── Couple Row (single person, no spouse) ── */
 .couple-row {
   display: flex;
   align-items: center;
   gap: 0;
   position: relative;
+}
+
+/* ── Couple Bubble (person + spouse as one unit) ── */
+.couple-bubble {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(135deg, #fffaf0 0%, #fff8ee 100%);
+  border: 2px solid var(--gold);
+  border-radius: 14px;
+  padding: 8px 10px 12px;
+  box-shadow: 0 2px 10px rgba(212, 160, 23, 0.15);
+}
+
+.couple-bubble.dimmed     { opacity: 0.35; }
+.couple-bubble.highlighted {
+  border-color: var(--green);
+  background: linear-gradient(135deg, #f0fbf5 0%, #e8f8f0 100%);
+  box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.2);
+}
+
+.couple-bubble-inner {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+/* Override card borders inside bubble so they don't double-border */
+.couple-bubble .person-card {
+  border-color: transparent;
+  box-shadow: none;
+  background: transparent;
+}
+
+.couple-bubble .person-card:hover {
+  border-color: var(--gold);
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: var(--shadow);
+}
+
+.couple-bubble .person-card.selected {
+  border-color: var(--saffron);
+  background: rgba(255, 245, 233, 0.9);
+}
+
+.couple-bubble-pair {
+  display: flex;
+  align-items: center;
+}
+
+.couple-badge {
+  font-size: 0.85rem;
+  color: var(--gold);
+  padding: 0 6px;
+  line-height: 1;
+  user-select: none;
+}
+
+.couple-collapse-btn {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .marriage-line {
@@ -1468,7 +1540,23 @@ button {
     text-transform: uppercase;
     letter-spacing: 0.07em;
     color: #444;
-    margin-bottom: 4pt;
+    margin-bottom: 6pt;
+  }
+
+  .pv-disclaimer-para {
+    margin: 0 0 5pt 0;
+  }
+
+  .pv-disclaimer-para:last-child {
+    margin-bottom: 0;
+  }
+
+  .pv-disclaimer-hindi {
+    font-family: 'Noto Sans Devanagari', 'Mangal', serif;
+    line-height: 1.7;
+    border-bottom: 0.5pt solid #ccc;
+    padding-bottom: 5pt;
+    margin-bottom: 5pt;
   }
 
   /* ── Generation section ── */

@@ -33,6 +33,7 @@ export default function DetailPanel({ person, personMap, people, onClose, onSele
   const spouses  = (person.spouseIds || []).map(id => personMap[id]).filter(Boolean);
   const children = people.filter(p => p.parentId === person.id);
   const father   = person.parentId ? personMap[person.parentId] : null;
+  const mother   = person.motherId ? personMap[person.motherId] : null;
   const siblings = person.parentId
     ? people.filter(p => p.parentId === person.parentId && p.id !== person.id)
     : [];
@@ -129,11 +130,12 @@ export default function DetailPanel({ person, personMap, people, onClose, onSele
         )}
 
         {/* Family */}
-        {(father || spouses.length > 0 || children.length > 0 || siblings.length > 0) && (
+        {(father || mother || spouses.length > 0 || children.length > 0 || siblings.length > 0) && (
           <div className="detail-section">
             <div className="detail-section-title">Family</div>
             <div className="detail-relations">
-              {father && <RelationChip label="Father"  person={father}  onSelect={onSelect} personMap={personMap} />}
+              {father && <RelationChip label="Father" person={father} onSelect={onSelect} personMap={personMap} />}
+              {mother && <RelationChip label="Mother" person={mother} onSelect={onSelect} personMap={personMap} />}
               {spouses.map(s   => <RelationChip key={s.id}  label="Spouse"  person={s}   onSelect={onSelect} personMap={personMap} />)}
               {children.map(c  => <RelationChip key={c.id}  label="Child"   person={c}   onSelect={onSelect} personMap={personMap} />)}
               {siblings.slice(0, 5).map(s => <RelationChip key={s.id} label="Sibling" person={s} onSelect={onSelect} personMap={personMap} />)}

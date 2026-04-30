@@ -1,82 +1,15 @@
 # Vanshavali — Gautam Dynasty Family Tree
 
-An interactive family tree web application for the Gautam dynasty, Ghurehata village, Mauganj, Rewa, Madhya Pradesh.
+An interactive family tree web application for the Gautam dynasty, Ghurehata village, Mauganj, Rewa, Madhya Pradesh. Traces the lineage from Maharishi Gautam through ~243 recorded members across present generations.
 
 ## Running locally
 
 ```bash
 npm install
-npm run dev
+npm run dev      # http://localhost:5173
+npm run build    # production build → dist/
+npm run preview  # preview production build locally
 ```
-
-Open http://localhost:5173
-
-## Editing the family data
-
-All family data lives in **`src/data/family.json`**. Edit this file to add/update members.
-
-### Person object fields
-
-```json
-{
-  "id": "unique-id",           // unique string, no spaces (e.g. "ram-prasad-1")
-  "name": "Full Name",         // shown on the card
-  "gender": "male",            // "male" or "female"
-  "born": 1920,                // year (number) or "YYYY-MM-DD" or null
-  "died": 1985,                // year or null
-  "alive": false,              // true = living, false = deceased
-  "parentId": "father-id",     // id of the father (null for root ancestor)
-  "spouseIds": ["spouse-id"],  // array of spouse IDs
-  "occupation": "Farmer",      // shown on the card
-  "location": "Ghurehata, Rewa",
-  "bio": "Brief biography…",   // shown in the detail panel
-  "tags": ["elder"]            // optional tags (see below)
-}
-```
-
-### Tags
-
-| Tag | Color | Meaning |
-|-----|-------|---------|
-| `legendary` | Gold | Mythological/ancient ancestor |
-| `placeholder` | Grey | Data not yet filled in |
-| `author` | Green | Blog/record author |
-| `elder` | Red | Senior family figure |
-| `verified-source` | Blue | Verified family history source |
-
-### Adding a new member
-
-1. Open `src/data/family.json`
-2. Add a new object to the `"people"` array
-3. Set `"parentId"` to the father's `"id"`
-4. For wives/spouses: add their `"id"` to the husband's `"spouseIds"` array, and the husband's `"id"` to the wife's `"spouseIds"`
-5. Save the file — the app hot-reloads automatically
-
-### Adding intermediate ancestors (filling placeholders)
-
-Replace the placeholder objects (those with `"tags": ["placeholder"]`) with actual ancestors. Update the `"parentId"` chain to connect them.
-
-## Deploying as a website
-
-### Option 1: Netlify (easiest — free)
-
-1. `npm run build` — creates the `dist/` folder
-2. Go to [netlify.com](https://netlify.com) → "Add new site" → "Deploy manually"
-3. Drag and drop the `dist/` folder
-
-### Option 2: GitHub Pages (free)
-
-1. Push this repo to GitHub
-2. Install the deploy tool: `npm install -D gh-pages`
-3. Add to `package.json` scripts: `"deploy": "gh-pages -d dist"`
-4. Run: `npm run build && npm run deploy`
-5. Enable GitHub Pages in repo Settings → Pages → branch: `gh-pages`
-
-### Option 3: Vercel (free)
-
-1. Push to GitHub
-2. Import at [vercel.com](https://vercel.com)
-3. Vercel auto-detects Vite and deploys on every push
 
 ## Project structure
 
@@ -84,13 +17,123 @@ Replace the placeholder objects (those with `"tags": ["placeholder"]`) with actu
 Vanshavali/
 ├── src/
 │   ├── data/
-│   │   └── family.json          ← Edit this to update family data
+│   │   ├── family.json       ← App data (edit to update the tree)
+│   │   └── member-base.js    ← Master source: nested name/children list
 │   ├── components/
-│   │   ├── FamilyTree.jsx       ← Tree layout engine
-│   │   ├── TreeNode.jsx         ← Individual node (person + children)
-│   │   ├── PersonCard.jsx       ← Card displayed in the tree
-│   │   └── DetailPanel.jsx      ← Right-side detail view on click
+│   │   ├── FamilyTree.jsx    ← Tree layout, root detection, childrenMap
+│   │   ├── TreeNode.jsx      ← Recursive node (person + couple bubble + children)
+│   │   ├── PersonCard.jsx    ← Card shown in the tree
+│   │   ├── DetailPanel.jsx   ← Right-side detail view on click
+│   │   ├── Sidebar.jsx       ← Left toolbar (About, Add Member, Export, Print)
+│   │   ├── AddMemberForm.jsx ← Form for adding a new member
+│   │   ├── Avatar.jsx        ← Photo with DiceBear fallback
+│   │   └── PrintView.jsx     ← Print-only layout (Cmd+P)
+│   ├── utils/
+│   │   └── tagColor.js       ← djb2 hash → deterministic pastel tag colour
 │   ├── App.jsx
-│   └── index.css
+│   └── index.css             ← All styles (single file, CSS custom properties)
 └── README.md
+```
+
+## Features
+
+- **Interactive tree** — org-chart style, pure CSS flexbox (no third-party tree library)
+- **Couple bubbles** — spouses shown side-by-side with a ⚭ badge
+- **Collapsible nodes** — expand/collapse any branch
+- **Zoom** — toolbar +/− buttons, Ctrl+Scroll, Ctrl+= / Ctrl+− / Ctrl+0
+- **Search & highlight** — dim non-matching nodes, highlight matches by name or occupation
+- **Detail panel** — click any person to see full profile: dates, occupation, location, bio, date of marriage, and any extra custom fields added to the JSON
+- **Family relations** — Father, Mother, Spouse, Children, Siblings shown as clickable chips
+- **Add Member** — sidebar form to add a new person (updates in-memory state; use Export JSON to persist)
+- **Export JSON** — downloads current in-memory tree as `family.json`
+- **Print view** — clean printable layout via Cmd+P or the print button
+- **Dynasty Info** — sidebar panel showing gotra, location, member stats
+
+## Data model (`src/data/family.json`)
+
+Two top-level keys: `meta` (dynasty metadata) and `people` (flat array).
+
+### Person fields
+
+```json
+{
+  "id":         "unique-slug",          // e.g. "ram-prasad"
+  "name":       "Full Name",
+  "gender":     "male",                 // "male" | "female" | null
+  "born":       "Mar 1943",             // string, year, or null
+  "died":       "23 April 2011",        // string, year, or null
+  "dom":        "15 Feb 2020",          // date of marriage (optional)
+  "alive":      false,                  // true | false | null (unknown)
+  "parentId":   "father-id",            // drives tree hierarchy; null for roots
+  "motherId":   "mother-id",            // optional; shown as Mother chip in detail panel
+  "spouseIds":  ["spouse-id"],          // bidirectional — both sides must list each other
+  "occupation": "Retired Captain",
+  "location":   "Ghurehata, Mauganj",
+  "bio":        "Short biography…",
+  "photo":      "https://…",            // URL; DiceBear avatar used as fallback
+  "tags":       ["elder"]               // see tag table below
+}
+```
+
+Any field not in the list above (e.g. `education`, `phone`, `dom`) is automatically rendered as an extra row in the Details section of the panel with a human-readable label.
+
+### Tags
+
+| Tag | Meaning |
+|-----|---------|
+| `placeholder` | Data not yet filled in — hidden from member stats |
+| `legendary` | Mythological / ancient ancestor |
+| `root` | Marks the lineage root node |
+| `elder` | Senior family figure |
+| `verified-source` | Confirmed by a family history source |
+| `author` | Blog / record author |
+| `died-early` | Died in childhood |
+| Any other string | Rendered with a deterministic pastel colour |
+
+### Data source
+
+`src/data/member-base.js` is the **master source** — a raw nested `{ name, children[] }` JS object with no IDs or schema. When updating the tree from this source:
+
+1. Assign a slugified `id` to each entry
+2. Compute `parentId` by tracing the nesting
+3. Infer gender from name suffixes: `(पुत्री)` = female, `(पुत्र)` = male
+4. Mark `(-1)` entries as `alive: false` with tag `died-early`
+5. Leave all unknown fields as `null`
+
+### Adding a member manually
+
+1. Open `src/data/family.json`
+2. Append a new object to `"people"`
+3. Set `"parentId"` to the father's `"id"`
+4. For spouses: add each other's IDs to both `"spouseIds"` arrays
+5. Save — the dev server hot-reloads automatically
+
+## Deployment (free)
+
+### Vercel (recommended)
+
+```bash
+npm i -g vercel
+npm run build
+vercel
+```
+
+Or connect your GitHub repo at [vercel.com](https://vercel.com) — auto-deploys on every push.
+
+### Netlify
+
+```bash
+npm run build
+# drag-and-drop dist/ at netlify.com, or:
+npm i -g netlify-cli
+netlify deploy --dir=dist --prod
+```
+
+### GitHub Pages
+
+```bash
+npm install -D gh-pages
+# add "deploy": "gh-pages -d dist" to package.json scripts
+npm run build && npm run deploy
+# then enable Pages in repo Settings → Pages → branch: gh-pages
 ```

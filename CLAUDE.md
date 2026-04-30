@@ -1,0 +1,78 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Commands
+
+```bash
+npm run dev       # Start dev server (Vite, http://localhost:5173)
+npm run build     # Production build → dist/
+npm run preview   # Preview production build locally
+```
+
+No test suite or linter is configured.
+
+## Architecture
+
+**Vanshavali** is a React + Vite single-page app for visualising and managing a Hindu family genealogy (वंशावली). There is no backend — all data lives in `src/data/family.json`.
+
+### Data model (`src/data/family.json`)
+
+Two top-level keys:
+
+- **`meta`** — dynasty metadata (gotra, location, maintainer, disclaimers, etc.). Displayed in the Dynasty Info sidebar panel; fields are rendered dynamically (primitives → rows, nested objects → sections).
+- **`people`** — flat array of person objects. Key fields:
+  - `id` — unique slug (used as lookup key everywhere)
+  - `parentId` — points to the father/primary parent; drives the tree hierarchy
+  - `spouseIds` — array of spouse IDs (bidirectional; both sides must list each other)
+  - `alive`, `born`, `died`, `dom` (date of marriage), `tags`, `photo`, `bio`, `occupation`, `location`
+  - `motherId` — optional, points to the mother's person `id`; shown as a clickable **Mother** chip in the Family section of the detail panel (alongside `parentId` which is the father)
+  - `tags`: special values — `"placeholder"` hides the person from stats and suppresses some UI; `"root"` marks legendary ancestors
+
+### Component tree
+
+```
+App
+├── PrintView          (hidden; renders on Cmd+P / window.print())
+├── header             (inline JSX in App)
+├── Sidebar
+│   ├── AddMemberForm  (shown when "Add Member" tool is active)
+│   └── DynastyInfoPanel (inline in Sidebar.jsx)
+├── FamilyTree
+│   └── TreeNode (recursive)
+│       └── PersonCard (×1 primary + ×N spouses per node)
+│           └── Avatar
+└── DetailPanel        (shown when a person is selected)
+    └── Avatar
+```
+
+### Key logic
+
+**FamilyTree / TreeNode rendering:**
+- `FamilyTree` builds a `childrenMap` (parentId → children array) and finds root nodes — people with no `parentId` that are not a spouse of another root-level person. Male roots are treated as primary; their `spouseIds` render as attached "couple bubbles".
+- `TreeNode` recurses. Each node renders either a single `PersonCard` or a "couple bubble" (primary + spouses side-by-side with a ⚭ badge). Children are filtered to exclude people who list the current person as a spouse (avoids double-rendering spouses as children).
+- Nodes are collapsible (local `collapsed` state per `TreeNode`).
+
+**Search / highlight:** `App` computes `highlightIds` (a `Set`) from the search string. Nodes not in the set get `dimmed` class; matching nodes get `highlighted`.
+
+**Add Member (sidebar):** `AddMemberForm` generates a slug ID from the name (strips Devanagari, lowercases, slugifies, appends a timestamp suffix). On submit it calls `onAddMember` in `App` (updates React state) and also POSTs to `/api/family` — this endpoint does not exist in the static build, so the write always fails gracefully and the user is prompted to use "Export JSON" instead.
+
+**Export JSON:** Downloads the current in-memory `familyData` (merged `meta` + live `people` state) as `family.json` via a temporary object URL.
+
+**Avatar (`src/components/Avatar.jsx`):** Falls back to a DiceBear SVG URL if no `person.photo` is set.
+
+**Tag colours (`src/utils/tagColor.js`):** djb2-style hash of the tag string → deterministic pastel HSL colour.
+
+### Styling
+
+All CSS is in `src/index.css` (single file, no CSS modules). CSS custom properties (defined on `:root`) are used for the colour palette — `--gold`, `--saffron`, `--text-muted`, etc. The tree layout is pure CSS flexbox/`<ul><li>` — no third-party tree library.
+
+### Data source
+
+`src/data/member-base.js` is the **master source** for the family member list. It is a raw JS object with a nested `{ name, children[] }` structure rooted at "श्री हृदयी राम". It does not contain IDs, parentIds, gender, dates, or any schema fields — just names and parent-child relationships.
+
+`src/data/family.json` is the **app data file** derived from the master source. When the master source is updated, `family.json` must be rebuilt: assign slugified IDs, compute `parentId` for each member by tracing the nested tree, infer gender from name suffixes (`(पुत्री)` = female, `(पुत्र)` = male), and leave all unknown fields (`born`, `died`, `bio`, etc.) as `null`. Entries marked `(-1)` in the source died early; `(1)`/`(2)` suffixes indicate which wife's child in multi-wife households.
+
+### Adding / editing family data
+
+Edit `src/data/family.json` directly. The app hot-reloads in dev. For production, run `npm run build` and redeploy `dist/`. The "Export JSON" button in the sidebar exports the current in-memory state (useful after using "Add Member" in the UI, since the `/api/family` write endpoint is unavailable in static hosting).

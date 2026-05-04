@@ -1941,6 +1941,61 @@ button {
     max-width: 140px;
     padding: 8px 10px;
   }
+
+  /* ── Toolbar: allow wrapping on small screens ── */
+  .toolbar {
+    height: auto;
+    min-height: var(--toolbar-h);
+    padding: 8px 12px;
+    gap: 8px;
+    row-gap: 6px;
+  }
+
+  /* Hide decorative legend — saves a full row of space */
+  .legend {
+    display: none;
+  }
+
+  /* Search takes available width but leaves room for controls */
+  .search-wrap {
+    flex: 1 1 120px;
+    max-width: none;
+  }
+
+  /* Remove auto-margin so gen+zoom sit together naturally */
+  .zoom-controls {
+    margin-left: 0;
+    flex-shrink: 0;
+  }
+
+  .gen-controls {
+    flex-shrink: 0;
+  }
+
+  /* Bigger tap targets for gen buttons */
+  .gen-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 1.2rem;
+  }
+
+  /* Bigger tap targets for zoom buttons */
+  .zoom-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 1.2rem;
+  }
+
+  .zoom-level {
+    min-width: 48px;
+    height: 32px;
+    font-size: 0.82rem;
+  }
+
+  .gen-value {
+    min-width: 28px;
+    font-size: 0.82rem;
+  }
 }
 
 /* ── Animations ── */

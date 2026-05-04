@@ -1437,6 +1437,7 @@ button {
    ═══════════════════════════════════════════════════════════ */
 @media print {
 
+
   /* Hide everything interactive */
   .app-header,
   .sidebar,

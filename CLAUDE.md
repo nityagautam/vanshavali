@@ -36,6 +36,7 @@ Two top-level keys:
   - `alive`, `born`, `died`, `dom` (date of marriage), `tags`, `photo`, `bio`, `occupation`, `location`
   - `motherId` — optional, points to the mother's person `id`; shown as a clickable **Mother** chip in the Family section of the detail panel (alongside `parentId` which is the father)
   - `tags`: special values — `"placeholder"` hides the person from stats and suppresses some UI; `"root"` marks legendary ancestors
+  - **`alive` semantics**: `true` = living; anything else (`false`, `null`, missing) = deceased. Only `alive === true` counts as living everywhere in the UI (stats, card styling, detail panel "Living" badge, Print Tree `स्व.` prefix).
 
 ### Component tree
 
@@ -60,6 +61,9 @@ App
 - `FamilyTree` builds a `childrenMap` (parentId → children array) and finds root nodes — people with no `parentId` that are not a spouse of another root-level person. Male roots are treated as primary; their `spouseIds` render as attached "couple bubbles".
 - `TreeNode` recurses. Each node renders either a single `PersonCard` or a "couple bubble" (primary + spouses side-by-side with a ⚭ badge). Children are filtered to exclude people who list the current person as a spouse (avoids double-rendering spouses as children).
 - Nodes are collapsible (local `collapsed` state per `TreeNode`).
+- `depth` prop (0 = root) drives the 4-colour generation accent (`--gen-color` CSS variable on each `<li>`, rendered as a top stripe on `PersonCard`). Palette: `#1a3a6b` → `#1a6b3a` → `#6b1a4a` → `#7a4a00`, cycling every 4 levels.
+- `maxGen` prop (from App state, `null` = show all) force-collapses nodes at `depth >= maxGen - 1`. A `+N` badge (absolutely positioned, out of flow) shows the hidden child count. The toolbar **Depth** stepper controls `maxGen`.
+- `MiniMap` component (`src/components/MiniMap.jsx`) is positioned absolutely in `.tree-section` (not inside the scroll container). It reads `scrollLeft/Top/Width/Height` from `canvasRef`, re-reads on scroll, resize, and zoom change. Click navigates the viewport.
 
 **Search / highlight:** `App` computes `highlightIds` (a `Set`) from the search string. Nodes not in the set get `dimmed` class; matching nodes get `highlighted`.
 
@@ -72,7 +76,7 @@ App
 **Print Tree:** Generates a directory-style text tree from the `people` array (no DOM rendering) and injects it into the current page as a print-only overlay div (`#__vv_print_tree`). Key details:
 - Root detection: top-level people (`parentId: null`) keeping males always and females only if unclaimed as a spouse — avoids the bidirectional `spouseIds` trap where every person ends up in `allSpouseIds`.
 - 4-colour depth palette (`#1a3a6b` navy → `#1a6b3a` green → `#6b1a4a` burgundy → `#7a4a00` amber) cycling per generation.
-- Deceased members (`alive === false`, not `placeholder`) are shown with `स्व.` prefix (स्वर्गीय — traditional Hindu "departed") in gray (`#888`).
+- Deceased members (`alive !== true`, not `placeholder`) are shown with `स्व.` prefix (स्वर्गीय — traditional Hindu "departed") in gray (`#888`).
 - Trunk segments (`│   `) are coloured with their own generation's colour; connectors (`├─`/`└─`) and names share the node's colour.
 - Header includes: disclaimer block (Hindi + English, red border), dynasty title, gotra info table from `meta.info`, legend explaining `स्व.`.
 - Footer includes the blog URL from `meta.blog`.

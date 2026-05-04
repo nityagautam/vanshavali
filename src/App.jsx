@@ -4,12 +4,14 @@ import FamilyTree from './components/FamilyTree';
 import DetailPanel from './components/DetailPanel';
 import Sidebar from './components/Sidebar';
 import PrintView from './components/PrintView';
+import MiniMap from './components/MiniMap';
 
 export default function App() {
   const [people, setPeople]           = useState(initialData.people);
   const [selectedPerson, setSelected] = useState(null);
   const [search, setSearch]           = useState('');
   const [zoom, setZoom]               = useState(0.25);
+  const [maxGen, setMaxGen]           = useState(null); // null = show all
   const canvasRef                     = useRef(null);
 
   const clampZoom = useCallback(z => Math.min(1.5, Math.max(0.25, +z.toFixed(2))), []);
@@ -156,6 +158,26 @@ export default function App() {
               </div>
             )}
 
+            <div className="gen-controls">
+              <span className="gen-label">Depth</span>
+              <button
+                className="gen-btn"
+                onClick={() => setMaxGen(g => { const cur = g ?? totalGen; return cur > 1 ? cur - 1 : cur; })}
+                disabled={maxGen === 1}
+                title="Show one fewer generation"
+              >−</button>
+              <span className="gen-value">{maxGen ?? 'All'}</span>
+              <button
+                className="gen-btn"
+                onClick={() => setMaxGen(g => { if (g === null) return null; const n = g + 1; return n >= totalGen ? null : n; })}
+                disabled={maxGen === null}
+                title="Show one more generation"
+              >+</button>
+              {maxGen !== null && (
+                <button className="gen-reset" onClick={() => setMaxGen(null)} title="Show all generations">↺</button>
+              )}
+            </div>
+
             <div className="zoom-controls">
               <button className="zoom-btn" onClick={() => adjustZoom(-0.1)} title="Zoom out (Ctrl+−)">−</button>
               <button className="zoom-level" onClick={() => setZoom(1)} title="Reset zoom (Ctrl+0)">
@@ -167,15 +189,17 @@ export default function App() {
 
           <div className="tree-canvas" ref={canvasRef}>
             <div style={{ zoom }}>
-            <FamilyTree
-              people={people}
-              personMap={personMap}
-              selectedId={selectedPerson?.id}
-              onSelect={handleSelect}
-              highlightIds={highlightIds}
-            />
+              <FamilyTree
+                people={people}
+                personMap={personMap}
+                selectedId={selectedPerson?.id}
+                onSelect={handleSelect}
+                highlightIds={highlightIds}
+                maxGen={maxGen}
+              />
             </div>
           </div>
+          <MiniMap canvasRef={canvasRef} zoom={zoom} />
         </div>
 
         {/* Detail panel */}

@@ -6,17 +6,17 @@
     "subgotra": "चंपारण (Champaran)",
     "title/aaspad": "मिश्र/मिश्रा (Mishra)",
     "info": {
-        "गोत्र": "गौतम गोत्र",
-        "प्रवर / उप-गोत्र": "चंपारण (Champaran)",
-        "ब्राह्मण": "सरयूपारीण (Saryuparin)",
-        "आसपद": "मिश्र/मिश्रा (Mishra)",
-        "वर्ण": "ब्राह्मण (Brahman)",
-        "शिखा": "दाया (right side)",
-        "कुलदेवता/ईष्टदेवता": "शिव (Shiva)",
-        "कुलदेवी/ईष्टदेवी": "काली (Kali)",
-        "वेद": "...वेद (Rigveda)",
-        "उपवेद": "...",
-        "संबंधित": ""
+      "गोत्र": "गौतम गोत्र",
+      "प्रवर / उप-गोत्र": "चंपारण (Champaran)",
+      "ब्राह्मण": "सरयूपारीण (Saryuparin)",
+      "आसपद": "मिश्र/मिश्रा (Mishra)",
+      "वर्ण": "ब्राह्मण (Brahman)",
+      "शिखा": "दाया (right side)",
+      "कुलदेवता/ईष्टदेवता": "शिव (Shiva)",
+      "कुलदेवी/ईष्टदेवी": "काली (Kali)",
+      "वेद": "...वेद (Rigveda)",
+      "उपवेद": "...",
+      "संबंधित": ""
     },
     "location": {
       "village": "Ghurehata",
@@ -28,7 +28,7 @@
     },
     "description": "Vanshavali of the Gautam lineage from Ghurehata village, Mauganj, Rewa, Madhya Pradesh. This tree traces our lineage from the great sage Maharishi Gautam to the present generation.",
     "lastUpdated": "17 April 2026",
-    "maintainer": "Nitya Narayan Gautam",
+    "maintainer": "Nitya Narayan Gautam (आशुतोष मिश्र)",
     "blog": "https://gautamdynasty.blogspot.com",
     "disclaimerHindi": "इस वंशावली में प्रस्तुत जानकारी रखरखावकर्ता के सर्वोत्तम ज्ञान के आधार पर संकलित की गई है, जो मौखिक इतिहास, पारिवारिक अभिलेखों और व्यक्तिगत शोध पर आधारित है। यह केवल व्यक्तिगत, पारिवारिक एवं वंशावली संदर्भ हेतु है। रखरखावकर्ता सभी अभिलेखों की पूर्णता या पूर्ण सटीकता की कोई गारंटी नहीं देता। स्वतंत्र सत्यापन के बिना इस दस्तावेज़ के किसी भी भाग का उपयोग किसी कानूनी, व्यावसायिक या आधिकारिक उद्देश्य के लिए नहीं किया जाना चाहिए।",
     "disclaimer": "The information presented in this Vanshavali is compiled to the best of the maintainer's knowledge, based on oral histories, family records, and personal research. It is intended solely for personal, family, and genealogical reference. The maintainer does not guarantee the completeness or absolute accuracy of all records. No part of this document should be used for any legal, commercial, or official purpose without independent verification."
@@ -42,10 +42,15 @@
       "died": "",
       "alive": false,
       "parentId": null,
-      "spouseIds": ["grandfather-1-wife"],
+      "spouseIds": [
+        "grandfather-1-wife"
+      ],
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
       "bio": "Patriarch of the modern Gautam family branch in Ghurehata. Came from Khadra deeh from UP.",
-      "tags": ["GreatGrandfather", "legendary"]
+      "tags": [
+        "GreatGrandfather",
+        "legendary"
+      ]
     },
     {
       "id": "grandfather-1-wife",
@@ -55,9 +60,13 @@
       "died": "",
       "alive": false,
       "parentId": null,
-      "spouseIds": ["greatgrandfather"],
+      "spouseIds": [
+        "greatgrandfather"
+      ],
       "bio": "Please fill in the actual name and details.",
-      "tags": ["placeholder"]
+      "tags": [
+        "placeholder"
+      ]
     },
     {
       "id": "shri-shivdas",
@@ -71,7 +80,10 @@
       "occupation": null,
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
       "bio": null,
-      "tags": ["elder", "verified-source"]
+      "tags": [
+        "elder",
+        "verified-source"
+      ]
     },
     {
       "id": "shri-ganesh",
@@ -85,7 +97,10 @@
       "occupation": null,
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
       "bio": null,
-      "tags": ["elder", "verified-source"]
+      "tags": [
+        "elder",
+        "verified-source"
+      ]
     },
     {
       "id": "shri-ram-garib",
@@ -99,7 +114,10 @@
       "occupation": null,
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
       "bio": null,
-      "tags": ["elder", "verified-source"]
+      "tags": [
+        "elder",
+        "verified-source"
+      ]
     },
     {
       "id": "shri-shivpal",
@@ -113,7 +131,10 @@
       "occupation": null,
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
       "bio": null,
-      "tags": ["elder", "verified-source"]
+      "tags": [
+        "elder",
+        "verified-source"
+      ]
     },
     {
       "id": "shri-mahesh",
@@ -127,7 +148,10 @@
       "occupation": null,
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
       "bio": null,
-      "tags": ["elder", "verified-source"]
+      "tags": [
+        "elder",
+        "verified-source"
+      ]
     },
     {
       "id": "shri-trilok-ram",
@@ -141,7 +165,10 @@
       "occupation": null,
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
       "bio": null,
-      "tags": ["elder", "verified-source"]
+      "tags": [
+        "elder",
+        "verified-source"
+      ]
     },
     {
       "id": "shri-ram-nath",
@@ -155,7 +182,10 @@
       "occupation": null,
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
       "bio": null,
-      "tags": ["elder", "verified-source"]
+      "tags": [
+        "elder",
+        "verified-source"
+      ]
     },
     {
       "id": "shri-benimadhav",
@@ -169,7 +199,10 @@
       "occupation": null,
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
       "bio": null,
-      "tags": ["elder", "verified-source"]
+      "tags": [
+        "elder",
+        "verified-source"
+      ]
     },
     {
       "id": "ram-adheen",
@@ -183,7 +216,9 @@
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ram-sewak",
@@ -197,7 +232,9 @@
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "shri-gangaram",
@@ -211,7 +248,10 @@
       "occupation": null,
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
       "bio": null,
-      "tags": ["elder", "verified-source"]
+      "tags": [
+        "elder",
+        "verified-source"
+      ]
     },
     {
       "id": "shri-nand-kishor",
@@ -221,11 +261,16 @@
       "died": null,
       "alive": false,
       "parentId": "shri-gangaram",
-      "spouseIds": ["wife1-of-shri-nand-kishor", "wife2-of-shri-nand-kishor"],
+      "spouseIds": [
+        "wife1-of-shri-nand-kishor",
+        "wife2-of-shri-nand-kishor"
+      ],
       "occupation": null,
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
       "bio": null,
-      "tags": ["elder"]
+      "tags": [
+        "elder"
+      ]
     },
     {
       "id": "wife1-of-shri-nand-kishor",
@@ -235,11 +280,15 @@
       "died": null,
       "alive": false,
       "parentId": null,
-      "spouseIds": ["shri-nand-kishor"],
+      "spouseIds": [
+        "shri-nand-kishor"
+      ],
       "occupation": null,
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
       "bio": null,
-      "tags": ["placeholder"]
+      "tags": [
+        "placeholder"
+      ]
     },
     {
       "id": "wife2-of-shri-nand-kishor",
@@ -249,11 +298,15 @@
       "died": null,
       "alive": false,
       "parentId": null,
-      "spouseIds": ["shri-nand-kishor"],
+      "spouseIds": [
+        "shri-nand-kishor"
+      ],
       "occupation": null,
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
       "bio": null,
-      "tags": ["placeholder"]
+      "tags": [
+        "placeholder"
+      ]
     },
     {
       "id": "shri-suryadeen",
@@ -267,7 +320,10 @@
       "occupation": null,
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
       "bio": null,
-      "tags": ["elder", "verified-source"]
+      "tags": [
+        "elder",
+        "verified-source"
+      ]
     },
     {
       "id": "shri-vishweshwarram",
@@ -277,11 +333,16 @@
       "died": null,
       "alive": false,
       "parentId": "shri-suryadeen",
-      "spouseIds": ["shrimati-koyalidevi"],
+      "spouseIds": [
+        "shrimati-koyalidevi"
+      ],
       "occupation": null,
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
       "bio": null,
-      "tags": ["elder", "verified-source"]
+      "tags": [
+        "elder",
+        "verified-source"
+      ]
     },
     {
       "id": "shrimati-koyalidevi",
@@ -291,11 +352,16 @@
       "died": null,
       "alive": false,
       "parentId": null,
-      "spouseIds": ["shri-vishweshwarram"],
+      "spouseIds": [
+        "shri-vishweshwarram"
+      ],
       "occupation": null,
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
       "bio": "Hails from Baghaun(Known for first white tiger 'Mohan'), Sidhi; Daughter from Pandey Pariwar",
-      "tags": ["elder", "verified-source"]
+      "tags": [
+        "elder",
+        "verified-source"
+      ]
     },
     {
       "id": "sri-manbahor",
@@ -310,7 +376,9 @@
       "occupation": null,
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
       "bio": null,
-      "tags": ["elder"]
+      "tags": [
+        "elder"
+      ]
     },
     {
       "id": "lakshman-prasad",
@@ -321,11 +389,16 @@
       "died": "23 April 2011",
       "alive": false,
       "parentId": "shri-vishweshwarram",
-      "spouseIds": ["lakshman-prasad-wife"],
+      "spouseIds": [
+        "lakshman-prasad-wife"
+      ],
       "occupation": "Retired Mistri, Public Works Department (PWD)",
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
       "bio": "Respected elder of the Gautam family. Served in the Public Works Department as Mistri. A key source and verifier of family history and lineage information.",
-      "tags": ["legendary", "GOAT"]
+      "tags": [
+        "legendary",
+        "GOAT"
+      ]
     },
     {
       "id": "sri-manmohan",
@@ -340,7 +413,9 @@
       "occupation": null,
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
       "bio": null,
-      "tags": ["elder"]
+      "tags": [
+        "elder"
+      ]
     },
     {
       "id": "lakshman-prasad-wife",
@@ -350,9 +425,13 @@
       "died": "21 JAN 2025",
       "alive": false,
       "parentId": null,
-      "spouseIds": ["lakshman-prasad"],
+      "spouseIds": [
+        "lakshman-prasad"
+      ],
       "bio": "Please fill in the actual name and details.",
-      "tags": ["elder"]
+      "tags": [
+        "elder"
+      ]
     },
     {
       "id": "yagya-narayan",
@@ -366,7 +445,9 @@
       "occupation": "Retired Deputy Ranger, Forest Department",
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
       "bio": "Served as Deputy Ranger in the Forest Department. A respected member of the family and key source of genealogical information for the Gautam dynasty records.",
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ambika-prasad",
@@ -379,7 +460,9 @@
       "spouseIds": [],
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
       "bio": "Member of the Gautam family. Contributed to verifying and preserving family history records.",
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "mahadev-ra",
@@ -387,13 +470,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": false,
       "parentId": "ram-adheen",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "rameshwar-ra",
@@ -401,13 +486,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": false,
       "parentId": "ram-adheen",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "bindra-ram",
@@ -421,7 +508,9 @@
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "badri-ram",
@@ -429,13 +518,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": false,
       "parentId": "ram-sewak",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ram-vishal",
@@ -449,7 +540,9 @@
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "shiv-prasad-v",
@@ -463,7 +556,9 @@
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ramesh-sp",
@@ -471,13 +566,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "shiv-prasad-v",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ram-naresh-sp",
@@ -485,13 +582,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "shiv-prasad-v",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "sanjay-rn",
@@ -499,13 +598,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ram-naresh-sp",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "vijay-rn",
@@ -513,13 +614,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ram-naresh-sp",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "dinesh-sp",
@@ -527,13 +630,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "shiv-prasad-v",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "niraj-d",
@@ -541,13 +646,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": false,
       "parentId": "dinesh-sp",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "nilesh-d",
@@ -555,13 +662,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "dinesh-sp",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "dipesh-d",
@@ -569,13 +678,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "dinesh-sp",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "rohit-d",
@@ -583,13 +694,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "dinesh-sp",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ram-newaj",
@@ -603,7 +716,9 @@
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "raj-kumar-rn",
@@ -611,13 +726,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ram-newaj",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "abhishek-rk",
@@ -625,13 +742,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "raj-kumar-rn",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "anurag-rk",
@@ -639,13 +758,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "raj-kumar-rn",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "child3-rk",
@@ -653,28 +774,31 @@
       "gender": null,
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "raj-kumar-rn",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["placeholder"]
+      "tags": [
+        "placeholder"
+      ]
     },
-
     {
       "id": "indrakali",
       "name": "इंद्रकली",
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "lakshman-prasad",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "suresh-prasad-g",
@@ -682,13 +806,17 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "lakshman-prasad",
-      "spouseIds": ["smt-ramwati-sp"],
+      "spouseIds": [
+        "smt-ramwati-sp"
+      ],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "smt-ramwati-sp",
@@ -696,13 +824,17 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": null,
-      "spouseIds": ["suresh-prasad-g"],
+      "spouseIds": [
+        "suresh-prasad-g"
+      ],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["wife"]
+      "tags": [
+        "wife"
+      ]
     },
     {
       "id": "sunita-spg",
@@ -710,27 +842,31 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "suresh-prasad-g",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "deepak-sp",
       "name": "श्री दीप नारायण",
       "gender": "male",
       "born": null,
-      "died": null,
-      "alive": null,
+      "died": "2013",
+      "alive": false,
       "parentId": "suresh-prasad-g",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ayush-d",
@@ -738,13 +874,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "deepak-sp",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "prachi-d",
@@ -752,13 +890,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "deepak-sp",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "anand-sp",
@@ -766,13 +906,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "suresh-prasad-g",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "child1-anand",
@@ -780,13 +922,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "anand-sp",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["placeholder"]
+      "tags": [
+        "placeholder"
+      ]
     },
     {
       "id": "child2-anand",
@@ -794,13 +938,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "anand-sp",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["placeholder"]
+      "tags": [
+        "placeholder"
+      ]
     },
     {
       "id": "anant-sp",
@@ -808,13 +954,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "suresh-prasad-g",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "child1-anant",
@@ -822,13 +970,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "anant-sp",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["placeholder"]
+      "tags": [
+        "placeholder"
+      ]
     },
     {
       "id": "child2-anant",
@@ -836,13 +986,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "anant-sp",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["placeholder"]
+      "tags": [
+        "placeholder"
+      ]
     },
     {
       "id": "keshari-prasad",
@@ -854,11 +1006,17 @@
       "died": null,
       "alive": true,
       "parentId": "lakshman-prasad",
-      "spouseIds": ["prafulla-devi"],
+      "spouseIds": [
+        "prafulla-devi"
+      ],
       "occupation": "Retired Captain, Indian Army",
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
       "bio": "Served as Captain in the Indian Army. A distinguished member of the Gautam family who contributed to verifying the family lineage records.",
-      "tags": ["verified-source", "RETD CAPTAIN", "ExArmy"]
+      "tags": [
+        "verified-source",
+        "RETD CAPTAIN",
+        "ExArmy"
+      ]
     },
     {
       "id": "prafulla-devi",
@@ -870,11 +1028,15 @@
       "died": null,
       "alive": true,
       "parentId": null,
-      "spouseIds": ["keshari-prasad"],
+      "spouseIds": [
+        "keshari-prasad"
+      ],
       "occupation": "Farmer",
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
       "bio": "Served home with 6 children.",
-      "tags": ["wise"]
+      "tags": [
+        "wise"
+      ]
     },
     {
       "id": "sudha-mishra",
@@ -882,13 +1044,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "keshari-prasad",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "aradhana-mishra",
@@ -896,13 +1060,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "keshari-prasad",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "archana-mishra",
@@ -910,13 +1076,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "keshari-prasad",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "aarti-mishra-kp",
@@ -924,13 +1092,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "keshari-prasad",
       "spouseIds": [],
       "occupation": "शिक्षक (Teacher)",
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "nitya-narayan",
@@ -942,11 +1112,15 @@
       "alive": true,
       "parentId": "keshari-prasad",
       "motherId": "prafulla-devi",
-      "spouseIds": ["ruchi-tiwari-gautam"],
+      "spouseIds": [
+        "ruchi-tiwari-gautam"
+      ],
       "occupation": "Researcher / Seeker",
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
       "bio": "Author and maintainer of the Gautam Dynasty blog (gautamdynasty.blogspot.com). Dedicated to documenting and preserving the Gautam family lineage for future generations. Self-described as 'a seeker'.",
-      "tags": ["author"]
+      "tags": [
+        "author"
+      ]
     },
     {
       "id": "ruchi-tiwari-gautam",
@@ -957,11 +1131,15 @@
       "died": null,
       "alive": true,
       "parentId": null,
-      "spouseIds": ["nitya-narayan"],
+      "spouseIds": [
+        "nitya-narayan"
+      ],
       "occupation": "Engineer",
       "location": "Mumbai, MH",
       "bio": null,
-      "tags": ["wise"]
+      "tags": [
+        "wise"
+      ]
     },
     {
       "id": "adya-mishra",
@@ -975,7 +1153,9 @@
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "adarsh-mishra",
@@ -985,11 +1165,15 @@
       "died": null,
       "alive": true,
       "parentId": "keshari-prasad",
-      "spouseIds": ["shreya-pandey-gautam"],
+      "spouseIds": [
+        "shreya-pandey-gautam"
+      ],
       "occupation": "Indian Army, Education Core, MasterJi (मास्टरजी)",
       "location": null,
       "bio": "Served in the Indian Army's Education Core. Known for his dedication to education and mentorship, earning him the nickname 'MasterJi' (मास्टरजी). A respected member of the Gautam family who contributes to preserving family history and lineage information.",
-      "tags": ["army"]
+      "tags": [
+        "army"
+      ]
     },
     {
       "id": "shreya-pandey-gautam",
@@ -1000,11 +1184,15 @@
       "died": null,
       "alive": true,
       "parentId": null,
-      "spouseIds": ["adarsh-mishra"],
+      "spouseIds": [
+        "adarsh-mishra"
+      ],
       "occupation": "Student",
       "location": "Ghurehata, Mauganj, M.P.",
       "bio": null,
-      "tags": [""]
+      "tags": [
+        ""
+      ]
     },
     {
       "id": "avya-mishra",
@@ -1018,9 +1206,10 @@
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
-
     {
       "id": "shri-aanande-ram",
       "name": "श्री आनंदे राम",
@@ -1033,7 +1222,9 @@
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "shri-phadali-ram",
@@ -1041,13 +1232,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": false,
       "parentId": "shri-aanande-ram",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "narvada-ram",
@@ -1061,7 +1254,9 @@
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "baldev",
@@ -1069,13 +1264,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": false,
       "parentId": "narvada-ram",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ram-jivan",
@@ -1083,13 +1280,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": false,
       "parentId": "narvada-ram",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "shriniwas",
@@ -1097,13 +1296,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ram-jivan",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "poonam-rj",
@@ -1111,13 +1312,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "shriniwas",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "pooja-rj",
@@ -1125,13 +1328,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "shriniwas",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "tryambak-rj",
@@ -1139,13 +1344,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "shriniwas",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "palak-rj",
@@ -1153,13 +1360,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "shriniwas",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "jhalak-rj",
@@ -1167,13 +1376,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "shriniwas",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ram-narayan-nk",
@@ -1181,28 +1392,31 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": false,
       "parentId": "narvada-ram",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
-
     {
       "id": "guddi-yn",
       "name": "गुड्डी",
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "yagya-narayan",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "rakesh-yn",
@@ -1210,13 +1424,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "yagya-narayan",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "rishabh-ry",
@@ -1224,13 +1440,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "rakesh-yn",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "child1-ry",
@@ -1238,13 +1456,15 @@
       "gender": null,
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "rakesh-yn",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["placeholder"]
+      "tags": [
+        "placeholder"
+      ]
     },
     {
       "id": "pawan-yn",
@@ -1252,13 +1472,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "yagya-narayan",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "devansh-p",
@@ -1266,13 +1488,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "pawan-yn",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ghanshyam-yn",
@@ -1280,13 +1504,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "yagya-narayan",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "divyansh-g",
@@ -1294,13 +1520,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ghanshyam-yn",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "pankaj-yn",
@@ -1308,15 +1536,16 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "yagya-narayan",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
-
     {
       "id": "shri-param-sukh",
       "name": "श्री परम सुख",
@@ -1329,7 +1558,9 @@
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "jamuna-ram",
@@ -1343,7 +1574,9 @@
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "jagdish-prasad",
@@ -1351,13 +1584,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": false,
       "parentId": "jamuna-ram",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "mandavi",
@@ -1365,13 +1600,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "jagdish-prasad",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ram-gopal",
@@ -1379,13 +1616,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": false,
       "parentId": "jamuna-ram",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "sampati",
@@ -1393,13 +1632,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ram-gopal",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "varsha-s",
@@ -1407,13 +1648,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "sampati",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "sushma-s",
@@ -1421,13 +1664,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "sampati",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "suman-s",
@@ -1435,13 +1680,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "sampati",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "om-prakash-s",
@@ -1449,13 +1696,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": false,
       "parentId": "sampati",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "jay-prakash-s",
@@ -1463,13 +1712,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "sampati",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "dayashankar",
@@ -1477,13 +1728,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ram-gopal",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "meera-ds",
@@ -1491,13 +1744,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "dayashankar",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ajay-ds",
@@ -1505,13 +1760,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "dayashankar",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "parth-aj",
@@ -1519,13 +1776,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ajay-ds",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "radha-ds",
@@ -1533,13 +1792,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "dayashankar",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ravendra",
@@ -1547,13 +1808,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": false,
       "parentId": "ram-gopal",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "shalu-rv",
@@ -1561,13 +1824,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": false,
       "parentId": "ravendra",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "saurabh-rv",
@@ -1575,13 +1840,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ravendra",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ram-milan",
@@ -1589,13 +1856,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": false,
       "parentId": "jamuna-ram",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "girija-rm",
@@ -1603,13 +1872,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ram-milan",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "vivek-g",
@@ -1617,13 +1888,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "girija-rm",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "abhishek-g",
@@ -1631,13 +1904,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "girija-rm",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "shivshankar-rm",
@@ -1645,13 +1920,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ram-milan",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "aditya-ss",
@@ -1659,13 +1936,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "shivshankar-rm",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "neha-ss",
@@ -1673,15 +1952,16 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "shivshankar-rm",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
-
     {
       "id": "shobhanath",
       "name": "श्री शोभनाथ",
@@ -1694,7 +1974,9 @@
       "occupation": null,
       "location": null,
       "bio": "Son from first wife of श्री नन्द किशोर.",
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "chandra-shekhar",
@@ -1702,13 +1984,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": false,
       "parentId": "shobhanath",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "sheshmani",
@@ -1716,13 +2000,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": false,
       "parentId": "chandra-shekhar",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "mahendra",
@@ -1730,13 +2016,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "sheshmani",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "neha-m",
@@ -1744,13 +2032,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "mahendra",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "nikhil-m",
@@ -1758,13 +2048,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "mahendra",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "nitesh-m",
@@ -1772,13 +2064,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "mahendra",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "shambhu",
@@ -1786,13 +2080,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": false,
       "parentId": "shobhanath",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "indrasen",
@@ -1800,13 +2096,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": false,
+      "alive": true,
       "parentId": "shambhu",
       "spouseIds": [],
       "occupation": null,
       "location": null,
-      "bio": "Died early.",
-      "tags": ["verified-source", "died-early"]
+      "bio": "(-1) Son of शम्भू",
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ram-pragas",
@@ -1814,13 +2112,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": false,
       "parentId": "shri-nand-kishor",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": "Son from first wife of श्री नन्द किशोर.",
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "shubhuwa",
@@ -1828,13 +2128,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": false,
       "parentId": "ram-pragas",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "rajni-rp",
@@ -1842,15 +2144,16 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": false,
       "parentId": "ram-pragas",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
-
     {
       "id": "chandramani",
       "name": "श्री चंद्रमणि",
@@ -1863,7 +2166,9 @@
       "occupation": null,
       "location": null,
       "bio": "Son from second wife of श्री नन्द किशोर.",
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "shri-lal",
@@ -1871,13 +2176,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": false,
       "parentId": "chandramani",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ramjas",
@@ -1885,13 +2192,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "shri-lal",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "umakant",
@@ -1899,13 +2208,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ramjas",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ramakant",
@@ -1913,13 +2224,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ramjas",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ramdev",
@@ -1927,13 +2240,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "shri-lal",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "krishna-kumar",
@@ -1941,13 +2256,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ramdev",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "shivam",
@@ -1955,13 +2272,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ramdev",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "satyam",
@@ -1969,13 +2288,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ramdev",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "child4-rd",
@@ -1983,13 +2304,15 @@
       "gender": null,
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ramdev",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["placeholder"]
+      "tags": [
+        "placeholder"
+      ]
     },
     {
       "id": "madhusudan",
@@ -1997,13 +2320,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "shri-lal",
       "spouseIds": [],
-      "occupation": null,
+      "occupation": "LIC Agent",
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "nilesh-md",
@@ -2011,13 +2336,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "madhusudan",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "rani-md",
@@ -2025,13 +2352,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "madhusudan",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "vipin-md",
@@ -2039,13 +2368,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "madhusudan",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "sanjay-md",
@@ -2053,13 +2384,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "madhusudan",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": "Also known as चिकने.",
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ramlal",
@@ -2067,13 +2400,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "chandramani",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "jay-shankar",
@@ -2081,13 +2416,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ramlal",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "sanjay-js",
@@ -2095,13 +2432,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "jay-shankar",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ajit-js",
@@ -2109,13 +2448,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "jay-shankar",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "hira-lal",
@@ -2123,13 +2464,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ramlal",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "gauri-hl",
@@ -2137,13 +2480,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "hira-lal",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ashutosh-hl",
@@ -2151,13 +2496,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "hira-lal",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "harihar-rl",
@@ -2165,13 +2512,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ramlal",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "rahul-hh",
@@ -2179,13 +2528,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "harihar-rl",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "amit-kumar-hh",
@@ -2193,13 +2544,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "harihar-rl",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ram-nihor",
@@ -2207,13 +2560,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": false,
       "parentId": "chandramani",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "sunita-rn",
@@ -2221,13 +2576,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ram-nihor",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "raghunath",
@@ -2235,13 +2592,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "chandramani",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": "Also known as DADDI.",
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "santosh-rg",
@@ -2249,13 +2608,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": false,
       "parentId": "raghunath",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "suyash-s",
@@ -2263,13 +2624,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "santosh-rg",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ayushi-s",
@@ -2277,13 +2640,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "santosh-rg",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "arun-rg",
@@ -2291,13 +2656,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "raghunath",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "kapil-a",
@@ -2305,13 +2672,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "arun-rg",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "rashi-a",
@@ -2319,13 +2688,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "arun-rg",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "vijay-rg",
@@ -2333,13 +2704,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "raghunath",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "radha-v",
@@ -2347,13 +2720,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "vijay-rg",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "harshi-v",
@@ -2361,13 +2736,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "vijay-rg",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ramayan",
@@ -2375,13 +2752,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": false,
       "parentId": "chandramani",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "manoj-ry",
@@ -2389,13 +2768,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ramayan",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "jyoti-ry",
@@ -2403,28 +2784,31 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ramayan",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
-
     {
       "id": "vishwanath-nk",
       "name": "श्री विश्वनाथ",
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": false,
       "parentId": "shri-nand-kishor",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": "Son from second wife of श्री नन्द किशोर.",
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "brijesh-ap",
@@ -2432,13 +2816,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ambika-prasad",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "parth-bj",
@@ -2446,13 +2832,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "brijesh-ap",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": "Also known as प्रियांश.",
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "pragyaan-bj",
@@ -2460,13 +2848,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "brijesh-ap",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": "Also known as शिवांश.",
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "valmiki",
@@ -2474,13 +2864,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "vishwanath-nk",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "pradeep-bv",
@@ -2488,13 +2880,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "valmiki",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "pallavi-pv",
@@ -2502,13 +2896,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "pradeep-bv",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ayushi-pv",
@@ -2516,13 +2912,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "pradeep-bv",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "aarti-bv",
@@ -2530,13 +2928,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "valmiki",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "sandeep-bv",
@@ -2544,13 +2944,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "valmiki",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "child1-sb",
@@ -2558,13 +2960,15 @@
       "gender": null,
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "sandeep-bv",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["placeholder"]
+      "tags": [
+        "placeholder"
+      ]
     },
     {
       "id": "child2-sb",
@@ -2572,13 +2976,15 @@
       "gender": null,
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "sandeep-bv",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["placeholder"]
+      "tags": [
+        "placeholder"
+      ]
     },
     {
       "id": "ashish-bv",
@@ -2586,13 +2992,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "valmiki",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "child1-ab",
@@ -2600,28 +3008,31 @@
       "gender": null,
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ashish-bv",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["placeholder"]
+      "tags": [
+        "placeholder"
+      ]
     },
-
     {
       "id": "baijnath-nk",
       "name": "श्री बैजनाथ",
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": false,
       "parentId": "shri-nand-kishor",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": "Son from second wife of श्री नन्द किशोर.",
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "shyam-sundar",
@@ -2629,13 +3040,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "baijnath-nk",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "urmilesh-ss",
@@ -2643,13 +3056,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "shyam-sundar",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "rishi-um",
@@ -2657,13 +3072,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "urmilesh-ss",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "kamlesh-ss",
@@ -2671,13 +3088,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "shyam-sundar",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "rohit-kss",
@@ -2685,13 +3104,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "kamlesh-ss",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ritik-kss",
@@ -2699,13 +3120,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "kamlesh-ss",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "akhilesh-ss",
@@ -2713,13 +3136,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "shyam-sundar",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "aditi-ak",
@@ -2727,13 +3152,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "akhilesh-ss",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "arjun-bn",
@@ -2741,13 +3168,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "baijnath-nk",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "rudradev",
@@ -2755,13 +3184,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "arjun-bn",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ruhi-rd",
@@ -2769,13 +3200,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "rudradev",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "abhimanyu",
@@ -2783,13 +3216,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "arjun-bn",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ravi-arj",
@@ -2797,15 +3232,16 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "arjun-bn",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
-
     {
       "id": "ishwar-din",
       "name": "ईश्वर दीन",
@@ -2818,7 +3254,9 @@
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ashok-id",
@@ -2826,13 +3264,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": false,
       "parentId": "ishwar-din",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ram-bahadur",
@@ -2840,13 +3280,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ashok-id",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "vidyalankar-sagar",
@@ -2854,13 +3296,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ram-bahadur",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ram-ujaagar",
@@ -2868,13 +3312,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ashok-id",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "divyaraj",
@@ -2882,28 +3328,31 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ram-ujaagar",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
-
     {
       "id": "krishna-kant",
       "name": "कृष्ण कांत",
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "shri-ram-nath",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "triveni-kk",
@@ -2911,13 +3360,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "krishna-kant",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "rama-tv",
@@ -2925,13 +3376,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "triveni-kk",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "uma-tv",
@@ -2939,13 +3392,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "triveni-kk",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "pragya-tv",
@@ -2953,13 +3408,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "triveni-kk",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "prachi-tv",
@@ -2967,13 +3424,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "triveni-kk",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "shivshankar-kk",
@@ -2981,13 +3440,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": false,
       "parentId": "krishna-kant",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": "Also known as नन्हू.",
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "urvijesh-sk",
@@ -2995,13 +3456,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "shivshankar-kk",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "hitesh-uv",
@@ -3009,13 +3472,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "urvijesh-sk",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "kamari-kk",
@@ -3023,13 +3488,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "krishna-kant",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "aditya-km",
@@ -3037,13 +3504,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "kamari-kk",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "arya-ad",
@@ -3051,13 +3520,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "aditya-km",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ashish-km",
@@ -3065,13 +3536,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "kamari-kk",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "rudra-ash",
@@ -3079,13 +3552,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ashish-km",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "abhishek-km",
@@ -3093,13 +3568,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "kamari-kk",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "vishwesh-abk",
@@ -3107,28 +3584,31 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "abhishek-km",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
-
     {
       "id": "buddhsen",
       "name": "बुद्धसेन",
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": false,
       "parentId": "shri-ram-nath",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ramanuj-bs",
@@ -3136,13 +3616,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "buddhsen",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "amarnath-rj",
@@ -3150,13 +3632,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ramanuj-bs",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "ayushi-amn",
@@ -3164,13 +3648,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "amarnath-rj",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "harihar-rj",
@@ -3178,13 +3664,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ramanuj-bs",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "rupesh-hh",
@@ -3192,13 +3680,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "harihar-rj",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "prashant-hh",
@@ -3206,13 +3696,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "harihar-rj",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "priyanshu-hh",
@@ -3220,13 +3712,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "harihar-rj",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "pushkarnath",
@@ -3234,13 +3728,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ramanuj-bs",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "priyarsha",
@@ -3248,13 +3744,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "pushkarnath",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "riyarsha",
@@ -3262,13 +3760,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "pushkarnath",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "siyarsha",
@@ -3276,13 +3776,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "pushkarnath",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "arvind-rj",
@@ -3290,13 +3792,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ramanuj-bs",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "diksha-arv",
@@ -3304,13 +3808,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "arvind-rj",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "shivangi-arv",
@@ -3318,13 +3824,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "arvind-rj",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "janmejay-arv",
@@ -3332,13 +3840,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "arvind-rj",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "vishwash-arv",
@@ -3346,13 +3856,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "arvind-rj",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "pradeep-rj",
@@ -3360,13 +3872,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ramanuj-bs",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "yashraj-prj",
@@ -3374,13 +3888,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "pradeep-rj",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "keshavi-prj",
@@ -3388,13 +3904,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "pradeep-rj",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "mayank-rj",
@@ -3402,13 +3920,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "ramanuj-bs",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "shreya-myn",
@@ -3416,13 +3936,15 @@
       "gender": "female",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "mayank-rj",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "narayan-myn",
@@ -3430,13 +3952,15 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": null,
+      "alive": true,
       "parentId": "mayank-rj",
       "spouseIds": [],
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     }
   ]
 }

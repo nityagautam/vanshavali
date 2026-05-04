@@ -3,10 +3,10 @@ import AddMemberForm from './AddMemberForm';
 
 const TOOLS = [
   { id: 'info',        icon: 'i', label: 'About'       },
-  { id: 'add',         icon: '＋', label: 'Add Member'  },
-  { id: 'export',      icon: '↓',  label: 'Export JSON' },
   { id: 'print',       icon: '⎙',  label: 'Print Data'  },
   { id: 'print-tree',  icon: '⊞',  label: 'Print Tree'  },
+  { id: 'add',         icon: '＋', label: 'Add Member'  },
+  { id: 'export',      icon: '↓',  label: 'Export JSON' },
 ];
 
 export default function Sidebar({ people, familyData, meta, onAddMember }) {
@@ -58,7 +58,7 @@ export default function Sidebar({ people, familyData, meta, onAddMember }) {
     //   • spouse — italicised, same colour, slightly lighter
     const divs = [];
 
-    const isDeceased = p => p.alive === false && !p.tags?.includes('placeholder');
+    const isDeceased = p => p.alive !== true && !p.tags?.includes('placeholder');
 
     const makeLine = (trunkSegments, connector, person, spouseNames, depth) => {
       const deceased = isDeceased(person);
@@ -306,7 +306,7 @@ function renderPrimitive(key, val) {
 
 function DynastyInfoPanel({ meta, people }) {
   const livingCount   = people.filter(p => p.alive === true).length;
-  const deceasedCount = people.filter(p => p.alive === false && !p.tags?.includes('placeholder')).length;
+  const deceasedCount = people.filter(p => p.alive !== true && !p.tags?.includes('placeholder')).length;
 
   // Separate meta keys into: primitives (→ rows) and objects (→ sections)
   const primitiveEntries = [];

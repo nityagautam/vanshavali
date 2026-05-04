@@ -39,7 +39,7 @@ export default function DetailPanel({ person, personMap, people, onClose, onSele
     : [];
 
   const isPlaceholder = person.tags?.includes('placeholder');
-  const isDeceased    = person.alive === false && !isPlaceholder;
+  const isDeceased    = person.alive !== true && !isPlaceholder;
 
   return (
     <aside className="detail-panel">
@@ -60,7 +60,7 @@ export default function DetailPanel({ person, personMap, people, onClose, onSele
         </div>
         {/* Status + tags */}
         <div className="detail-hero-tags">
-          {person.alive === true && (
+          {person.alive === true && !isPlaceholder && (
             <span className="card-tag" style={{ background: 'rgba(209,250,229,0.9)', color: '#065F46', border: '1px solid rgba(110,231,183,0.6)' }}>Living</span>
           )}
           {isDeceased && (

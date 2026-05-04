@@ -3,7 +3,7 @@ import { getTagStyle } from '../utils/tagColor';
 
 export default function PersonCard({ person, selected, highlighted, dimmed, onClick }) {
   const isPlaceholder = person.tags?.includes('placeholder');
-  const isDeceased = person.alive === false && !isPlaceholder;
+  const isDeceased = person.alive !== true && !isPlaceholder;
 
   const formatYear = (y) => {
     if (!y) return null;

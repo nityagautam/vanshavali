@@ -10,6 +10,14 @@ npm run build     # Production build → dist/
 npm run preview   # Preview production build locally
 ```
 
+### Deploying to Vercel
+
+```bash
+vercel --prod     # Build and deploy to production (https://vanshavali-ten.vercel.app)
+```
+
+The project is linked to Vercel project `nitya-narayan-gautams-projects/vanshavali`. Running `vercel --prod` uploads the source, runs `npm run build` on Vercel's servers, and promotes to production in one step. No separate `npm run build` needed locally before deploying.
+
 No test suite or linter is configured.
 
 ## Architecture
@@ -58,6 +66,17 @@ App
 **Add Member (sidebar):** `AddMemberForm` generates a slug ID from the name (strips Devanagari, lowercases, slugifies, appends a timestamp suffix). On submit it calls `onAddMember` in `App` (updates React state) and also POSTs to `/api/family` — this endpoint does not exist in the static build, so the write always fails gracefully and the user is prompted to use "Export JSON" instead.
 
 **Export JSON:** Downloads the current in-memory `familyData` (merged `meta` + live `people` state) as `family.json` via a temporary object URL.
+
+**Print Data:** Calls `window.print()` directly, which triggers the existing `@media print` CSS in `src/index.css` — hides app chrome, reveals `#print-view` (the `PrintView` component).
+
+**Print Tree:** Generates a directory-style text tree from the `people` array (no DOM rendering) and injects it into the current page as a print-only overlay div (`#__vv_print_tree`). Key details:
+- Root detection: top-level people (`parentId: null`) keeping males always and females only if unclaimed as a spouse — avoids the bidirectional `spouseIds` trap where every person ends up in `allSpouseIds`.
+- 4-colour depth palette (`#1a3a6b` navy → `#1a6b3a` green → `#6b1a4a` burgundy → `#7a4a00` amber) cycling per generation.
+- Deceased members (`alive === false`, not `placeholder`) are shown with `स्व.` prefix (स्वर्गीय — traditional Hindu "departed") in gray (`#888`).
+- Trunk segments (`│   `) are coloured with their own generation's colour; connectors (`├─`/`└─`) and names share the node's colour.
+- Header includes: disclaimer block (Hindi + English, red border), dynasty title, gotra info table from `meta.info`, legend explaining `स्व.`.
+- Footer includes the blog URL from `meta.blog`.
+- `@media print { body > * { display: none !important } #__vv_print_tree { display: block !important } }` injected as a `<style>` tag; cleaned up 2 s after `window.print()` returns.
 
 **Avatar (`src/components/Avatar.jsx`):** Falls back to a DiceBear SVG URL if no `person.photo` is set.
 

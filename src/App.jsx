@@ -12,7 +12,10 @@ export default function App() {
   const [search, setSearch]           = useState('');
   const [zoom, setZoom]               = useState(0.25);
   const [maxGen, setMaxGen]           = useState(null); // null = show all
+  const [lang, setLang]               = useState(() => localStorage.getItem('vv-lang') || 'hi');
   const canvasRef                     = useRef(null);
+
+  const handleLang = (l) => { setLang(l); localStorage.setItem('vv-lang', l); };
 
   const clampZoom = useCallback(z => Math.min(1.5, Math.max(0.25, +z.toFixed(2))), []);
   const adjustZoom = useCallback(delta => setZoom(z => clampZoom(z + delta)), [clampZoom]);
@@ -95,7 +98,7 @@ export default function App() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
       {/* Print view — invisible on screen, rendered when Cmd+P / Print button */}
-      <PrintView people={people} meta={meta} />
+      <PrintView people={people} meta={meta} lang={lang} />
       {/* Header */}
       <header className="app-header">
         <div className="header-inner">
@@ -110,6 +113,16 @@ export default function App() {
           <div className="header-meta">
             <span className="meta-pill">{people.length} members</span>
             <span className="meta-pill">{totalGen} generations</span>
+            <div className="lang-toggle" role="group" aria-label="Language">
+              {[['hi', 'हिं'], ['both', 'दो'], ['en', 'EN']].map(([val, label]) => (
+                <button
+                  key={val}
+                  className={`lang-btn${lang === val ? ' active' : ''}`}
+                  onClick={() => handleLang(val)}
+                  title={val === 'hi' ? 'Hindi only' : val === 'en' ? 'English only' : 'Both languages'}
+                >{label}</button>
+              ))}
+            </div>
           </div>
         </div>
       </header>
@@ -120,6 +133,7 @@ export default function App() {
           people={people}
           familyData={familyData}
           meta={meta}
+          lang={lang}
           onAddMember={setPeople}
         />
 

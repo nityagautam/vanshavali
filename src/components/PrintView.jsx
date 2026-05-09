@@ -108,7 +108,13 @@ function PersonBlock({ person, spouse, personMap }) {
   );
 }
 
-export default function PrintView({ people, meta }) {
+function pickLang(hindi, english, lang) {
+  if (lang === 'hi') return { primary: hindi,  secondary: null };
+  if (lang === 'en') return { primary: english, secondary: null };
+  return              { primary: hindi,  secondary: english };
+}
+
+export default function PrintView({ people, meta, lang = 'both' }) {
   const personMap = Object.fromEntries(people.map(p => [p.id, p]));
   const genMap    = buildGenMap(people, personMap);
 
@@ -152,17 +158,16 @@ export default function PrintView({ people, meta }) {
 
       {/* Cover / Dynasty Header */}
       <div className="pv-cover">
-        {(meta.disclaimerHindi || meta.disclaimer) && (
-          <div className="pv-cover-disclaimer">
-            <span className="pv-disclaimer-label">⚠ अस्वीकरण / Disclaimer</span>
-            {meta.disclaimerHindi && (
-              <p className="pv-disclaimer-para pv-disclaimer-hindi">{meta.disclaimerHindi}</p>
-            )}
-            {meta.disclaimer && (
-              <p className="pv-disclaimer-para">{meta.disclaimer}</p>
-            )}
-          </div>
-        )}
+        {(meta.disclaimerHindi || meta.disclaimer) && (() => {
+          const { primary: dp, secondary: ds } = pickLang(meta.disclaimerHindi, meta.disclaimer, lang);
+          return (dp || ds) ? (
+            <div className="pv-cover-disclaimer">
+              <span className="pv-disclaimer-label">⚠ अस्वीकरण / Disclaimer</span>
+              {dp && <p className="pv-disclaimer-para pv-disclaimer-hindi">{dp}</p>}
+              {ds && <p className="pv-disclaimer-para">{ds}</p>}
+            </div>
+          ) : null;
+        })()}
         {meta.maintainer && (
           <div className="pv-cover-maintainer">Maintained by: {meta.maintainer}</div>
         )}
@@ -170,7 +175,7 @@ export default function PrintView({ people, meta }) {
           <div className="pv-cover-last-updated">Last updated: {meta.lastUpdated}</div>
         )}
 
-        <div className="pv-cover-title">{meta.dynasty} Dynasty — Vanshavali</div>
+        <div className="pv-cover-title">{meta.dynasty} — वंशावली</div>
         {meta.pageTitle && <div className="pv-cover-subtitle">{meta.pageTitle}</div>}
         <div className="pv-cover-meta">
           {meta.gotra    && <span>Gotra: {meta.gotra}</span>}
@@ -178,16 +183,15 @@ export default function PrintView({ people, meta }) {
           {meta.title    && <span>Title: {meta.title}</span>}
         </div>
         {locationStr && <div className="pv-cover-location">{locationStr}</div>}
-        {(meta.descriptionHindi || meta.description) && (
-          <div className="pv-cover-desc">
-            {meta.descriptionHindi && (
-              <p className="pv-cover-desc-hindi">{meta.descriptionHindi}</p>
-            )}
-            {meta.description && (
-              <p className="pv-cover-desc-en">{meta.description}</p>
-            )}
-          </div>
-        )}
+        {(meta.descriptionHindi || meta.description) && (() => {
+          const { primary: dp, secondary: ds } = pickLang(meta.descriptionHindi, meta.description, lang);
+          return (dp || ds) ? (
+            <div className="pv-cover-desc">
+              {dp && <p className="pv-cover-desc-hindi">{dp}</p>}
+              {ds && <p className="pv-cover-desc-en">{ds}</p>}
+            </div>
+          ) : null;
+        })()}
 
         {/* Dynamic object sections from meta (e.g. info, rituals, etc.) */}
         {metaObjects.map(([key, obj]) => (

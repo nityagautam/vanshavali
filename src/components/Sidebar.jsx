@@ -9,7 +9,14 @@ const TOOLS = [
   { id: 'export',      icon: '↓',  label: 'Export JSON' },
 ];
 
-export default function Sidebar({ people, familyData, meta, onAddMember }) {
+// Returns text to show based on lang setting
+function pickLang(hindi, english, lang) {
+  if (lang === 'hi') return { primary: hindi,   secondary: null };
+  if (lang === 'en') return { primary: english,  secondary: null };
+  return              { primary: hindi,   secondary: english };
+}
+
+export default function Sidebar({ people, familyData, meta, lang = 'both', onAddMember }) {
   const [open, setOpen]   = useState(false);
   const [active, setActive] = useState(null);
   const [toast, setToast] = useState(null);
@@ -110,7 +117,9 @@ export default function Sidebar({ people, familyData, meta, onAddMember }) {
     });
 
     // ── 4. Build header + footer from meta ───────────────────────────────
-    const e = s => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const e  = s => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    // nl: escape + convert newlines to <br> for inline HTML blocks
+    const nl = s => e(s).replace(/\n/g, '<br>');
 
     // Gotra info rows
     const infoRows = meta.info
@@ -125,19 +134,21 @@ export default function Sidebar({ people, familyData, meta, onAddMember }) {
           .filter(Boolean).join(', ')
       : '';
 
-    const disclaimerBlock = (meta.disclaimer || meta.disclaimerHindi) ? `
+    const { primary: dclPrimary, secondary: dclSecondary } = pickLang(meta.disclaimerHindi, meta.disclaimer, lang);
+    const disclaimerBlock = (dclPrimary || dclSecondary) ? `
       <div style="font-family:Arial,sans-serif;border:1px solid #c0392b;border-radius:3px;padding:8px 10px;margin-bottom:12px;background:#fff8f8">
         <div style="font-size:9pt;font-weight:700;color:#c0392b;margin-bottom:5px">
           अस्वीकरण / Disclaimer
         </div>
-        ${meta.disclaimerHindi ? `<div style="font-size:7.5pt;color:#444;line-height:1.55;margin-bottom:4px">${e(meta.disclaimerHindi)}</div>` : ''}
-        ${meta.disclaimer ? `<div style="font-size:7.5pt;color:#555;line-height:1.55;font-style:italic">${e(meta.disclaimer)}</div>` : ''}
+        ${dclPrimary   ? `<div style="font-size:7.5pt;color:#444;line-height:1.55;margin-bottom:${dclSecondary ? '4px' : '0'}">${nl(dclPrimary)}</div>`   : ''}
+        ${dclSecondary ? `<div style="font-size:7.5pt;color:#555;line-height:1.55;font-style:italic">${nl(dclSecondary)}</div>` : ''}
       </div>` : '';
 
-    const descriptionBlock = (meta.descriptionHindi || meta.description) ? `
+    const { primary: descPrimary, secondary: descSecondary } = pickLang(meta.descriptionHindi, meta.description, lang);
+    const descriptionBlock = (descPrimary || descSecondary) ? `
       <div style="font-family:Arial,sans-serif;border:1px solid #c8a45a;border-radius:3px;padding:9px 11px;margin-bottom:10px;background:#fffbf4">
-        ${meta.descriptionHindi ? `<div style="font-size:8pt;color:#3b2a10;line-height:1.65;margin-bottom:${meta.description ? '6px' : '0'}">${e(meta.descriptionHindi)}</div>` : ''}
-        ${meta.description ? `<div style="font-size:7.5pt;color:#7b4f2e;line-height:1.6;font-style:italic">${e(meta.description)}</div>` : ''}
+        ${descPrimary   ? `<div style="font-size:8pt;color:#3b2a10;line-height:1.65;margin-bottom:${descSecondary ? '6px' : '0'}">${nl(descPrimary)}</div>`   : ''}
+        ${descSecondary ? `<div style="font-size:7.5pt;color:#7b4f2e;line-height:1.6;font-style:italic">${nl(descSecondary)}</div>` : ''}
       </div>` : '';
 
     const header = `
@@ -260,7 +271,7 @@ export default function Sidebar({ people, familyData, meta, onAddMember }) {
         </nav>
 
         {/* Panels */}
-        {open && active === 'info' && <DynastyInfoPanel meta={meta} people={people} />}
+        {open && active === 'info' && <DynastyInfoPanel meta={meta} people={people} lang={lang} />}
         {open && active === 'add'  && (
           <div className="sidebar-panel">
             <div className="sidebar-panel-title">Add Family Member</div>
@@ -311,7 +322,7 @@ function renderPrimitive(key, val) {
   return str;
 }
 
-function DynastyInfoPanel({ meta, people }) {
+function DynastyInfoPanel({ meta, people, lang = 'both' }) {
   const livingCount   = people.filter(p => p.alive === true).length;
   const deceasedCount = people.filter(p => p.alive !== true && !p.tags?.includes('placeholder')).length;
 
@@ -330,9 +341,13 @@ function DynastyInfoPanel({ meta, people }) {
   });
 
   // Split primitive entries: descriptions get their own paragraph; rest go into "Details"
-  const descHindi    = primitiveEntries.find(([k]) => k === 'descriptionHindi');
-  const descEnglish  = primitiveEntries.find(([k]) => k === 'description');
+  const descHindiEntry  = primitiveEntries.find(([k]) => k === 'descriptionHindi');
+  const descEnglishEntry = primitiveEntries.find(([k]) => k === 'description');
   const detailEntries = primitiveEntries.filter(([k]) => k !== 'descriptionHindi' && k !== 'description');
+
+  const { primary: descPrimary, secondary: descSecondary } = pickLang(
+    descHindiEntry?.[1], descEnglishEntry?.[1], lang
+  );
 
   return (
     <div className="sidebar-panel dip">
@@ -362,13 +377,11 @@ function DynastyInfoPanel({ meta, people }) {
           </Section>
         )} */}
 
-        {/* Description → About (Hindi always primary, English secondary) */}
-        {(descHindi || descEnglish) && (
+        {/* Description → About */}
+        {(descPrimary || descSecondary) && (
           <Section title="About">
-            {descHindi && <p className="dip-description">{descHindi[1]}</p>}
-            {descEnglish && (
-              <p className="dip-description dip-description-en">{descEnglish[1]}</p>
-            )}
+            {descPrimary   && <p className="dip-description">{descPrimary}</p>}
+            {descSecondary && <p className="dip-description dip-description-en">{descSecondary}</p>}
           </Section>
         )}
 

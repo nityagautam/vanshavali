@@ -311,7 +311,7 @@ function renderPrimitive(key, val) {
   if (/^https?:\/\//.test(str))
     return <a href={str} target="_blank" rel="noreferrer" className="info-link">{str.replace(/^https?:\/\//, '')}</a>;
 
-  // Lat/Long value → Google Maps link
+  // Lat/Long value → Google Maps link {https://www.google.com/maps?q=${parts[0]},${parts[1]} }
   const lk = key.toLowerCase();
   if (/lat/.test(lk) && /l(on|ng)/.test(lk)) {
     const parts = str.split(/[,/\s]+/).map(Number);
@@ -396,7 +396,8 @@ function DynastyInfoPanel({ meta, people, lang = 'both' }) {
               .filter(([k, v]) => v && !/^https?:\/\//.test(String(v)) && !/^\d{5,}$/.test(String(v)) && !/lat|lng|lon|coord/i.test(k))
               .map(([, v]) => v);
             if (summaryVals.length)
-              mapHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(summaryVals.join(', '))}`;
+              // mapHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(summaryVals.join(', '))}`;
+              mapHref = `https://maps.app.goo.gl/27YTdui9oNsZuxDDA`;
           }
 
           return (

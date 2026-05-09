@@ -134,6 +134,12 @@ export default function Sidebar({ people, familyData, meta, onAddMember }) {
         ${meta.disclaimer ? `<div style="font-size:7.5pt;color:#555;line-height:1.55;font-style:italic">${e(meta.disclaimer)}</div>` : ''}
       </div>` : '';
 
+    const descriptionBlock = (meta.descriptionHindi || meta.description) ? `
+      <div style="font-family:Arial,sans-serif;border:1px solid #c8a45a;border-radius:3px;padding:9px 11px;margin-bottom:10px;background:#fffbf4">
+        ${meta.descriptionHindi ? `<div style="font-size:8pt;color:#3b2a10;line-height:1.65;margin-bottom:${meta.description ? '6px' : '0'}">${e(meta.descriptionHindi)}</div>` : ''}
+        ${meta.description ? `<div style="font-size:7.5pt;color:#7b4f2e;line-height:1.6;font-style:italic">${e(meta.description)}</div>` : ''}
+      </div>` : '';
+
     const header = `
       ${disclaimerBlock}
       <div style="border-bottom:2px solid #1a3a6b;padding-bottom:8px;margin-bottom:10px">
@@ -142,6 +148,7 @@ export default function Sidebar({ people, familyData, meta, onAddMember }) {
         ${loc ? `<div style="font-size:8.5pt;color:#555;margin-top:1px">📍 ${e(loc)}</div>` : ''}
       </div>
       ${infoRows ? `<table style="font-family:Arial,sans-serif;font-size:8pt;border-collapse:collapse;margin-bottom:10px">${infoRows}</table>` : ''}
+      ${descriptionBlock}
       <div style="font-family:Arial,sans-serif;font-size:8pt;color:#777;margin-bottom:6px">
         ${meta.lastUpdated ? `अंतिम अद्यतन: ${e(meta.lastUpdated)}` : ''}
         ${meta.maintainer ? ` &nbsp;·&nbsp; संधारक: ${e(meta.maintainer)}` : ''}
@@ -322,9 +329,10 @@ function DynastyInfoPanel({ meta, people }) {
     }
   });
 
-  // Split primitive entries: description gets its own paragraph; rest go into "Details"
-  const descEntry    = primitiveEntries.find(([k]) => k === 'description');
-  const detailEntries = primitiveEntries.filter(([k]) => k !== 'description');
+  // Split primitive entries: descriptions get their own paragraph; rest go into "Details"
+  const descHindi    = primitiveEntries.find(([k]) => k === 'descriptionHindi');
+  const descEnglish  = primitiveEntries.find(([k]) => k === 'description');
+  const detailEntries = primitiveEntries.filter(([k]) => k !== 'descriptionHindi' && k !== 'description');
 
   return (
     <div className="sidebar-panel dip">
@@ -345,19 +353,22 @@ function DynastyInfoPanel({ meta, people }) {
         </div>
 
         {/* Primitive fields → "Details" section */}
-        {detailEntries.length > 0 && (
+        {/* {detailEntries.length > 0 && (
           <Section title="Details">
             {detailEntries.map(([key, val]) => {
               const rendered = renderPrimitive(key, val);
               return rendered ? <Row key={key} label={toLabel(key)} value={rendered} /> : null;
             })}
           </Section>
-        )}
+        )} */}
 
-        {/* Description → About */}
-        {descEntry && (
+        {/* Description → About (Hindi always primary, English secondary) */}
+        {(descHindi || descEnglish) && (
           <Section title="About">
-            <p className="dip-description">{descEntry[1]}</p>
+            {descHindi && <p className="dip-description">{descHindi[1]}</p>}
+            {descEnglish && (
+              <p className="dip-description dip-description-en">{descEnglish[1]}</p>
+            )}
           </Section>
         )}
 

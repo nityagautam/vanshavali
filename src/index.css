@@ -1359,6 +1359,17 @@ button {
   padding: 10px 12px;
 }
 
+.dip-description + .dip-description {
+  margin-top: 8px;
+}
+
+.dip-description-en {
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 0.75rem;
+  border-top: none;
+}
+
 /* ── Info button & popup (legacy — kept for reference) ── */
 .info-btn-wrap {
   position: relative;

@@ -1660,12 +1660,24 @@ button {
   .pv-cover-desc {
     max-width: 420pt;
     margin: 14pt auto;
-    font-size: 10pt;
-    color: #333;
-    line-height: 1.65;
     text-align: left;
-    border-left: 3pt solid #bbb;
+    border-left: 3pt solid #c8a45a;
     padding-left: 12pt;
+  }
+
+  .pv-cover-desc-hindi {
+    font-size: 10pt;
+    color: #2a1a08;
+    line-height: 1.7;
+    margin: 0 0 8pt;
+  }
+
+  .pv-cover-desc-en {
+    font-size: 9pt;
+    color: #666;
+    line-height: 1.6;
+    font-style: italic;
+    margin: 0;
   }
 
   .pv-cover-stats {

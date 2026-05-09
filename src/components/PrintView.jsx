@@ -141,7 +141,7 @@ export default function PrintView({ people, meta }) {
 
   // All object-type meta entries (skip location — already rendered as string above)
   const COVER_SKIP = new Set(['pageTitle', 'dynasty', 'gotra', 'subgotra', 'title',
-                               'description', 'lastUpdated', 'disclaimer', 'disclaimerHindi',
+                               'description', 'descriptionHindi', 'lastUpdated', 'disclaimer', 'disclaimerHindi',
                                'maintainer', 'blog', 'location']);
   const metaObjects = Object.entries(meta).filter(
     ([k, v]) => !COVER_SKIP.has(k) && v && typeof v === 'object' && !Array.isArray(v)
@@ -178,8 +178,15 @@ export default function PrintView({ people, meta }) {
           {meta.title    && <span>Title: {meta.title}</span>}
         </div>
         {locationStr && <div className="pv-cover-location">{locationStr}</div>}
-        {meta.description && (
-          <div className="pv-cover-desc">{meta.description}</div>
+        {(meta.descriptionHindi || meta.description) && (
+          <div className="pv-cover-desc">
+            {meta.descriptionHindi && (
+              <p className="pv-cover-desc-hindi">{meta.descriptionHindi}</p>
+            )}
+            {meta.description && (
+              <p className="pv-cover-desc-en">{meta.description}</p>
+            )}
+          </div>
         )}
 
         {/* Dynamic object sections from meta (e.g. info, rituals, etc.) */}

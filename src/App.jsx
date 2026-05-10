@@ -13,6 +13,9 @@ export default function App() {
   const [zoom, setZoom]               = useState(0.25);
   const [maxGen, setMaxGen]           = useState(null); // null = show all
   const [lang, setLang]               = useState(() => localStorage.getItem('vv-lang') || 'hi');
+  const [filterGender,   setFilterGender]   = useState('all'); // all | male | female
+  const [filterStatus,   setFilterStatus]   = useState('all'); // all | living | deceased
+  const [filterMarriage, setFilterMarriage] = useState('all'); // all | married | unmarried
   const canvasRef                     = useRef(null);
 
   const handleLang = (l) => { setLang(l); localStorage.setItem('vv-lang', l); };
@@ -68,15 +71,43 @@ export default function App() {
     [people]
   );
 
+  const filtersActive = filterGender !== 'all' || filterStatus !== 'all' || filterMarriage !== 'all';
+
   const highlightIds = useMemo(() => {
     const q = search.trim().toLowerCase();
-    if (!q) return null;
+    const hasSearch = !!q;
+
+    if (!hasSearch && !filtersActive) return null;
+
     return new Set(
       people
-        .filter(p => p.name.toLowerCase().includes(q) || p.occupation?.toLowerCase().includes(q))
+        .filter(p => {
+          const isPlaceholder = p.tags?.includes('placeholder');
+          // Placeholders are always structural — never dimmed by filters
+          if (isPlaceholder) return true;
+
+          // Search match
+          if (hasSearch && !p.name.toLowerCase().includes(q) && !p.occupation?.toLowerCase().includes(q))
+            return false;
+
+          // Gender filter
+          if (filterGender !== 'all' && p.gender !== filterGender)
+            return false;
+
+          // Status filter
+          if (filterStatus === 'living'   && p.alive !== true)  return false;
+          if (filterStatus === 'deceased' && p.alive === true)   return false;
+
+          // Marriage filter
+          const isMarried = (p.spouseIds?.length ?? 0) > 0;
+          if (filterMarriage === 'married'   && !isMarried) return false;
+          if (filterMarriage === 'unmarried' &&  isMarried) return false;
+
+          return true;
+        })
         .map(p => p.id)
     );
-  }, [search, people]);
+  }, [search, people, filterGender, filterStatus, filterMarriage, filtersActive]);
 
   const handleSelect = (person) => {
     setSelected(prev => prev?.id === person.id ? null : person);
@@ -162,13 +193,55 @@ export default function App() {
 
             <div style={{ flex: 1 }} />
 
-            {search && highlightIds && (
+            {/* ── Filter pills ── */}
+            <div className="filter-pills">
+              {/* Gender */}
+              <div className="filter-pill-group">
+                {[['all','सभी'],['male','पु'],['female','स्त्री']].map(([v,l]) => (
+                  <button key={v} className={`filter-pill-btn${filterGender === v ? ' active' : ''}`}
+                    onClick={() => setFilterGender(v)}
+                    title={v === 'all' ? 'सभी' : v === 'male' ? 'केवल पुरुष' : 'केवल स्त्री'}>
+                    {l}
+                  </button>
+                ))}
+              </div>
+              {/* Status */}
+              <div className="filter-pill-group">
+                {[['all','सभी'],['living','जी'],['deceased','मृ']].map(([v,l]) => (
+                  <button key={v} className={`filter-pill-btn${filterStatus === v ? ' active' : ''}`}
+                    onClick={() => setFilterStatus(v)}
+                    title={v === 'all' ? 'सभी' : v === 'living' ? 'जीवित' : 'मृत'}>
+                    {l}
+                  </button>
+                ))}
+              </div>
+              {/* Marriage */}
+              <div className="filter-pill-group">
+                {[['all','सभी'],['married','वि'],['unmarried','अवि']].map(([v,l]) => (
+                  <button key={v} className={`filter-pill-btn${filterMarriage === v ? ' active' : ''}`}
+                    onClick={() => setFilterMarriage(v)}
+                    title={v === 'all' ? 'सभी' : v === 'married' ? 'विवाहित' : 'अविवाहित'}>
+                    {l}
+                  </button>
+                ))}
+              </div>
+              {/* Reset all filters */}
+              {filtersActive && (
+                <button className="filter-reset"
+                  onClick={() => { setFilterGender('all'); setFilterStatus('all'); setFilterMarriage('all'); }}
+                  title="Reset all filters">↺</button>
+              )}
+            </div>
+
+            {highlightIds && (
               <div className="toolbar-info" style={{ marginLeft: 0 }}>
-                {highlightIds.size} result{highlightIds.size !== 1 ? 's' : ''}
-                <button onClick={() => setSearch('')}
-                  style={{ marginLeft: 8, color: 'var(--saffron)', fontSize: '0.75rem', textDecoration: 'underline', background: 'none', border: 'none', cursor: 'pointer' }}>
-                  Clear
-                </button>
+                {highlightIds.size} match{highlightIds.size !== 1 ? 'es' : ''}
+                {search && (
+                  <button onClick={() => setSearch('')}
+                    style={{ marginLeft: 8, color: 'var(--saffron)', fontSize: '0.75rem', textDecoration: 'underline', background: 'none', border: 'none', cursor: 'pointer' }}>
+                    Clear
+                  </button>
+                )}
               </div>
             )}
 

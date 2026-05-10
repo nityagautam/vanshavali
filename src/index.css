@@ -287,6 +287,63 @@ button {
   color: var(--text-primary);
 }
 
+/* ── Filter pills ── */
+.filter-pills {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.filter-pill-group {
+  display: flex;
+  align-items: center;
+  background: var(--card-bg);
+  border: 1.5px solid var(--card-border);
+  border-radius: 20px;
+  padding: 2px;
+  gap: 1px;
+}
+
+.filter-pill-btn {
+  padding: 2px 8px;
+  height: 24px;
+  border-radius: 16px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.filter-pill-btn:hover {
+  color: var(--text-primary);
+  background: var(--cream-dark);
+}
+
+.filter-pill-btn.active {
+  background: var(--saffron);
+  color: #fff;
+}
+
+.filter-reset {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--saffron);
+  font-size: 0.9rem;
+  padding: 0 2px;
+  line-height: 1;
+  transition: color var(--transition);
+}
+
+.filter-reset:hover {
+  color: var(--deep-red);
+}
+
 /* ── Generation depth controls ── */
 .gen-controls {
   display: flex;
@@ -2123,6 +2180,18 @@ button {
   /* Hide decorative legend — saves a full row of space */
   .legend {
     display: none;
+  }
+
+  /* Filter pills: wrap tightly on mobile */
+  .filter-pills {
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+
+  .filter-pill-btn {
+    padding: 2px 6px;
+    font-size: 0.72rem;
+    height: 26px;
   }
 
   /* Search takes available width but leaves room for controls */

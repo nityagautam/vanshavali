@@ -23,10 +23,11 @@ No test suite or linter is configured.
 ### Data scripts
 
 ```bash
-node scripts/backfill-motherid.js   # Adds motherId to people missing the key
+node scripts/backfill-motherid.js        # Adds motherId to people missing the key
+node scripts/add-placeholder-spouses.js  # Adds placeholder spouse for parents with no spouseIds
 ```
 
-Run after adding new members to `family.json` who don't have `motherId` set.
+Run both after adding new members to `family.json`. Order matters: run `backfill-motherid` first, then `add-placeholder-spouses` (which also back-fills `motherId` for children of newly-created placeholders). Both scripts are idempotent for existing entries — they only touch records missing the relevant data.
 
 ## Architecture
 
@@ -43,14 +44,15 @@ Two top-level keys:
   - `info` — nested object rendered as a table in the sidebar and print outputs
   - `location` — nested object; rendered as address string + Google Maps link
 
-- **`people`** — flat array of person objects. Key fields:
+- **`people`** — flat array of 335 person objects (248 real + 87 placeholders). Key fields:
   - `id` — unique slug (used as lookup key everywhere)
   - `parentId` — points to the father/primary parent; drives the tree hierarchy
-  - `motherId` — points to the mother's person `id`; shown as a clickable **Mother** chip in the detail panel. All people now have this key (null if mother unknown). Backfill rule: defaults to `father.spouseIds[0]` if available.
-  - `spouseIds` — array of spouse IDs (bidirectional; both sides must list each other)
+  - `motherId` — points to the mother's person `id`; shown as a clickable **Mother** chip in the detail panel. All people have this key (null if unknown). Backfill rule: defaults to `father.spouseIds[0]` if available.
+  - `spouseIds` — array of spouse IDs (bidirectional; both sides must list each other). Every person with children now has at least one entry — placeholder spouses (`tags: ["placeholder"]`) are created for parents with no recorded spouse.
   - `alive`, `born`, `died`, `dom` (date of marriage), `tags`, `photo`, `bio`, `occupation`, `location`
-  - `tags`: special values — `"placeholder"` hides the person from stats and suppresses some UI; `"root"` marks legendary ancestors
+  - `tags`: special values — `"placeholder"` hides the person from stats, suppresses occupation/bio UI, and marks auto-generated placeholder spouses (named `"श्रीमती (अज्ञात)"` / `"श्री (अज्ञात)"`); `"root"` marks legendary ancestors
   - **`alive` semantics**: `true` = living; anything else (`false`, `null`, missing) = deceased. Only `alive === true` counts as living everywhere in the UI (stats, card styling, detail panel "Living" badge, Print Tree `स्व.` prefix).
+  - **`photo`** paths must be relative to the site root (e.g. `/photos/foo.jpg`), NOT `public/photos/foo.jpg`. Vite serves `public/` at `/`.
 
 ### Component tree
 
@@ -91,7 +93,14 @@ App
 - Sidebar About panel: `.credit-line` (bottom border of `DynastyInfoPanel`)
 - Both read `meta.maintainer`; render "With ❤ by {maintainer}"
 
-**Search / highlight:** `App` computes `highlightIds` (a `Set`) from the search string. Nodes not in the set get `dimmed` class; matching nodes get `highlighted`.
+**Toolbar filter pills:** Three compact pill groups dim non-matching nodes (same mechanism as search — preserves tree structure):
+- Gender: सभी · पु · स्त्री (EN: All · Male · Female)
+- Status: सभी · जी (जीवित) · मृ (मृत) (EN: All · Living · Deceased)
+- Marriage: सभी · वि (विवाहित) · अवि (अविवाहित) (EN: All · Married · Unmarried)
+- Labels switch automatically when `lang === 'en'`. Placeholders always pass (never dimmed). A ↺ reset button appears when any filter is active.
+- State: `filterGender`, `filterStatus`, `filterMarriage` in `App`. All three compose with search inside the `highlightIds` useMemo.
+
+**Search / highlight:** `App` computes `highlightIds` (a `Set`) from search + active filters. Nodes not in the set get `dimmed` class; matching nodes get `highlighted`.
 
 **Add Member (sidebar):** `AddMemberForm` generates a slug ID from the name (strips Devanagari, lowercases, slugifies, appends a timestamp suffix). On submit it calls `onAddMember` in `App` (updates React state) and also POSTs to `/api/family` — this endpoint does not exist in the static build, so the write always fails gracefully and the user is prompted to use "Export JSON" instead.
 
@@ -109,7 +118,9 @@ App
 - Footer includes the blog URL from `meta.blog`.
 - `@media print { body > * { display: none !important } #__vv_print_tree { display: block !important } }` injected as a `<style>` tag; cleaned up 2 s after `window.print()` returns.
 
-**Avatar (`src/components/Avatar.jsx`):** Falls back to a DiceBear SVG URL if no `person.photo` is set.
+**Photo lightbox (`DetailPanel.jsx`):** Clicking the avatar in the detail panel (only when `person.photo` is set) opens a full-screen lightbox overlay. A ⊕ zoom hint appears on hover. Close via ✕ button, clicking the backdrop, or Escape key. Lightbox is scoped inside `<aside class="detail-panel">` using `position: fixed`.
+
+**Avatar (`src/components/Avatar.jsx`):** Falls back to styled initials (श्री / श्रीमती for Devanagari names, initials for Latin) if no `person.photo` is set or the image fails to load.
 
 **Tag colours (`src/utils/tagColor.js`):** djb2-style hash of the tag string → deterministic pastel HSL colour.
 
@@ -125,7 +136,9 @@ Mobile breakpoint at `≤768px`: toolbar fixed height removed (becomes `min-heig
 
 `src/data/family.json` is the **app data file** derived from the master source. When the master source is updated, `family.json` must be rebuilt: assign slugified IDs, compute `parentId` for each member by tracing the nested tree, infer gender from name suffixes (`(पुत्री)` = female, `(पुत्र)` = male), and leave all unknown fields (`born`, `died`, `bio`, etc.) as `null`. Entries marked `(-1)` in the source died early; `(1)`/`(2)` suffixes indicate which wife's child in multi-wife households.
 
-After rebuilding, run `node scripts/backfill-motherid.js` to populate `motherId` for all new entries.
+After rebuilding, run both data scripts in order:
+1. `node scripts/backfill-motherid.js` — populates `motherId` from `father.spouseIds[0]`
+2. `node scripts/add-placeholder-spouses.js` — creates placeholder spouses for parents with no `spouseIds`, then updates children's `motherId` to point to the new placeholder
 
 ### Adding / editing family data
 

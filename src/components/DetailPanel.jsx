@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Avatar from './Avatar';
 import { getTagStyle } from '../utils/tagColor';
 
@@ -16,6 +17,16 @@ function toLabel(key) {
 }
 
 export default function DetailPanel({ person, personMap, people, onClose, onSelect }) {
+  const [lightbox, setLightbox] = useState(false);
+
+  // Close lightbox on Escape key
+  useEffect(() => {
+    if (!lightbox) return;
+    const onKey = (e) => { if (e.key === 'Escape') setLightbox(false); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [lightbox]);
+
   const formatDate = (d) => {
     if (!d) return null;
     if (typeof d === 'number') return d.toString();
@@ -46,7 +57,14 @@ export default function DetailPanel({ person, personMap, people, onClose, onSele
       {/* ── Photo hero ── */}
       <div className="detail-photo-hero">
         <button className="detail-close" onClick={onClose} title="Close">✕</button>
-        <Avatar person={person} size="lg" className="detail-photo-avatar" />
+        <div
+          className={`detail-photo-avatar-wrap${person.photo ? ' has-photo' : ''}`}
+          onClick={() => person.photo && setLightbox(true)}
+          title={person.photo ? 'Click to enlarge photo' : undefined}
+        >
+          <Avatar person={person} size="lg" className="detail-photo-avatar" />
+          {person.photo && <span className="detail-photo-zoom-hint">⊕</span>}
+        </div>
         <div className="detail-hero-name">{person.name}</div>
         <div className="detail-hero-sub">
           {person.occupation && !isPlaceholder && (
@@ -148,6 +166,20 @@ export default function DetailPanel({ person, personMap, people, onClose, onSele
           </div>
         )}
       </div>
+
+      {/* ── Photo lightbox ── */}
+      {lightbox && (
+        <div className="photo-lightbox" onClick={() => setLightbox(false)}>
+          <button className="photo-lightbox-close" onClick={() => setLightbox(false)} title="Close (Esc)">✕</button>
+          <img
+            src={person.photo}
+            alt={person.name}
+            className="photo-lightbox-img"
+            onClick={e => e.stopPropagation()}
+          />
+          <div className="photo-lightbox-name">{person.name}</div>
+        </div>
+      )}
     </aside>
   );
 }

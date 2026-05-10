@@ -79,6 +79,9 @@ export default function App() {
 
     if (!hasSearch && !filtersActive) return null;
 
+    // Build a set of IDs who have at least one child (for marriage filter)
+    const parentIds = new Set(people.map(p => p.parentId).filter(Boolean));
+
     return new Set(
       people
         .filter(p => {
@@ -98,11 +101,16 @@ export default function App() {
           if (filterStatus === 'living'   && p.alive !== true)  return false;
           if (filterStatus === 'deceased' && p.alive === true)   return false;
 
-          // Marriage filter
-          // Only real (non-placeholder) spouses count as married
-          const isMarried = (p.spouseIds || []).some(sid => !personMap[sid]?.tags?.includes('placeholder'));
-          if (filterMarriage === 'married'   && !isMarried) return false;
-          if (filterMarriage === 'unmarried' &&  isMarried) return false;
+          // Marriage filter:
+          // Married   = has a real (non-placeholder) spouse OR has children
+          // Unmarried = no real spouse AND no children
+          if (filterMarriage !== 'all') {
+            const hasRealSpouse = (p.spouseIds || []).some(sid => !personMap[sid]?.tags?.includes('placeholder'));
+            const hasChildren   = parentIds.has(p.id);
+            const isMarried     = hasRealSpouse || hasChildren;
+            if (filterMarriage === 'married'   && !isMarried) return false;
+            if (filterMarriage === 'unmarried' &&  isMarried) return false;
+          }
 
           return true;
         })

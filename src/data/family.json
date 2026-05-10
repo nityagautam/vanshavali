@@ -4118,81 +4118,6 @@
       "motherId": "ph-spouse-santosh-rg"
     },
     {
-      "id": "arun-rg",
-      "name": "अरूण / राजू",
-      "photo": "/photos/arun-rg.jpeg",
-      "gender": "male",
-      "born": null,
-      "died": null,
-      "alive": true,
-      "parentId": "raghunath",
-      "spouseIds": [
-        "ph-spouse-arun-rg"
-      ],
-      "occupation": null,
-      "location": "रीवा, मध्य प्रदेश",
-      "bio": null,
-      "tags": [
-        "verified-source"
-      ],
-      "motherId": "ph-spouse-raghunath"
-    },
-    {
-      "id": "ph-spouse-arun-rg",
-      "name": "श्रीमती (अज्ञात)",
-      "gender": "female",
-      "alive": null,
-      "born": null,
-      "died": null,
-      "dom": null,
-      "parentId": null,
-      "motherId": null,
-      "spouseIds": [
-        "arun-rg"
-      ],
-      "occupation": null,
-      "location": null,
-      "bio": null,
-      "tags": [
-        "placeholder"
-      ],
-      "photo": null
-    },
-    {
-      "id": "kapil-a",
-      "name": "कपिल",
-      "gender": "male",
-      "born": null,
-      "died": null,
-      "alive": true,
-      "parentId": "arun-rg",
-      "spouseIds": [],
-      "occupation": null,
-      "location": "रीवा, मध्य प्रदेश",
-      "bio": null,
-      "tags": [
-        "verified-source"
-      ],
-      "motherId": "ph-spouse-arun-rg"
-    },
-    {
-      "id": "rashi-a",
-      "name": "राशी",
-      "gender": "female",
-      "born": null,
-      "died": null,
-      "alive": true,
-      "parentId": "arun-rg",
-      "spouseIds": [],
-      "occupation": null,
-      "location": "रीवा, मध्य प्रदेश",
-      "bio": null,
-      "tags": [
-        "verified-source"
-      ],
-      "motherId": "ph-spouse-arun-rg"
-    },
-    {
       "id": "vijay-rg",
       "name": "विजय",
       "photo": "/photos/vijay-rg.jpeg",
@@ -4266,6 +4191,81 @@
         "verified-source"
       ],
       "motherId": "ph-spouse-vijay-rg"
+    },
+    {
+      "id": "arun-rg",
+      "name": "अरूण / राजू",
+      "photo": "/photos/arun-rg.jpeg",
+      "gender": "male",
+      "born": null,
+      "died": null,
+      "alive": true,
+      "parentId": "raghunath",
+      "spouseIds": [
+        "ph-spouse-arun-rg"
+      ],
+      "occupation": null,
+      "location": "रीवा, मध्य प्रदेश",
+      "bio": null,
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": "ph-spouse-raghunath"
+    },
+    {
+      "id": "ph-spouse-arun-rg",
+      "name": "श्रीमती (अज्ञात)",
+      "gender": "female",
+      "alive": null,
+      "born": null,
+      "died": null,
+      "dom": null,
+      "parentId": null,
+      "motherId": null,
+      "spouseIds": [
+        "arun-rg"
+      ],
+      "occupation": null,
+      "location": null,
+      "bio": null,
+      "tags": [
+        "placeholder"
+      ],
+      "photo": null
+    },
+    {
+      "id": "kapil-a",
+      "name": "कपिल",
+      "gender": "male",
+      "born": null,
+      "died": null,
+      "alive": true,
+      "parentId": "arun-rg",
+      "spouseIds": [],
+      "occupation": null,
+      "location": "रीवा, मध्य प्रदेश",
+      "bio": null,
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": "ph-spouse-arun-rg"
+    },
+    {
+      "id": "rashi-a",
+      "name": "राशी",
+      "gender": "female",
+      "born": null,
+      "died": null,
+      "alive": true,
+      "parentId": "arun-rg",
+      "spouseIds": [],
+      "occupation": null,
+      "location": "रीवा, मध्य प्रदेश",
+      "bio": null,
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": "ph-spouse-arun-rg"
     },
     {
       "id": "ramayan",
@@ -4588,7 +4588,8 @@
     },
     {
       "id": "sandeep-bv",
-      "name": "संदीप",
+      "name": "श्री संदीप",
+      "photo": "/photos/sandeep-bv.jpeg",
       "gender": "male",
       "born": null,
       "died": null,

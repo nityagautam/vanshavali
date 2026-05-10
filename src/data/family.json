@@ -1,6 +1,6 @@
 {
   "meta": {
-    "pageTitle": "वंशावली — गौतम गोत्र, ग्राम घुरेहटा",
+    "pageTitle": "वंशावली—गौतम गोत्र, ग्राम घुरेहटा",
     "dynasty": "गौतम (Gautam)",
     "gotra": "गौतम गोत्र",
     "subgotra": "चंपारण (Champaran)",
@@ -43,10 +43,16 @@
       "died": "",
       "alive": false,
       "parentId": null,
-      "spouseIds": ["grandfather-1-wife"],
+      "spouseIds": [
+        "grandfather-1-wife"
+      ],
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश (Ghurehata, Mauganj, Rewa, M.P.)",
       "bio": "हमारे आदरणीय पूर्वज “श्री हृदयी राम” जी उत्तर प्रदेश के खदराहा डीह से रीवा राज्य आए थे, जहाँ तत्कालीन रीवा नरेश ने उन्हें अन्य विद्वान ब्राह्मण परिवारों के साथ ग्राम घुरेहटा में बसाया।",
-      "tags": ["GreatGrandfather", "legendary"]
+      "tags": [
+        "GreatGrandfather",
+        "legendary"
+      ],
+      "motherId": null
     },
     {
       "id": "grandfather-1-wife",
@@ -56,10 +62,15 @@
       "died": "",
       "alive": false,
       "parentId": null,
-      "spouseIds": ["greatgrandfather"],
+      "spouseIds": [
+        "greatgrandfather"
+      ],
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश (Ghurehata, Mauganj, Rewa, M.P.)",
       "bio": "“श्री हृदयी राम” जी की धर्मपत्नी एवं गौतम परिवार की प्राचीन कुलमाता। उन्हें परिवार के इतिहास में एक आदरणीय मातृसत्ता के रूप में स्मरण किया जाता है।",
-      "tags": ["great grand-mother"]
+      "tags": [
+        "great grand-mother"
+      ],
+      "motherId": null
     },
     {
       "id": "shri-shivdas",
@@ -76,7 +87,8 @@
       "tags": [
         "elder",
         "verified-source"
-      ]
+      ],
+      "motherId": "grandfather-1-wife"
     },
     {
       "id": "shri-ganesh",
@@ -90,7 +102,11 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश (Ghurehata, Mauganj, Rewa, M.P.)",
       "bio": null,
-      "tags": ["elder", "verified-source"]
+      "tags": [
+        "elder",
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "shri-ram-garib",
@@ -107,7 +123,8 @@
       "tags": [
         "elder",
         "verified-source"
-      ]
+      ],
+      "motherId": null
     },
     {
       "id": "shri-shivpal",
@@ -121,7 +138,11 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश (Ghurehata, Mauganj, Rewa, M.P.)",
       "bio": null,
-      "tags": ["elder", "verified-source"]
+      "tags": [
+        "elder",
+        "verified-source"
+      ],
+      "motherId": "grandfather-1-wife"
     },
     {
       "id": "shri-mahesh",
@@ -138,7 +159,8 @@
       "tags": [
         "elder",
         "verified-source"
-      ]
+      ],
+      "motherId": "grandfather-1-wife"
     },
     {
       "id": "shri-trilok-ram",
@@ -155,7 +177,8 @@
       "tags": [
         "elder",
         "verified-source"
-      ]
+      ],
+      "motherId": null
     },
     {
       "id": "shri-ram-nath",
@@ -172,7 +195,8 @@
       "tags": [
         "elder",
         "verified-source"
-      ]
+      ],
+      "motherId": null
     },
     {
       "id": "shri-benimadhav",
@@ -189,7 +213,8 @@
       "tags": [
         "elder",
         "verified-source"
-      ]
+      ],
+      "motherId": null
     },
     {
       "id": "ram-adheen",
@@ -203,7 +228,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ram-sewak",
@@ -217,7 +245,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "shri-gangaram",
@@ -234,7 +265,8 @@
       "tags": [
         "elder",
         "verified-source"
-      ]
+      ],
+      "motherId": null
     },
     {
       "id": "shri-nand-kishor",
@@ -253,7 +285,8 @@
       "bio": null,
       "tags": [
         "elder"
-      ]
+      ],
+      "motherId": null
     },
     {
       "id": "wife1-of-shri-nand-kishor",
@@ -271,7 +304,8 @@
       "bio": null,
       "tags": [
         "placeholder"
-      ]
+      ],
+      "motherId": null
     },
     {
       "id": "wife2-of-shri-nand-kishor",
@@ -289,7 +323,8 @@
       "bio": null,
       "tags": [
         "placeholder"
-      ]
+      ],
+      "motherId": null
     },
     {
       "id": "shri-suryadeen",
@@ -306,7 +341,8 @@
       "tags": [
         "elder",
         "verified-source"
-      ]
+      ],
+      "motherId": null
     },
     {
       "id": "shri-vishweshwarram",
@@ -325,7 +361,8 @@
       "tags": [
         "elder",
         "verified-source"
-      ]
+      ],
+      "motherId": null
     },
     {
       "id": "shrimati-koyalidevi",
@@ -344,7 +381,8 @@
       "tags": [
         "elder",
         "verified-source"
-      ]
+      ],
+      "motherId": null
     },
     {
       "id": "sri-manbahor",
@@ -355,6 +393,7 @@
       "died": "Early",
       "alive": false,
       "parentId": "shri-vishweshwarram",
+      "motherId": "shrimati-koyalidevi",
       "spouseIds": [],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश (Ghurehata, Mauganj, Rewa, M.P.)",
@@ -372,11 +411,17 @@
       "died": "23 April 2011",
       "alive": false,
       "parentId": "shri-vishweshwarram",
-      "spouseIds": ["lakshman-prasad-wife"],
+      "motherId": "shrimati-koyalidevi",
+      "spouseIds": [
+        "lakshman-prasad-wife"
+      ],
       "occupation": "Retd मिस्त्री, लोक निर्माण विभाग (PWD)",
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश (Ghurehata, Mauganj, Rewa, M.P.)",
       "bio": "“श्री लक्ष्मण प्रसाद गौतम” जी गौतम परिवार की वंशावली परंपरा के प्रमुख संरक्षकों में से एक थे। वे राज्य शासन के लोक निर्माण विभाग (PWD) में मिस्त्री के पद पर कार्यरत रहे। अपने कर्मनिष्ठ, अनुशासित एवं सरल व्यक्तित्व के साथ उन्होंने पारिवारिक इतिहास, वंश संबंधी विवरणों एवं पूर्वजों की स्मृतियों को पीढ़ी-दर-पीढ़ी सुरक्षित रखने में महत्वपूर्ण भूमिका निभाई। मौखिक परंपरा द्वारा प्राप्त वंशावली ज्ञान को उन्होंने अत्यंत श्रद्धा, स्मरण शक्ति एवं समर्पण के साथ संरक्षित किया, जिसके कारण परिवार की अनेक ऐतिहासिक जानकारियाँ आज भी सुरक्षित हैं। उन्हें परिवार में वंश परंपरा, संस्कृति एवं पारिवारिक मूल्यों के आदरणीय संवाहक के रूप में स्मरण किया जाता है।",
-      "tags": ["legendary","GOAT"]
+      "tags": [
+        "legendary",
+        "GOAT"
+      ]
     },
     {
       "id": "lakshman-prasad-wife",
@@ -386,10 +431,15 @@
       "died": "21 JAN 2025",
       "alive": false,
       "parentId": null,
-      "spouseIds": ["lakshman-prasad"],
+      "spouseIds": [
+        "lakshman-prasad"
+      ],
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश (Ghurehata, Mauganj, Rewa, M.P.)",
       "bio": "श्रीमती लाला (रामवती) जी, श्री लक्ष्मण प्रसाद जी की धर्मपत्नी थीं। वे परिवार के इतिहास में एक आदरणीय मातृसत्ता के रूप में स्मरण की जाती हैं।",
-      "tags": ["elder"]
+      "tags": [
+        "elder"
+      ],
+      "motherId": null
     },
     {
       "id": "sri-manmohan",
@@ -400,6 +450,7 @@
       "died": null,
       "alive": false,
       "parentId": "shri-vishweshwarram",
+      "motherId": "shrimati-koyalidevi",
       "spouseIds": [],
       "occupation": null,
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
@@ -416,11 +467,16 @@
       "died": null,
       "alive": true,
       "parentId": "narvada-ram",
-      "spouseIds": ["wife-of-yagya-narayan"],
+      "spouseIds": [
+        "wife-of-yagya-narayan"
+      ],
       "occupation": "सेवानिवृत्त उप वन क्षेत्रपाल (Deputy Ranger), वन विभाग, मध्य प्रदेश शासन",
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश (Ghurehata, Mauganj, Rewa, M.P.)",
       "bio": "“श्री यज्ञनारायण मिश्र” जी मध्य प्रदेश शासन के वन विभाग में उप वन क्षेत्रपाल (Deputy Ranger) के पद से सेवानिवृत्त अधिकारी हैं। उन्होंने अपने सेवाकाल में अनुशासन, कर्तव्यनिष्ठा एवं प्रकृति संरक्षण के मूल्यों का निष्ठापूर्वक पालन किया। पारिवारिक वंशावली, पूर्वजों की स्मृतियों एवं ऐतिहासिक विवरणों के संरक्षण एवं संवर्धन में उनका विशेष योगदान रहा है। उन्होंने परिवार से संबंधित अनेक महत्वपूर्ण जानकारियों को संकलित एवं सुरक्षित कर आने वाली पीढ़ियों तक पहुँचाने का महत्वपूर्ण कार्य किया। उन्हें परिवार में ज्ञान, परंपरा एवं सांस्कृतिक विरासत के आदरणीय संरक्षक के रूप में स्मरण किया जाता है।",
-      "tags": ["elder"]
+      "tags": [
+        "elder"
+      ],
+      "motherId": null
     },
     {
       "id": "wife-of-yagya-narayan",
@@ -430,11 +486,16 @@
       "died": null,
       "alive": false,
       "parentId": null,
-      "spouseIds": ["yagya-narayan"],
+      "spouseIds": [
+        "yagya-narayan"
+      ],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश (Ghurehata, Mauganj, Rewa, M.P.)",
       "bio": null,
-      "tags": ["elder"]
+      "tags": [
+        "elder"
+      ],
+      "motherId": null
     },
     {
       "id": "ambika-prasad",
@@ -447,7 +508,10 @@
       "spouseIds": [],
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
       "bio": "Member of the Gautam family. Contributed to verifying and preserving family history records.",
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "mahadev-ra",
@@ -461,7 +525,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "rameshwar-ra",
@@ -475,7 +542,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "bindra-ram",
@@ -489,7 +559,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "badri-ram",
@@ -503,7 +576,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ram-vishal",
@@ -517,7 +593,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "shiv-prasad-v",
@@ -531,7 +610,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ramesh-sp",
@@ -545,7 +627,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ram-naresh-sp",
@@ -559,7 +644,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "sanjay-rn",
@@ -573,7 +661,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "vijay-rn",
@@ -587,7 +678,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "dinesh-sp",
@@ -601,7 +695,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "niraj-d",
@@ -615,7 +712,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "nilesh-d",
@@ -629,7 +729,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "dipesh-d",
@@ -643,7 +746,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "rohit-d",
@@ -657,7 +763,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ram-newaj",
@@ -671,7 +780,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "raj-kumar-rn",
@@ -685,7 +797,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "abhishek-rk",
@@ -699,7 +814,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "anurag-rk",
@@ -713,7 +831,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "child3-rk",
@@ -729,7 +850,8 @@
       "bio": null,
       "tags": [
         "placeholder"
-      ]
+      ],
+      "motherId": null
     },
     {
       "id": "indrakali",
@@ -739,11 +861,14 @@
       "died": null,
       "alive": true,
       "parentId": "lakshman-prasad",
+      "motherId": "lakshman-prasad-wife",
       "spouseIds": [],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "suresh-prasad-g",
@@ -753,11 +878,16 @@
       "died": null,
       "alive": true,
       "parentId": "lakshman-prasad",
-      "spouseIds": ["smt-ramwati-sp"],
+      "motherId": "lakshman-prasad-wife",
+      "spouseIds": [
+        "smt-ramwati-sp"
+      ],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "smt-ramwati-sp",
@@ -767,11 +897,16 @@
       "died": null,
       "alive": true,
       "parentId": null,
-      "spouseIds": ["suresh-prasad-g"],
+      "spouseIds": [
+        "suresh-prasad-g"
+      ],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["wife"]
+      "tags": [
+        "wife"
+      ],
+      "motherId": null
     },
     {
       "id": "sunita-spg",
@@ -781,11 +916,14 @@
       "died": null,
       "alive": true,
       "parentId": "suresh-prasad-g",
+      "motherId": "smt-ramwati-sp",
       "spouseIds": [],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "deepak-sp",
@@ -795,11 +933,16 @@
       "died": "2013",
       "alive": false,
       "parentId": "suresh-prasad-g",
-      "spouseIds": ["smt-deepak-sp"],
+      "motherId": "smt-ramwati-sp",
+      "spouseIds": [
+        "smt-deepak-sp"
+      ],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "smt-deepak-sp",
@@ -808,11 +951,16 @@
       "born": null,
       "died": null,
       "alive": true,
-      "spouseIds": ["deepak-sp"],
+      "spouseIds": [
+        "deepak-sp"
+      ],
       "occupation": null,
       "location": "रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ayush-d",
@@ -822,11 +970,14 @@
       "died": null,
       "alive": true,
       "parentId": "deepak-sp",
+      "motherId": "smt-deepak-sp",
       "spouseIds": [],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "prachi-d",
@@ -836,11 +987,14 @@
       "died": null,
       "alive": true,
       "parentId": "deepak-sp",
+      "motherId": "smt-deepak-sp",
       "spouseIds": [],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "anand-sp",
@@ -850,11 +1004,16 @@
       "died": null,
       "alive": true,
       "parentId": "suresh-prasad-g",
-      "spouseIds": ["smt-anand-sp"],
+      "motherId": "smt-ramwati-sp",
+      "spouseIds": [
+        "smt-anand-sp"
+      ],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "smt-anand-sp",
@@ -863,11 +1022,16 @@
       "born": null,
       "died": null,
       "alive": true,
-      "spouseIds": ["anand-sp"],
+      "spouseIds": [
+        "anand-sp"
+      ],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "child1-anand",
@@ -877,6 +1041,7 @@
       "died": null,
       "alive": true,
       "parentId": "anand-sp",
+      "motherId": "smt-anand-sp",
       "spouseIds": [],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
@@ -893,6 +1058,7 @@
       "died": null,
       "alive": true,
       "parentId": "anand-sp",
+      "motherId": "smt-anand-sp",
       "spouseIds": [],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
@@ -909,11 +1075,16 @@
       "died": null,
       "alive": true,
       "parentId": "suresh-prasad-g",
-      "spouseIds": ["smt-anant-sp"],
+      "motherId": "smt-ramwati-sp",
+      "spouseIds": [
+        "smt-anant-sp"
+      ],
       "occupation": "Sr Software Engineer",
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": "अपने समय के अत्यंत शिक्षित एवं मेधावी छात्र। IPS Academy, Indore से स्नातक। Software Engineer के रूप में Pune में कार्यरत। शिक्षा के क्षेत्र में अन्य विद्यार्थियों को भी प्रेरित करते हैं तथा 12वीं एवं स्नातक स्तर के अनेक छात्रों का मार्गदर्शन कर चुके हैं।",
-      "tags": ["SW Engineer"]
+      "tags": [
+        "SW Engineer"
+      ]
     },
     {
       "id": "smt-anant-sp",
@@ -922,11 +1093,16 @@
       "born": null,
       "died": null,
       "alive": true,
-      "spouseIds": ["anant-sp"],
+      "spouseIds": [
+        "anant-sp"
+      ],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "child1-anant",
@@ -942,7 +1118,8 @@
       "bio": null,
       "tags": [
         "placeholder"
-      ]
+      ],
+      "motherId": "smt-anant-sp"
     },
     {
       "id": "child2-anant",
@@ -958,7 +1135,8 @@
       "bio": null,
       "tags": [
         "placeholder"
-      ]
+      ],
+      "motherId": "smt-anant-sp"
     },
     {
       "id": "keshari-prasad",
@@ -970,11 +1148,18 @@
       "died": null,
       "alive": true,
       "parentId": "lakshman-prasad",
-      "spouseIds": ["prafulla-devi"],
+      "spouseIds": [
+        "prafulla-devi"
+      ],
       "occupation": "सेवानिवृत्त कप्तान (Captain), भारतीय सेना (Indian Army)",
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": "“श्री केशरी प्रसाद मिश्र” जी भारतीय सेना में कप्तान (Captain) के पद पर सेवाएँ प्रदान कर दिसंबर 2019 में सेवानिवृत्त हुए। उनका जन्म 13 फ़रवरी 1966 को हुआ। वे “श्री लक्ष्मण प्रसाद गौतम” जी के कनिष्ठ पुत्र हैं तथा गौतम परिवार के प्रतिष्ठित एवं विशिष्ट सदस्यों में गिने जाते हैं। अपने सैन्य जीवन में उन्होंने अनुशासन, साहस, राष्ट्रसेवा एवं कर्तव्यनिष्ठा के आदर्शों का पालन किया।\n\nअपने अंतिम कार्यकाल के दौरान महाराष्ट्र में उन्हें NCC कैडेट्स की राइफल शूटिंग टीम का नेतृत्व करने का अवसर प्राप्त हुआ, जिसने स्वर्ण पदक अर्जित कर उल्लेखनीय उपलब्धि हासिल की। इस गौरवपूर्ण उपलब्धि के उपलक्ष्य में उन्हें महाराष्ट्र के तत्कालीन मुख्यमंत्री Devendra Fadnavis तथा शिक्षा एवं खेल मंत्री Vinod Tawde के साथ सम्मान समारोह एवं रात्रि भोज में सम्मिलित होने का अवसर प्राप्त हुआ।\n\nपारिवारिक वंशावली, पूर्वजों की स्मृतियों एवं वंश संबंधी विवरणों के संरक्षण एवं संवर्धन में उनका महत्वपूर्ण योगदान रहा है। उनके प्रयासों से परिवार की अनेक ऐतिहासिक जानकारियाँ सुरक्षित रूप से संरक्षित हो सकीं। उन्हें परिवार में सम्मान, सेवा, नेतृत्व एवं परंपरा के आदरणीय संवाहक के रूप में स्मरण किया जाता है।",
-      "tags": ["verified-source","RETD CAPTAIN","ExArmy"]
+      "tags": [
+        "verified-source",
+        "RETD CAPTAIN",
+        "ExArmy"
+      ],
+      "motherId": "lakshman-prasad-wife"
     },
     {
       "id": "prafulla-devi",
@@ -992,7 +1177,10 @@
       "occupation": "Farmer",
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
       "bio": "Served home with 6 children.",
-      "tags": ["farmer"]
+      "tags": [
+        "farmer"
+      ],
+      "motherId": null
     },
     {
       "id": "sudha-mishra",
@@ -1002,11 +1190,14 @@
       "died": null,
       "alive": true,
       "parentId": "keshari-prasad",
+      "motherId": "prafulla-devi",
       "spouseIds": [],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "aradhana-mishra",
@@ -1016,11 +1207,14 @@
       "died": null,
       "alive": true,
       "parentId": "keshari-prasad",
+      "motherId": "prafulla-devi",
       "spouseIds": [],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "archana-mishra",
@@ -1030,11 +1224,14 @@
       "died": null,
       "alive": true,
       "parentId": "keshari-prasad",
+      "motherId": "prafulla-devi",
       "spouseIds": [],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "aarti-mishra-kp",
@@ -1044,11 +1241,14 @@
       "died": null,
       "alive": true,
       "parentId": "keshari-prasad",
+      "motherId": "prafulla-devi",
       "spouseIds": [],
       "occupation": "शिक्षक (Teacher)",
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "nitya-narayan",
@@ -1061,11 +1261,16 @@
       "alive": true,
       "parentId": "keshari-prasad",
       "motherId": "prafulla-devi",
-      "spouseIds": ["ruchi-tiwari-gautam"],
+      "spouseIds": [
+        "ruchi-tiwari-gautam"
+      ],
       "occupation": "Researcher / Seeker / Farmer",
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": "Self-described as 'a seeker'.",
-      "tags": ["author", "farmer"]
+      "tags": [
+        "author",
+        "farmer"
+      ]
     },
     {
       "id": "ruchi-tiwari-gautam",
@@ -1077,11 +1282,16 @@
       "died": null,
       "alive": true,
       "parentId": null,
-      "spouseIds": ["nitya-narayan"],
+      "spouseIds": [
+        "nitya-narayan"
+      ],
       "occupation": "Engineer",
       "location": "Mumbai, MH",
       "bio": null,
-      "tags": ["SW Engineer"]
+      "tags": [
+        "SW Engineer"
+      ],
+      "motherId": null
     },
     {
       "id": "adya-mishra",
@@ -1091,11 +1301,14 @@
       "died": "",
       "alive": true,
       "parentId": "nitya-narayan",
+      "motherId": "ruchi-tiwari-gautam",
       "spouseIds": [],
       "occupation": null,
       "location": "Mumbai, MH",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "adarsh-mishra",
@@ -1105,13 +1318,16 @@
       "died": null,
       "alive": true,
       "parentId": "keshari-prasad",
+      "motherId": "prafulla-devi",
       "spouseIds": [
         "shreya-pandey-gautam"
       ],
       "occupation": "Indian Army, Education Core, MasterJi (मास्टरजी)",
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": "उन्होंने Government Science College से स्नातक की शिक्षा प्राप्त की, जो Awadhesh Pratap Singh University से संबद्ध है। वर्ष 2017 में उन्होंने दूसरी बार में AEC परीक्षा उत्तीर्ण कर Indian Army में प्रवेश प्राप्त किया। चयन प्रक्रिया के पश्चात वे Madhya Pradesh से AEC हेतु चयनित होने वाले पाँच अभ्यर्थियों में से एक रहे।\n\nवर्तमान में वे Indian Army के Army Education Corps में सेवाएं प्रदान कर रहे हैं। शिक्षा एवं मार्गदर्शन के प्रति अपने समर्पण के कारण वे ‘मास्टरजी’ (मास्टरजी) के नाम से प्रसिद्ध हैं। उन्होंने 10वीं, 12वीं एवं स्नातक स्तर के अनेक विद्यार्थियों को प्रेरित किया तथा उनका मार्गदर्शन किया है। बचपन से ही खेलकूद में अत्यंत सक्रिय रहे हैं, विशेष रूप से क्रिकेट के प्रति उनका विशेष लगाव रहा है।",
-      "tags": ["army"]
+      "tags": [
+        "army"
+      ]
     },
     {
       "id": "shreya-pandey-gautam",
@@ -1122,11 +1338,16 @@
       "died": null,
       "alive": true,
       "parentId": null,
-      "spouseIds": ["adarsh-mishra"],
+      "spouseIds": [
+        "adarsh-mishra"
+      ],
       "occupation": "Student",
       "location": "Ghurehata, Mauganj, M.P.",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "avya-mishra",
@@ -1136,11 +1357,14 @@
       "died": "",
       "alive": true,
       "parentId": "adarsh-mishra",
+      "motherId": "shreya-pandey-gautam",
       "spouseIds": [],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "shri-aanande-ram",
@@ -1154,7 +1378,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "shri-phadali-ram",
@@ -1168,7 +1395,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "narvada-ram",
@@ -1182,7 +1412,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "baldev",
@@ -1196,7 +1429,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ram-jivan",
@@ -1210,7 +1446,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "shriniwas",
@@ -1224,7 +1463,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "poonam-rj",
@@ -1238,7 +1480,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "pooja-rj",
@@ -1252,7 +1497,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "tryambak-rj",
@@ -1266,7 +1514,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "palak-rj",
@@ -1280,7 +1531,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "jhalak-rj",
@@ -1294,7 +1548,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ram-narayan-nk",
@@ -1308,7 +1565,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "guddi-yn",
@@ -1322,7 +1582,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": "wife-of-yagya-narayan"
     },
     {
       "id": "rakesh-yn",
@@ -1336,7 +1599,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": "wife-of-yagya-narayan"
     },
     {
       "id": "rishabh-ry",
@@ -1350,7 +1616,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "child1-ry",
@@ -1366,7 +1635,8 @@
       "bio": null,
       "tags": [
         "placeholder"
-      ]
+      ],
+      "motherId": null
     },
     {
       "id": "pawan-yn",
@@ -1380,7 +1650,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": "wife-of-yagya-narayan"
     },
     {
       "id": "devansh-p",
@@ -1394,7 +1667,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ghanshyam-yn",
@@ -1408,7 +1684,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": "wife-of-yagya-narayan"
     },
     {
       "id": "divyansh-g",
@@ -1422,7 +1701,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "pankaj-yn",
@@ -1436,7 +1718,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": "wife-of-yagya-narayan"
     },
     {
       "id": "shri-param-sukh",
@@ -1450,7 +1735,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "jamuna-ram",
@@ -1460,11 +1748,35 @@
       "died": null,
       "alive": false,
       "parentId": "shri-param-sukh",
-      "spouseIds": [],
+      "spouseIds": [
+        "smt-bhagvaniya"
+      ],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
+    },
+    {
+      "id": "smt-bhagvaniya",
+      "name": "श्रीमती भगवनिया",
+      "gender": "female",
+      "born": null,
+      "died": null,
+      "alive": false,
+      "parentId": null,
+      "spouseIds": [
+        "jamuna-ram"
+      ],
+      "occupation": null,
+      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
+      "bio": null,
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "jagdish-prasad",
@@ -1478,7 +1790,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": "smt-bhagvaniya"
     },
     {
       "id": "mandavi",
@@ -1492,7 +1807,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ram-gopal",
@@ -1502,11 +1820,35 @@
       "died": null,
       "alive": false,
       "parentId": "jamuna-ram",
-      "spouseIds": [],
+      "spouseIds": [
+        "smt-dashodri"
+      ],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": "smt-bhagvaniya"
+    },
+    {
+      "id": "smt-dashodri",
+      "name": "श्रीमती दशोद्री",
+      "gender": "female",
+      "born": null,
+      "died": null,
+      "alive": false,
+      "parentId": null,
+      "spouseIds": [
+        "ram-gopal"
+      ],
+      "occupation": null,
+      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
+      "bio": null,
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "sampati",
@@ -1516,11 +1858,14 @@
       "died": null,
       "alive": true,
       "parentId": "ram-gopal",
+      "motherId": "smt-dashodri",
       "spouseIds": [],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "varsha-s",
@@ -1534,7 +1879,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "sushma-s",
@@ -1548,7 +1896,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "suman-s",
@@ -1562,7 +1913,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "om-prakash-s",
@@ -1576,7 +1930,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "jay-prakash-s",
@@ -1590,7 +1947,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "dayashankar",
@@ -1604,7 +1964,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": "smt-dashodri"
     },
     {
       "id": "meera-ds",
@@ -1618,7 +1981,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ajay-ds",
@@ -1632,7 +1998,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "parth-aj",
@@ -1646,7 +2015,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "radha-ds",
@@ -1660,7 +2032,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ravendra",
@@ -1674,7 +2049,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": "smt-dashodri"
     },
     {
       "id": "shalu-rv",
@@ -1688,7 +2066,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "saurabh-rv",
@@ -1702,7 +2083,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ram-milan",
@@ -1716,7 +2100,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": "smt-bhagvaniya"
     },
     {
       "id": "girija-rm",
@@ -1730,7 +2117,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "vivek-g",
@@ -1744,7 +2134,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "abhishek-g",
@@ -1758,7 +2151,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "shivshankar-rm",
@@ -1772,7 +2168,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "aditya-ss",
@@ -1786,7 +2185,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "neha-ss",
@@ -1800,7 +2202,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "shobhanath",
@@ -1810,11 +2215,14 @@
       "died": null,
       "alive": false,
       "parentId": "shri-nand-kishor",
+      "motherId": "wife1-of-shri-nand-kishor",
       "spouseIds": [],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": "Son from first wife of श्री नन्द किशोर.",
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "chandra-shekhar",
@@ -1828,7 +2236,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "sheshmani",
@@ -1842,7 +2253,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "mahendra",
@@ -1856,7 +2270,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "neha-m",
@@ -1870,7 +2287,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "nikhil-m",
@@ -1884,7 +2304,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "nitesh-m",
@@ -1898,7 +2321,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "shambhu",
@@ -1912,7 +2338,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "indrasen",
@@ -1926,7 +2355,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": "(-1) Son of शम्भू",
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ram-pragas",
@@ -1936,11 +2368,14 @@
       "died": null,
       "alive": false,
       "parentId": "shri-nand-kishor",
+      "motherId": "wife1-of-shri-nand-kishor",
       "spouseIds": [],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": "Son from first wife of श्री नन्द किशोर.",
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "shubhuwa",
@@ -1954,7 +2389,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "rajni-rp",
@@ -1968,7 +2406,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "chandramani",
@@ -1978,11 +2419,14 @@
       "died": null,
       "alive": false,
       "parentId": "shri-nand-kishor",
+      "motherId": "wife2-of-shri-nand-kishor",
       "spouseIds": [],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": "Son from second wife of श्री नन्द किशोर.",
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "shri-lal",
@@ -1996,7 +2440,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ramjas",
@@ -2010,7 +2457,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "umakant",
@@ -2024,7 +2474,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ramakant",
@@ -2038,7 +2491,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ramdev",
@@ -2052,7 +2508,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "krishna-kumar",
@@ -2066,7 +2525,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "shivam",
@@ -2080,7 +2542,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "satyam",
@@ -2094,7 +2559,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "child4-rd",
@@ -2110,7 +2578,8 @@
       "bio": null,
       "tags": [
         "placeholder"
-      ]
+      ],
+      "motherId": null
     },
     {
       "id": "madhusudan",
@@ -2124,7 +2593,10 @@
       "occupation": "LIC Agent",
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "nilesh-md",
@@ -2138,7 +2610,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "rani-md",
@@ -2152,7 +2627,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "vipin-md",
@@ -2166,7 +2644,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "sanjay-md",
@@ -2180,7 +2661,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": "Also known as चिकने.",
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ramlal",
@@ -2194,7 +2678,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "jay-shankar",
@@ -2208,7 +2695,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "sanjay-js",
@@ -2222,7 +2712,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ajit-js",
@@ -2236,7 +2729,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "hira-lal",
@@ -2250,7 +2746,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "gauri-hl",
@@ -2264,7 +2763,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ashutosh-hl",
@@ -2278,7 +2780,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "harihar-rl",
@@ -2292,7 +2797,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "rahul-hh",
@@ -2306,7 +2814,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "amit-kumar-hh",
@@ -2320,7 +2831,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ram-nihor",
@@ -2334,7 +2848,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "sunita-rn",
@@ -2348,7 +2865,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "raghunath",
@@ -2362,7 +2882,10 @@
       "occupation": "Retd Sr. Clerk",
       "location": "रीवा, मध्य प्रदेश",
       "bio": "Also known as DADDI.",
-      "tags": ["SR CLERK"]
+      "tags": [
+        "SR CLERK"
+      ],
+      "motherId": null
     },
     {
       "id": "santosh-rg",
@@ -2376,7 +2899,10 @@
       "occupation": null,
       "location": "रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "suyash-s",
@@ -2390,7 +2916,10 @@
       "occupation": null,
       "location": "रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ayushi-s",
@@ -2404,7 +2933,10 @@
       "occupation": null,
       "location": "रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "arun-rg",
@@ -2418,7 +2950,10 @@
       "occupation": null,
       "location": "रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "kapil-a",
@@ -2432,7 +2967,10 @@
       "occupation": null,
       "location": "रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "rashi-a",
@@ -2446,7 +2984,10 @@
       "occupation": null,
       "location": "रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "vijay-rg",
@@ -2460,7 +3001,10 @@
       "occupation": null,
       "location": "रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "radha-v",
@@ -2474,7 +3018,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "harshi-v",
@@ -2488,7 +3035,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ramayan",
@@ -2502,7 +3052,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "manoj-ry",
@@ -2516,7 +3069,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "jyoti-ry",
@@ -2530,7 +3086,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "vishwanath-nk",
@@ -2540,11 +3099,14 @@
       "died": null,
       "alive": false,
       "parentId": "shri-nand-kishor",
+      "motherId": "wife2-of-shri-nand-kishor",
       "spouseIds": [],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": "Son from second wife of श्री नन्द किशोर.",
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "brijesh-ap",
@@ -2558,7 +3120,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "parth-bj",
@@ -2572,7 +3137,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": "Also known as प्रियांश.",
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "pragyaan-bj",
@@ -2586,7 +3154,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": "Also known as शिवांश.",
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "valmiki",
@@ -2600,7 +3171,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "pradeep-bv",
@@ -2614,7 +3188,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "pallavi-pv",
@@ -2628,7 +3205,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ayushi-pv",
@@ -2642,7 +3222,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "aarti-bv",
@@ -2656,7 +3239,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "sandeep-bv",
@@ -2670,7 +3256,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "child1-sb",
@@ -2686,7 +3275,8 @@
       "bio": null,
       "tags": [
         "placeholder"
-      ]
+      ],
+      "motherId": null
     },
     {
       "id": "child2-sb",
@@ -2702,7 +3292,8 @@
       "bio": null,
       "tags": [
         "placeholder"
-      ]
+      ],
+      "motherId": null
     },
     {
       "id": "ashish-bv",
@@ -2716,7 +3307,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "child1-ab",
@@ -2732,7 +3326,8 @@
       "bio": null,
       "tags": [
         "placeholder"
-      ]
+      ],
+      "motherId": null
     },
     {
       "id": "baijnath-nk",
@@ -2742,11 +3337,14 @@
       "died": null,
       "alive": false,
       "parentId": "shri-nand-kishor",
+      "motherId": "wife2-of-shri-nand-kishor",
       "spouseIds": [],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": "Son from second wife of श्री नन्द किशोर.",
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ]
     },
     {
       "id": "shyam-sundar",
@@ -2760,7 +3358,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "urmilesh-ss",
@@ -2774,7 +3375,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "rishi-um",
@@ -2788,7 +3392,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "kamlesh-ss",
@@ -2802,7 +3409,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "rohit-kss",
@@ -2816,7 +3426,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ritik-kss",
@@ -2830,7 +3443,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "akhilesh-ss",
@@ -2844,7 +3460,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "aditi-ak",
@@ -2858,7 +3477,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "arjun-bn",
@@ -2872,7 +3494,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "rudradev",
@@ -2886,7 +3511,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ruhi-rd",
@@ -2900,7 +3528,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "abhimanyu",
@@ -2914,7 +3545,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ravi-arj",
@@ -2928,7 +3562,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ishwar-din",
@@ -2942,7 +3579,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ashok-id",
@@ -2956,7 +3596,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ram-bahadur",
@@ -2970,7 +3613,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "vidyalankar-sagar",
@@ -2984,7 +3630,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ram-ujaagar",
@@ -2998,7 +3647,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "divyaraj",
@@ -3012,7 +3664,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "krishna-kant",
@@ -3026,7 +3681,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "triveni-kk",
@@ -3040,7 +3698,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "rama-tv",
@@ -3054,7 +3715,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "uma-tv",
@@ -3068,7 +3732,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "pragya-tv",
@@ -3082,7 +3749,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "prachi-tv",
@@ -3096,7 +3766,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "shivshankar-kk",
@@ -3110,7 +3783,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": "Also known as नन्हू.",
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "urvijesh-sk",
@@ -3124,7 +3800,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "hitesh-uv",
@@ -3138,7 +3817,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "kamari-kk",
@@ -3152,7 +3834,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "aditya-km",
@@ -3166,7 +3851,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "arya-ad",
@@ -3180,7 +3868,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ashish-km",
@@ -3194,7 +3885,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "rudra-ash",
@@ -3208,7 +3902,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "abhishek-km",
@@ -3222,7 +3919,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "vishwesh-abk",
@@ -3236,7 +3936,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "buddhsen",
@@ -3250,7 +3953,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ramanuj-bs",
@@ -3264,7 +3970,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "amarnath-rj",
@@ -3278,7 +3987,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "ayushi-amn",
@@ -3292,7 +4004,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "harihar-rj",
@@ -3306,7 +4021,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "rupesh-hh",
@@ -3320,7 +4038,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "prashant-hh",
@@ -3334,7 +4055,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "priyanshu-hh",
@@ -3348,7 +4072,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "pushkarnath",
@@ -3362,7 +4089,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "priyarsha",
@@ -3376,7 +4106,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "riyarsha",
@@ -3390,7 +4123,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "siyarsha",
@@ -3404,7 +4140,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "arvind-rj",
@@ -3418,7 +4157,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "diksha-arv",
@@ -3432,7 +4174,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "shivangi-arv",
@@ -3446,7 +4191,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "janmejay-arv",
@@ -3460,7 +4208,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "vishwash-arv",
@@ -3474,7 +4225,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "pradeep-rj",
@@ -3488,7 +4242,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "yashraj-prj",
@@ -3502,7 +4259,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "keshavi-prj",
@@ -3516,7 +4276,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "mayank-rj",
@@ -3530,7 +4293,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "shreya-myn",
@@ -3544,7 +4310,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     },
     {
       "id": "narayan-myn",
@@ -3558,7 +4327,10 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
-      "tags": ["verified-source"]
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
     }
   ]
 }

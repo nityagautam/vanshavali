@@ -99,7 +99,8 @@ export default function App() {
           if (filterStatus === 'deceased' && p.alive === true)   return false;
 
           // Marriage filter
-          const isMarried = (p.spouseIds?.length ?? 0) > 0;
+          // Only real (non-placeholder) spouses count as married
+          const isMarried = (p.spouseIds || []).some(sid => !personMap[sid]?.tags?.includes('placeholder'));
           if (filterMarriage === 'married'   && !isMarried) return false;
           if (filterMarriage === 'unmarried' &&  isMarried) return false;
 

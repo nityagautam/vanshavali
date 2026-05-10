@@ -197,30 +197,39 @@ export default function App() {
             <div className="filter-pills">
               {/* Gender */}
               <div className="filter-pill-group">
-                {[['all','सभी'],['male','पु'],['female','स्त्री']].map(([v,l]) => (
+                {(lang === 'en'
+                  ? [['all','All'],['male','Male'],['female','Female']]
+                  : [['all','सभी'],['male','पु'],['female','स्त्री']]
+                ).map(([v,l]) => (
                   <button key={v} className={`filter-pill-btn${filterGender === v ? ' active' : ''}`}
                     onClick={() => setFilterGender(v)}
-                    title={v === 'all' ? 'सभी' : v === 'male' ? 'केवल पुरुष' : 'केवल स्त्री'}>
+                    title={v === 'all' ? (lang === 'en' ? 'All genders' : 'सभी') : v === 'male' ? (lang === 'en' ? 'Male only' : 'केवल पुरुष') : (lang === 'en' ? 'Female only' : 'केवल स्त्री')}>
                     {l}
                   </button>
                 ))}
               </div>
               {/* Status */}
               <div className="filter-pill-group">
-                {[['all','सभी'],['living','जी'],['deceased','मृ']].map(([v,l]) => (
+                {(lang === 'en'
+                  ? [['all','All'],['living','Living'],['deceased','Deceased']]
+                  : [['all','सभी'],['living','जी'],['deceased','मृ']]
+                ).map(([v,l]) => (
                   <button key={v} className={`filter-pill-btn${filterStatus === v ? ' active' : ''}`}
                     onClick={() => setFilterStatus(v)}
-                    title={v === 'all' ? 'सभी' : v === 'living' ? 'जीवित' : 'मृत'}>
+                    title={v === 'all' ? (lang === 'en' ? 'All' : 'सभी') : v === 'living' ? (lang === 'en' ? 'Living only' : 'जीवित') : (lang === 'en' ? 'Deceased only' : 'मृत')}>
                     {l}
                   </button>
                 ))}
               </div>
               {/* Marriage */}
               <div className="filter-pill-group">
-                {[['all','सभी'],['married','वि'],['unmarried','अवि']].map(([v,l]) => (
+                {(lang === 'en'
+                  ? [['all','All'],['married','Married'],['unmarried','Unmarried']]
+                  : [['all','सभी'],['married','वि'],['unmarried','अवि']]
+                ).map(([v,l]) => (
                   <button key={v} className={`filter-pill-btn${filterMarriage === v ? ' active' : ''}`}
                     onClick={() => setFilterMarriage(v)}
-                    title={v === 'all' ? 'सभी' : v === 'married' ? 'विवाहित' : 'अविवाहित'}>
+                    title={v === 'all' ? (lang === 'en' ? 'All' : 'सभी') : v === 'married' ? (lang === 'en' ? 'Married only' : 'विवाहित') : (lang === 'en' ? 'Unmarried only' : 'अविवाहित')}>
                     {l}
                   </button>
                 ))}

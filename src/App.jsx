@@ -213,7 +213,17 @@ export default function App() {
               />
             </div>
           </div>
+
+          {/* MiniMap */}
           <MiniMap canvasRef={canvasRef} zoom={zoom} />
+
+          {/* Credit */}
+          {meta.maintainer && (
+            <div className="tree-credit" title={`Maintained & Developed by ${meta.maintainer}`}>
+              With &#x2764; by {meta.maintainer}
+            </div>
+          )}
+
         </div>
 
         {/* Detail panel */}

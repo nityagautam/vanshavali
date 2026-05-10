@@ -416,6 +416,12 @@ function DynastyInfoPanel({ meta, people, lang = 'both' }) {
         })}
 
       </div>
+
+      {meta.maintainer && (
+        <div className="credit-line">
+          With &#x2764; by {meta.maintainer}
+        </div>
+      )}
     </div>
   );
 }

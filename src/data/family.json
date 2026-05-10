@@ -1397,7 +1397,7 @@
     {
       "id": "child3-rk",
       "name": "— [3rd child]",
-      "gender": null,
+      "gender": "female",
       "born": null,
       "died": null,
       "alive": true,
@@ -1665,37 +1665,39 @@
     },
     {
       "id": "child1-anant",
-      "name": "— [1st child]",
+      "name": "1st child",
+      "photo": "/photos/child1-anant.jpeg",
       "gender": "male",
       "born": null,
       "died": null,
       "alive": true,
       "parentId": "anant-sp",
+      "motherId": "smt-anant-sp",
       "spouseIds": [],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
       "tags": [
         "elder"
-      ],
-      "motherId": "smt-anant-sp"
+      ]
     },
     {
       "id": "child2-anant",
-      "name": "— [2nd child]",
+      "name": "2nd child",
+      "photo": "/photos/child2-anant.jpeg",
       "gender": "female",
       "born": null,
       "died": null,
       "alive": true,
       "parentId": "anant-sp",
+      "motherId": "smt-anant-sp",
       "spouseIds": [],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
       "tags": [
         "elder"
-      ],
-      "motherId": "smt-anant-sp"
+      ]
     },
     {
       "id": "keshari-prasad",
@@ -2152,7 +2154,8 @@
     },
     {
       "id": "pawan-yn",
-      "name": "पवन",
+      "name": "श्री पवन",
+      "photo": "/photos/pawan-yn.jpeg",
       "gender": "male",
       "born": null,
       "died": null,
@@ -2587,9 +2590,7 @@
       "died": null,
       "alive": true,
       "parentId": "ram-gopal",
-      "spouseIds": [
-        "ph-spouse-dayashankar"
-      ],
+      "spouseIds": ["smt-devki"],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
@@ -2599,10 +2600,10 @@
       "motherId": "smt-dashodri"
     },
     {
-      "id": "ph-spouse-dayashankar",
-      "name": "श्रीमती (अज्ञात)",
+      "id": "smt-devki",
+      "name": "श्रीमती देवकी",
       "gender": "female",
-      "alive": null,
+      "alive": true,
       "born": null,
       "died": null,
       "dom": null,
@@ -2614,9 +2615,7 @@
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": [
-        "placeholder"
-      ],
+      "tags": ["housewife"],
       "photo": null
     },
     {
@@ -2634,11 +2633,12 @@
       "tags": [
         "verified-source"
       ],
-      "motherId": "ph-spouse-dayashankar"
+      "motherId": "smt-devki"
     },
     {
       "id": "ajay-ds",
       "name": "अजय",
+      "photo": "/photos/ajay-ds.jpeg",
       "gender": "male",
       "born": null,
       "died": null,
@@ -2653,7 +2653,7 @@
       "tags": [
         "verified-source"
       ],
-      "motherId": "ph-spouse-dayashankar"
+      "motherId": "smt-devki"
     },
     {
       "id": "ph-spouse-ajay-ds",
@@ -2708,7 +2708,7 @@
       "tags": [
         "verified-source"
       ],
-      "motherId": "ph-spouse-dayashankar"
+      "motherId": "smt-devki"
     },
     {
       "id": "ravendra",
@@ -4120,6 +4120,7 @@
     {
       "id": "arun-rg",
       "name": "अरूण / राजू",
+      "photo": "/photos/arun-rg.jpeg",
       "gender": "male",
       "born": null,
       "died": null,
@@ -4194,6 +4195,7 @@
     {
       "id": "vijay-rg",
       "name": "विजय",
+      "photo": "/photos/vijay-rg.jpeg",
       "gender": "male",
       "born": null,
       "died": null,

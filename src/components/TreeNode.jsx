@@ -23,16 +23,11 @@ export default function TreeNode({
     .map(sid => personMap[sid])
     .filter(Boolean);
 
-  // Exclude placeholder spouses from highlight/dim checks — a placeholder
-  // spouse is always in highlightIds (structural node) and must not "save"
-  // the couple from being dimmed when a real filter is active.
-  const realSpouses = spouses.filter(s => !s.tags?.includes('placeholder'));
-
   const isHighlighted = highlightIds
-    ? highlightIds.has(person.id) || realSpouses.some(s => highlightIds.has(s.id))
+    ? highlightIds.has(person.id) || spouses.some(s => highlightIds.has(s.id))
     : false;
   const isDimmed = highlightIds
-    ? !highlightIds.has(person.id) && !realSpouses.some(s => highlightIds.has(s.id))
+    ? !highlightIds.has(person.id) && !spouses.some(s => highlightIds.has(s.id))
     : false;
 
   const genColor  = GEN_COLORS[depth % GEN_COLORS.length];

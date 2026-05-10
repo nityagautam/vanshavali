@@ -86,8 +86,27 @@ export default function App() {
       people
         .filter(p => {
           const isPlaceholder = p.tags?.includes('placeholder');
-          // Placeholders are always structural — never dimmed by filters
-          if (isPlaceholder) return true;
+          if (isPlaceholder) {
+            // Always respect gender filter
+            if (filterGender !== 'all' && p.gender !== filterGender) return false;
+            // For status/marriage filters, follow the real partner's eligibility
+            if (filterStatus !== 'all' || filterMarriage !== 'all') {
+              const partnerId = (p.spouseIds || [])[0];
+              const partner = partnerId ? personMap[partnerId] : null;
+              if (partner && !partner.tags?.includes('placeholder')) {
+                if (filterStatus === 'living'   && partner.alive !== true)  return false;
+                if (filterStatus === 'deceased' && partner.alive === true)   return false;
+                if (filterMarriage !== 'all') {
+                  const partnerHasRealSpouse = (partner.spouseIds || []).some(sid => !personMap[sid]?.tags?.includes('placeholder'));
+                  const partnerHasChildren   = parentIds.has(partner.id);
+                  const partnerIsMarried     = partnerHasRealSpouse || partnerHasChildren;
+                  if (filterMarriage === 'married'   && !partnerIsMarried) return false;
+                  if (filterMarriage === 'unmarried' &&  partnerIsMarried) return false;
+                }
+              }
+            }
+            return true;
+          }
 
           // Search match
           if (hasSearch && !p.name.toLowerCase().includes(q) && !p.occupation?.toLowerCase().includes(q))

@@ -378,7 +378,7 @@
     {
       "id": "lakshman-prasad-wife",
       "name": "श्रीमती लाला / रामवती",
-      "photo": "public/photos/smt-lala-ramvati-001.jpeg", 
+      "photo": "/photos/smt-lala-ramvati-001.jpeg", 
       "gender": "female",
       "born": "JAN 1931",
       "died": "21 JAN 2025",
@@ -516,7 +516,7 @@
     {
       "id": "yagya-narayan",
       "name": "श्री यज्ञ नारायण गौतम",
-      "photo": "public/photos/yagya-narayan.jpeg",
+      "photo": "/photos/yagya-narayan.jpeg",
       "gender": "male",
       "born": null,
       "died": null,
@@ -1055,7 +1055,7 @@
     {
       "id": "anant-sp",
       "name": "श्री अनंत नारायण",
-      "photo": "public/photos/anant-sp.jpeg", 
+      "photo": "/photos/anant-sp.jpeg", 
       "gender": "male",
       "born": null,
       "died": null,
@@ -1264,7 +1264,7 @@
     {
       "id": "adya-mishra",
       "name": "आद्या मिश्रा",
-      "photo": "public/photos/adya-mishra.jpeg", 
+      "photo": "/photos/adya-mishra.jpeg", 
       "gender": "female",
       "born": "30 NOVEMBER 2023",
       "died": "",
@@ -1280,7 +1280,7 @@
     {
       "id": "adarsh-mishra",
       "name": "आदर्श मिश्र (भूपे)",
-      "photo": "public/photos/adarsh-mishra.jpeg",
+      "photo": "/photos/adarsh-mishra.jpeg",
       "gender": "male",
       "born": "18 MAY 1994",
       "died": null,
@@ -1318,7 +1318,7 @@
     {
       "id": "avya-mishra",
       "name": "आव्या मिश्रा",
-      "photo": "public/photos/avya-mishra.jpeg",
+      "photo": "/photos/avya-mishra.jpeg",
       "gender": "female",
       "born": "26 OCTOBER 2025",
       "died": "",

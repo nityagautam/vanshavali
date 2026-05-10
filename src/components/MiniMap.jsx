@@ -5,6 +5,22 @@ const MAP_H = 84;
 
 export default function MiniMap({ canvasRef, zoom }) {
   const [info, setInfo] = useState(null);
+  const [isPrinting, setIsPrinting] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia('print');
+    const onChange = e => setIsPrinting(e.matches);
+    mq.addEventListener('change', onChange);
+    const beforePrint = () => setIsPrinting(true);
+    const afterPrint  = () => setIsPrinting(false);
+    window.addEventListener('beforeprint', beforePrint);
+    window.addEventListener('afterprint', afterPrint);
+    return () => {
+      mq.removeEventListener('change', onChange);
+      window.removeEventListener('beforeprint', beforePrint);
+      window.removeEventListener('afterprint', afterPrint);
+    };
+  }, []);
 
   const update = useCallback(() => {
     const el = canvasRef.current;
@@ -40,7 +56,7 @@ export default function MiniMap({ canvasRef, zoom }) {
     return () => clearTimeout(t);
   }, [zoom, update]);
 
-  if (!info) return null;
+  if (!info || isPrinting) return null;
   const { sl, st, sw, sh, cw, ch } = info;
 
   // Hide when nothing to scroll

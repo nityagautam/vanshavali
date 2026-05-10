@@ -76,8 +76,8 @@ function PersonBlock({ person, spouse, personMap }) {
             <span className="pv-name pv-spouse-name">{spouse.name}</span>
           </>
         )}
-        {person.alive === false && !isPlaceholder && (
-          <span className="pv-deceased">✝</span>
+        {person.alive !== true && !isPlaceholder && (
+          <span className="pv-deceased">स्व.</span>
         )}
       </div>
 
@@ -223,7 +223,7 @@ export default function PrintView({ people, meta, lang = 'both' }) {
             </div>
             <div className="pv-cover-info-row">
               <span className="pv-cover-info-label">Deceased</span>
-              <span className="pv-cover-info-value">{people.filter(p => p.alive === false && !p.tags?.includes('placeholder')).length}</span>
+              <span className="pv-cover-info-value">{people.filter(p => p.alive !== true && !p.tags?.includes('placeholder')).length}</span>
             </div>
             <div className="pv-cover-info-row">
               <span className="pv-cover-info-label">Generations</span>

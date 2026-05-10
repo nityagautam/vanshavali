@@ -650,6 +650,525 @@
       "motherId": null
     },
     {
+      "id": "indrakali",
+      "name": "इंद्रकली",
+      "gender": "female",
+      "born": null,
+      "died": null,
+      "alive": true,
+      "parentId": "lakshman-prasad",
+      "motherId": "lakshman-prasad-wife",
+      "spouseIds": [],
+      "occupation": null,
+      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
+      "bio": null,
+      "tags": [
+        "verified-source"
+      ]
+    },
+    {
+      "id": "suresh-prasad-g",
+      "name": "श्री सुरेश प्रसाद गौतम",
+      "gender": "male",
+      "born": "1963",
+      "died": null,
+      "alive": true,
+      "parentId": "lakshman-prasad",
+      "motherId": "lakshman-prasad-wife",
+      "spouseIds": [
+        "smt-ramwati-sp"
+      ],
+      "occupation": null,
+      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
+      "bio": null,
+      "tags": [
+        "verified-source"
+      ]
+    },
+    {
+      "id": "smt-ramwati-sp",
+      "name": "श्रीमती रामवती",
+      "gender": "female",
+      "born": "1963",
+      "died": null,
+      "alive": true,
+      "parentId": null,
+      "spouseIds": [
+        "suresh-prasad-g"
+      ],
+      "occupation": null,
+      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
+      "bio": null,
+      "tags": [
+        "wife"
+      ],
+      "motherId": null
+    },
+    {
+      "id": "sunita-spg",
+      "name": "सुनीता",
+      "gender": "female",
+      "born": null,
+      "died": null,
+      "alive": true,
+      "parentId": "suresh-prasad-g",
+      "motherId": "smt-ramwati-sp",
+      "spouseIds": [],
+      "occupation": null,
+      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
+      "bio": null,
+      "tags": [
+        "verified-source"
+      ]
+    },
+    {
+      "id": "deepak-sp",
+      "name": "श्री दीप नारायण",
+      "gender": "male",
+      "born": null,
+      "died": "2013",
+      "alive": false,
+      "parentId": "suresh-prasad-g",
+      "motherId": "smt-ramwati-sp",
+      "spouseIds": [
+        "smt-deepak-sp"
+      ],
+      "occupation": null,
+      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
+      "bio": null,
+      "tags": [
+        "verified-source"
+      ]
+    },
+    {
+      "id": "smt-deepak-sp",
+      "name": "श्रीमती -- दीपक नारायण",
+      "gender": "female",
+      "born": null,
+      "died": null,
+      "alive": true,
+      "spouseIds": [
+        "deepak-sp"
+      ],
+      "occupation": null,
+      "location": "रीवा, मध्य प्रदेश",
+      "bio": null,
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
+    },
+    {
+      "id": "ayush-d",
+      "name": "श्री आयुष",
+      "gender": "male",
+      "born": null,
+      "died": null,
+      "alive": true,
+      "parentId": "deepak-sp",
+      "motherId": "smt-deepak-sp",
+      "spouseIds": [],
+      "occupation": null,
+      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
+      "bio": null,
+      "tags": [
+        "verified-source"
+      ]
+    },
+    {
+      "id": "prachi-d",
+      "name": "प्राची",
+      "gender": "female",
+      "born": null,
+      "died": null,
+      "alive": true,
+      "parentId": "deepak-sp",
+      "motherId": "smt-deepak-sp",
+      "spouseIds": [],
+      "occupation": null,
+      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
+      "bio": null,
+      "tags": [
+        "verified-source"
+      ]
+    },
+    {
+      "id": "anand-sp",
+      "name": "श्री आनंद नारायण",
+      "gender": "male",
+      "born": null,
+      "died": null,
+      "alive": true,
+      "parentId": "suresh-prasad-g",
+      "motherId": "smt-ramwati-sp",
+      "spouseIds": [
+        "smt-anand-sp"
+      ],
+      "occupation": null,
+      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
+      "bio": null,
+      "tags": [
+        "verified-source"
+      ]
+    },
+    {
+      "id": "smt-anand-sp",
+      "name": "श्रीमती -- आनंद नारायण",
+      "gender": "female",
+      "born": null,
+      "died": null,
+      "alive": true,
+      "spouseIds": [
+        "anand-sp"
+      ],
+      "occupation": null,
+      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
+      "bio": null,
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
+    },
+    {
+      "id": "child1-anand",
+      "name": "— [1st child]",
+      "gender": "female",
+      "born": null,
+      "died": null,
+      "alive": true,
+      "parentId": "anand-sp",
+      "motherId": "smt-anand-sp",
+      "spouseIds": [],
+      "occupation": null,
+      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
+      "bio": null,
+      "tags": [
+        "elder"
+      ]
+    },
+    {
+      "id": "child2-anand",
+      "name": "— [2nd child]",
+      "gender": "female",
+      "born": null,
+      "died": null,
+      "alive": true,
+      "parentId": "anand-sp",
+      "motherId": "smt-anand-sp",
+      "spouseIds": [],
+      "occupation": null,
+      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
+      "bio": null,
+      "tags": [
+        "elder"
+      ]
+    },
+    {
+      "id": "anant-sp",
+      "name": "श्री अनंत नारायण",
+      "photo": "/photos/anant-sp.jpeg",
+      "gender": "male",
+      "born": null,
+      "died": null,
+      "alive": true,
+      "parentId": "suresh-prasad-g",
+      "motherId": "smt-ramwati-sp",
+      "spouseIds": [
+        "smt-anant-sp"
+      ],
+      "occupation": "Sr Software Engineer",
+      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
+      "bio": "अपने समय के अत्यंत शिक्षित एवं मेधावी छात्र। IPS Academy, Indore से स्नातक। Software Engineer के रूप में Pune में कार्यरत। शिक्षा के क्षेत्र में अन्य विद्यार्थियों को भी प्रेरित करते हैं तथा 12वीं एवं स्नातक स्तर के अनेक छात्रों का मार्गदर्शन कर चुके हैं।",
+      "tags": [
+        "SW Engineer"
+      ]
+    },
+    {
+      "id": "smt-anant-sp",
+      "name": "श्रीमती -- अनंत नारायण",
+      "gender": "female",
+      "born": null,
+      "died": null,
+      "alive": true,
+      "spouseIds": [
+        "anant-sp"
+      ],
+      "occupation": null,
+      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
+      "bio": null,
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
+    },
+    {
+      "id": "child1-anant",
+      "name": "1st child",
+      "photo": "/photos/child1-anant.jpeg",
+      "gender": "male",
+      "born": null,
+      "died": null,
+      "alive": true,
+      "parentId": "anant-sp",
+      "motherId": "smt-anant-sp",
+      "spouseIds": [],
+      "occupation": null,
+      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
+      "bio": null,
+      "tags": [
+        "elder"
+      ]
+    },
+    {
+      "id": "child2-anant",
+      "name": "2nd child",
+      "photo": "/photos/child2-anant.jpeg",
+      "gender": "female",
+      "born": null,
+      "died": null,
+      "alive": true,
+      "parentId": "anant-sp",
+      "motherId": "smt-anant-sp",
+      "spouseIds": [],
+      "occupation": null,
+      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
+      "bio": null,
+      "tags": [
+        "elder"
+      ]
+    },
+    {
+      "id": "keshari-prasad",
+      "name": "श्री केशरी प्रसाद गौतम",
+      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=army&backgroundColor=d1d4f9",
+      "gender": "male",
+      "born": "13 FEB 1966 (On Record: 28 MAR 1967)",
+      "dom": "WED 10 May 1978 (Marriage: Akshaya Tritiya 1978, द्विरागवन/गवन: Akshaya Tritiya 1980 / FRIDAY 18 APRIL 1980)",
+      "died": null,
+      "alive": true,
+      "parentId": "lakshman-prasad",
+      "spouseIds": [
+        "prafulla-devi"
+      ],
+      "occupation": "सेवानिवृत्त कप्तान (Captain), भारतीय सेना (Indian Army)",
+      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
+      "bio": "“श्री केशरी प्रसाद मिश्र” जी भारतीय सेना में कप्तान (Captain) के पद पर सेवाएँ प्रदान कर दिसंबर 2019 में सेवानिवृत्त हुए। उनका जन्म 13 फ़रवरी 1966 को हुआ। वे “श्री लक्ष्मण प्रसाद गौतम” जी के कनिष्ठ पुत्र हैं तथा गौतम परिवार के प्रतिष्ठित एवं विशिष्ट सदस्यों में गिने जाते हैं। अपने सैन्य जीवन में उन्होंने अनुशासन, साहस, राष्ट्रसेवा एवं कर्तव्यनिष्ठा के आदर्शों का पालन किया।\n\nअपने अंतिम कार्यकाल के दौरान महाराष्ट्र में उन्हें NCC कैडेट्स की राइफल शूटिंग टीम का नेतृत्व करने का अवसर प्राप्त हुआ, जिसने स्वर्ण पदक अर्जित कर उल्लेखनीय उपलब्धि हासिल की। इस गौरवपूर्ण उपलब्धि के उपलक्ष्य में उन्हें महाराष्ट्र के तत्कालीन मुख्यमंत्री Devendra Fadnavis तथा शिक्षा एवं खेल मंत्री Vinod Tawde के साथ सम्मान समारोह एवं रात्रि भोज में सम्मिलित होने का अवसर प्राप्त हुआ।\n\nपारिवारिक वंशावली, पूर्वजों की स्मृतियों एवं वंश संबंधी विवरणों के संरक्षण एवं संवर्धन में उनका महत्वपूर्ण योगदान रहा है। उनके प्रयासों से परिवार की अनेक ऐतिहासिक जानकारियाँ सुरक्षित रूप से संरक्षित हो सकीं। उन्हें परिवार में सम्मान, सेवा, नेतृत्व एवं परंपरा के आदरणीय संवाहक के रूप में स्मरण किया जाता है।",
+      "tags": [
+        "verified-source",
+        "RETD CAPTAIN",
+        "ExArmy"
+      ],
+      "motherId": "lakshman-prasad-wife"
+    },
+    {
+      "id": "prafulla-devi",
+      "name": "श्रीमती प्रफुल्ला देवी गौतम",
+      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=prafulla-devi&backgroundColor=d1d4f9",
+      "gender": "female",
+      "born": "1965 (On Record: 01 JULY 1968)",
+      "dom": "WED 10 May 1978 (Marriage: Akshaya Tritiya 1978, द्विरागवन/गवन: Akshaya Tritiya 1980 / FRIDAY 18 APRIL 1980)",
+      "died": null,
+      "alive": true,
+      "parentId": null,
+      "spouseIds": [
+        "keshari-prasad"
+      ],
+      "occupation": "Farmer",
+      "location": "Ghurehata, Mauganj, Rewa, M.P.",
+      "bio": "Served home with 6 children.",
+      "tags": [
+        "farmer"
+      ],
+      "motherId": null
+    },
+    {
+      "id": "sudha-mishra",
+      "name": "सुधा मिश्रा (शुक्ला)",
+      "gender": "female",
+      "born": null,
+      "died": null,
+      "alive": true,
+      "parentId": "keshari-prasad",
+      "motherId": "prafulla-devi",
+      "spouseIds": [],
+      "occupation": null,
+      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
+      "bio": null,
+      "tags": [
+        "verified-source"
+      ]
+    },
+    {
+      "id": "aradhana-mishra",
+      "name": "आराधना मिश्रा (शुक्ला)",
+      "gender": "female",
+      "born": null,
+      "died": null,
+      "alive": true,
+      "parentId": "keshari-prasad",
+      "motherId": "prafulla-devi",
+      "spouseIds": [],
+      "occupation": null,
+      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
+      "bio": null,
+      "tags": [
+        "verified-source"
+      ]
+    },
+    {
+      "id": "archana-mishra",
+      "name": "अर्चना मिश्रा (शुक्ला)",
+      "gender": "female",
+      "born": null,
+      "died": null,
+      "alive": true,
+      "parentId": "keshari-prasad",
+      "motherId": "prafulla-devi",
+      "spouseIds": [],
+      "occupation": null,
+      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
+      "bio": null,
+      "tags": [
+        "verified-source"
+      ]
+    },
+    {
+      "id": "aarti-mishra-kp",
+      "name": "आरती मिश्रा (शुक्ला)",
+      "gender": "female",
+      "born": null,
+      "died": null,
+      "alive": true,
+      "parentId": "keshari-prasad",
+      "motherId": "prafulla-devi",
+      "spouseIds": [],
+      "occupation": "शिक्षक (Teacher)",
+      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
+      "bio": null,
+      "tags": [
+        "verified-source"
+      ]
+    },
+    {
+      "id": "nitya-narayan",
+      "name": "श्री नित्य नारायण (आशुतोष)",
+      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=boy&backgroundColor=d1d4f9",
+      "gender": "male",
+      "born": "11 JULY 1992",
+      "dom": "WED 07 Dec 2022 (मार्गशीर्ष शुक्ल पक्ष चतुर्दशी)",
+      "died": null,
+      "alive": true,
+      "parentId": "keshari-prasad",
+      "motherId": "prafulla-devi",
+      "spouseIds": [
+        "ruchi-tiwari-gautam"
+      ],
+      "occupation": "Researcher / Seeker / Farmer",
+      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
+      "bio": "Self-described as 'a seeker'.",
+      "tags": [
+        "author",
+        "farmer"
+      ]
+    },
+    {
+      "id": "ruchi-tiwari-gautam",
+      "name": "श्रीमती रुचि तिवारी मिश्रा",
+      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=ruchi&backgroundColor=d1d4f9",
+      "gender": "female",
+      "born": "02 JULY 1995",
+      "dom": "WED 07 Dec 2022 (मार्गशीर्ष शुक्ल पक्ष चतुर्दशी)",
+      "died": null,
+      "alive": true,
+      "parentId": null,
+      "motherId": null,
+      "spouseIds": [
+        "nitya-narayan"
+      ],
+      "occupation": "Engineer",
+      "location": "Mumbai, MH",
+      "bio": null,
+      "tags": [
+        "SW Engineer"
+      ]
+    },
+    {
+      "id": "adya-mishra",
+      "name": "आद्या मिश्रा",
+      "photo": "/photos/adya-mishra.jpeg",
+      "gender": "female",
+      "born": "30 NOVEMBER 2023",
+      "died": "",
+      "alive": true,
+      "parentId": "nitya-narayan",
+      "motherId": "ruchi-tiwari-gautam",
+      "spouseIds": [],
+      "occupation": null,
+      "location": "Mumbai, MH",
+      "bio": null,
+      "tags": [
+        "verified-source"
+      ]
+    },
+    {
+      "id": "adarsh-mishra",
+      "name": "आदर्श मिश्र (भूपे)",
+      "photo": "/photos/adarsh-mishra.jpeg",
+      "gender": "male",
+      "born": "18 MAY 1994",
+      "died": null,
+      "alive": true,
+      "parentId": "keshari-prasad",
+      "motherId": "prafulla-devi",
+      "spouseIds": [
+        "shreya-pandey-gautam"
+      ],
+      "occupation": "Indian Army, Education Core, MasterJi (मास्टरजी)",
+      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
+      "bio": "उन्होंने Government Science College से स्नातक की शिक्षा प्राप्त की, जो Awadhesh Pratap Singh University से संबद्ध है। वर्ष 2017 में उन्होंने दूसरी बार में AEC परीक्षा उत्तीर्ण कर Indian Army में प्रवेश प्राप्त किया। चयन प्रक्रिया के पश्चात वे Madhya Pradesh से AEC हेतु चयनित होने वाले पाँच अभ्यर्थियों में से एक रहे।\n\nवर्तमान में वे Indian Army के Army Education Corps में सेवाएं प्रदान कर रहे हैं। शिक्षा एवं मार्गदर्शन के प्रति अपने समर्पण के कारण वे ‘मास्टरजी’ (मास्टरजी) के नाम से प्रसिद्ध हैं। उन्होंने 10वीं, 12वीं एवं स्नातक स्तर के अनेक विद्यार्थियों को प्रेरित किया तथा उनका मार्गदर्शन किया है। बचपन से ही खेलकूद में अत्यंत सक्रिय रहे हैं, विशेष रूप से क्रिकेट के प्रति उनका विशेष लगाव रहा है।",
+      "tags": [
+        "army"
+      ]
+    },
+    {
+      "id": "shreya-pandey-gautam",
+      "name": "श्रीमती श्रेया पांडेय गौतम",
+      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=ruchi&backgroundColor=d1d4f9",
+      "gender": "female",
+      "born": "2000",
+      "died": null,
+      "alive": true,
+      "parentId": null,
+      "spouseIds": [
+        "adarsh-mishra"
+      ],
+      "occupation": "Student",
+      "location": "Ghurehata, Mauganj, M.P.",
+      "bio": null,
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": null
+    },
+    {
+      "id": "avya-mishra",
+      "name": "आव्या मिश्रा",
+      "photo": "/photos/avya-mishra.jpeg",
+      "gender": "female",
+      "born": "26 OCTOBER 2025",
+      "died": "",
+      "alive": true,
+      "parentId": "adarsh-mishra",
+      "motherId": "shreya-pandey-gautam",
+      "spouseIds": [],
+      "occupation": null,
+      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
+      "bio": null,
+      "tags": [
+        "verified-source"
+      ]
+    },
+    {
       "id": "sri-manmohan",
       "name": "श्री मनमोहन",
       "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=lakshman-prasad&backgroundColor=d1d4f9",
@@ -1410,525 +1929,6 @@
         "elder"
       ],
       "motherId": "ph-spouse-raj-kumar-rn"
-    },
-    {
-      "id": "indrakali",
-      "name": "इंद्रकली",
-      "gender": "female",
-      "born": null,
-      "died": null,
-      "alive": true,
-      "parentId": "lakshman-prasad",
-      "motherId": "lakshman-prasad-wife",
-      "spouseIds": [],
-      "occupation": null,
-      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": null,
-      "tags": [
-        "verified-source"
-      ]
-    },
-    {
-      "id": "suresh-prasad-g",
-      "name": "श्री सुरेश प्रसाद गौतम",
-      "gender": "male",
-      "born": "1963",
-      "died": null,
-      "alive": true,
-      "parentId": "lakshman-prasad",
-      "motherId": "lakshman-prasad-wife",
-      "spouseIds": [
-        "smt-ramwati-sp"
-      ],
-      "occupation": null,
-      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": null,
-      "tags": [
-        "verified-source"
-      ]
-    },
-    {
-      "id": "smt-ramwati-sp",
-      "name": "श्रीमती रामवती",
-      "gender": "female",
-      "born": "1963",
-      "died": null,
-      "alive": true,
-      "parentId": null,
-      "spouseIds": [
-        "suresh-prasad-g"
-      ],
-      "occupation": null,
-      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": null,
-      "tags": [
-        "wife"
-      ],
-      "motherId": null
-    },
-    {
-      "id": "sunita-spg",
-      "name": "सुनीता",
-      "gender": "female",
-      "born": null,
-      "died": null,
-      "alive": true,
-      "parentId": "suresh-prasad-g",
-      "motherId": "smt-ramwati-sp",
-      "spouseIds": [],
-      "occupation": null,
-      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": null,
-      "tags": [
-        "verified-source"
-      ]
-    },
-    {
-      "id": "deepak-sp",
-      "name": "श्री दीप नारायण",
-      "gender": "male",
-      "born": null,
-      "died": "2013",
-      "alive": false,
-      "parentId": "suresh-prasad-g",
-      "motherId": "smt-ramwati-sp",
-      "spouseIds": [
-        "smt-deepak-sp"
-      ],
-      "occupation": null,
-      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": null,
-      "tags": [
-        "verified-source"
-      ]
-    },
-    {
-      "id": "smt-deepak-sp",
-      "name": "श्रीमती -- दीपक नारायण",
-      "gender": "female",
-      "born": null,
-      "died": null,
-      "alive": true,
-      "spouseIds": [
-        "deepak-sp"
-      ],
-      "occupation": null,
-      "location": "रीवा, मध्य प्रदेश",
-      "bio": null,
-      "tags": [
-        "verified-source"
-      ],
-      "motherId": null
-    },
-    {
-      "id": "ayush-d",
-      "name": "श्री आयुष",
-      "gender": "male",
-      "born": null,
-      "died": null,
-      "alive": true,
-      "parentId": "deepak-sp",
-      "motherId": "smt-deepak-sp",
-      "spouseIds": [],
-      "occupation": null,
-      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": null,
-      "tags": [
-        "verified-source"
-      ]
-    },
-    {
-      "id": "prachi-d",
-      "name": "प्राची",
-      "gender": "female",
-      "born": null,
-      "died": null,
-      "alive": true,
-      "parentId": "deepak-sp",
-      "motherId": "smt-deepak-sp",
-      "spouseIds": [],
-      "occupation": null,
-      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": null,
-      "tags": [
-        "verified-source"
-      ]
-    },
-    {
-      "id": "anand-sp",
-      "name": "श्री आनंद नारायण",
-      "gender": "male",
-      "born": null,
-      "died": null,
-      "alive": true,
-      "parentId": "suresh-prasad-g",
-      "motherId": "smt-ramwati-sp",
-      "spouseIds": [
-        "smt-anand-sp"
-      ],
-      "occupation": null,
-      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": null,
-      "tags": [
-        "verified-source"
-      ]
-    },
-    {
-      "id": "smt-anand-sp",
-      "name": "श्रीमती -- आनंद नारायण",
-      "gender": "female",
-      "born": null,
-      "died": null,
-      "alive": true,
-      "spouseIds": [
-        "anand-sp"
-      ],
-      "occupation": null,
-      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": null,
-      "tags": [
-        "verified-source"
-      ],
-      "motherId": null
-    },
-    {
-      "id": "child1-anand",
-      "name": "— [1st child]",
-      "gender": "female",
-      "born": null,
-      "died": null,
-      "alive": true,
-      "parentId": "anand-sp",
-      "motherId": "smt-anand-sp",
-      "spouseIds": [],
-      "occupation": null,
-      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": null,
-      "tags": [
-        "elder"
-      ]
-    },
-    {
-      "id": "child2-anand",
-      "name": "— [2nd child]",
-      "gender": "female",
-      "born": null,
-      "died": null,
-      "alive": true,
-      "parentId": "anand-sp",
-      "motherId": "smt-anand-sp",
-      "spouseIds": [],
-      "occupation": null,
-      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": null,
-      "tags": [
-        "elder"
-      ]
-    },
-    {
-      "id": "anant-sp",
-      "name": "श्री अनंत नारायण",
-      "photo": "/photos/anant-sp.jpeg",
-      "gender": "male",
-      "born": null,
-      "died": null,
-      "alive": true,
-      "parentId": "suresh-prasad-g",
-      "motherId": "smt-ramwati-sp",
-      "spouseIds": [
-        "smt-anant-sp"
-      ],
-      "occupation": "Sr Software Engineer",
-      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": "अपने समय के अत्यंत शिक्षित एवं मेधावी छात्र। IPS Academy, Indore से स्नातक। Software Engineer के रूप में Pune में कार्यरत। शिक्षा के क्षेत्र में अन्य विद्यार्थियों को भी प्रेरित करते हैं तथा 12वीं एवं स्नातक स्तर के अनेक छात्रों का मार्गदर्शन कर चुके हैं।",
-      "tags": [
-        "SW Engineer"
-      ]
-    },
-    {
-      "id": "smt-anant-sp",
-      "name": "श्रीमती -- अनंत नारायण",
-      "gender": "female",
-      "born": null,
-      "died": null,
-      "alive": true,
-      "spouseIds": [
-        "anant-sp"
-      ],
-      "occupation": null,
-      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": null,
-      "tags": [
-        "verified-source"
-      ],
-      "motherId": null
-    },
-    {
-      "id": "child1-anant",
-      "name": "1st child",
-      "photo": "/photos/child1-anant.jpeg",
-      "gender": "male",
-      "born": null,
-      "died": null,
-      "alive": true,
-      "parentId": "anant-sp",
-      "motherId": "smt-anant-sp",
-      "spouseIds": [],
-      "occupation": null,
-      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": null,
-      "tags": [
-        "elder"
-      ]
-    },
-    {
-      "id": "child2-anant",
-      "name": "2nd child",
-      "photo": "/photos/child2-anant.jpeg",
-      "gender": "female",
-      "born": null,
-      "died": null,
-      "alive": true,
-      "parentId": "anant-sp",
-      "motherId": "smt-anant-sp",
-      "spouseIds": [],
-      "occupation": null,
-      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": null,
-      "tags": [
-        "elder"
-      ]
-    },
-    {
-      "id": "keshari-prasad",
-      "name": "श्री केशरी प्रसाद गौतम",
-      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=army&backgroundColor=d1d4f9",
-      "gender": "male",
-      "born": "13 FEB 1966 (On Record: 28 MAR 1967)",
-      "dom": "WED 10 May 1978 (Marriage: Akshaya Tritiya 1978, द्विरागवन/गवन: Akshaya Tritiya 1980 / FRIDAY 18 APRIL 1980)",
-      "died": null,
-      "alive": true,
-      "parentId": "lakshman-prasad",
-      "spouseIds": [
-        "prafulla-devi"
-      ],
-      "occupation": "सेवानिवृत्त कप्तान (Captain), भारतीय सेना (Indian Army)",
-      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": "“श्री केशरी प्रसाद मिश्र” जी भारतीय सेना में कप्तान (Captain) के पद पर सेवाएँ प्रदान कर दिसंबर 2019 में सेवानिवृत्त हुए। उनका जन्म 13 फ़रवरी 1966 को हुआ। वे “श्री लक्ष्मण प्रसाद गौतम” जी के कनिष्ठ पुत्र हैं तथा गौतम परिवार के प्रतिष्ठित एवं विशिष्ट सदस्यों में गिने जाते हैं। अपने सैन्य जीवन में उन्होंने अनुशासन, साहस, राष्ट्रसेवा एवं कर्तव्यनिष्ठा के आदर्शों का पालन किया।\n\nअपने अंतिम कार्यकाल के दौरान महाराष्ट्र में उन्हें NCC कैडेट्स की राइफल शूटिंग टीम का नेतृत्व करने का अवसर प्राप्त हुआ, जिसने स्वर्ण पदक अर्जित कर उल्लेखनीय उपलब्धि हासिल की। इस गौरवपूर्ण उपलब्धि के उपलक्ष्य में उन्हें महाराष्ट्र के तत्कालीन मुख्यमंत्री Devendra Fadnavis तथा शिक्षा एवं खेल मंत्री Vinod Tawde के साथ सम्मान समारोह एवं रात्रि भोज में सम्मिलित होने का अवसर प्राप्त हुआ।\n\nपारिवारिक वंशावली, पूर्वजों की स्मृतियों एवं वंश संबंधी विवरणों के संरक्षण एवं संवर्धन में उनका महत्वपूर्ण योगदान रहा है। उनके प्रयासों से परिवार की अनेक ऐतिहासिक जानकारियाँ सुरक्षित रूप से संरक्षित हो सकीं। उन्हें परिवार में सम्मान, सेवा, नेतृत्व एवं परंपरा के आदरणीय संवाहक के रूप में स्मरण किया जाता है।",
-      "tags": [
-        "verified-source",
-        "RETD CAPTAIN",
-        "ExArmy"
-      ],
-      "motherId": "lakshman-prasad-wife"
-    },
-    {
-      "id": "prafulla-devi",
-      "name": "श्रीमती प्रफुल्ला देवी गौतम",
-      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=prafulla-devi&backgroundColor=d1d4f9",
-      "gender": "female",
-      "born": "1965 (On Record: 01 JULY 1968)",
-      "dom": "WED 10 May 1978 (Marriage: Akshaya Tritiya 1978, द्विरागवन/गवन: Akshaya Tritiya 1980 / FRIDAY 18 APRIL 1980)",
-      "died": null,
-      "alive": true,
-      "parentId": null,
-      "spouseIds": [
-        "keshari-prasad"
-      ],
-      "occupation": "Farmer",
-      "location": "Ghurehata, Mauganj, Rewa, M.P.",
-      "bio": "Served home with 6 children.",
-      "tags": [
-        "farmer"
-      ],
-      "motherId": null
-    },
-    {
-      "id": "sudha-mishra",
-      "name": "सुधा मिश्रा (शुक्ला)",
-      "gender": "female",
-      "born": null,
-      "died": null,
-      "alive": true,
-      "parentId": "keshari-prasad",
-      "motherId": "prafulla-devi",
-      "spouseIds": [],
-      "occupation": null,
-      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": null,
-      "tags": [
-        "verified-source"
-      ]
-    },
-    {
-      "id": "aradhana-mishra",
-      "name": "आराधना मिश्रा (शुक्ला)",
-      "gender": "female",
-      "born": null,
-      "died": null,
-      "alive": true,
-      "parentId": "keshari-prasad",
-      "motherId": "prafulla-devi",
-      "spouseIds": [],
-      "occupation": null,
-      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": null,
-      "tags": [
-        "verified-source"
-      ]
-    },
-    {
-      "id": "archana-mishra",
-      "name": "अर्चना मिश्रा (शुक्ला)",
-      "gender": "female",
-      "born": null,
-      "died": null,
-      "alive": true,
-      "parentId": "keshari-prasad",
-      "motherId": "prafulla-devi",
-      "spouseIds": [],
-      "occupation": null,
-      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": null,
-      "tags": [
-        "verified-source"
-      ]
-    },
-    {
-      "id": "aarti-mishra-kp",
-      "name": "आरती मिश्रा (शुक्ला)",
-      "gender": "female",
-      "born": null,
-      "died": null,
-      "alive": true,
-      "parentId": "keshari-prasad",
-      "motherId": "prafulla-devi",
-      "spouseIds": [],
-      "occupation": "शिक्षक (Teacher)",
-      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": null,
-      "tags": [
-        "verified-source"
-      ]
-    },
-    {
-      "id": "nitya-narayan",
-      "name": "श्री नित्य नारायण (आशुतोष)",
-      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=boy&backgroundColor=d1d4f9",
-      "gender": "male",
-      "born": "11 JULY 1992",
-      "dom": "WED 07 Dec 2022 (मार्गशीर्ष शुक्ल पक्ष चतुर्दशी)",
-      "died": null,
-      "alive": true,
-      "parentId": "keshari-prasad",
-      "motherId": "prafulla-devi",
-      "spouseIds": [
-        "ruchi-tiwari-gautam"
-      ],
-      "occupation": "Researcher / Seeker / Farmer",
-      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": "Self-described as 'a seeker'.",
-      "tags": [
-        "author",
-        "farmer"
-      ]
-    },
-    {
-      "id": "ruchi-tiwari-gautam",
-      "name": "श्रीमती रुचि तिवारी मिश्रा",
-      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=ruchi&backgroundColor=d1d4f9",
-      "gender": "female",
-      "born": "02 JULY 1995",
-      "dom": "WED 07 Dec 2022 (मार्गशीर्ष शुक्ल पक्ष चतुर्दशी)",
-      "died": null,
-      "alive": true,
-      "parentId": null,
-      "motherId": null,
-      "spouseIds": [
-        "nitya-narayan"
-      ],
-      "occupation": "Engineer",
-      "location": "Mumbai, MH",
-      "bio": null,
-      "tags": [
-        "SW Engineer"
-      ]
-    },
-    {
-      "id": "adya-mishra",
-      "name": "आद्या मिश्रा",
-      "photo": "/photos/adya-mishra.jpeg",
-      "gender": "female",
-      "born": "30 NOVEMBER 2023",
-      "died": "",
-      "alive": true,
-      "parentId": "nitya-narayan",
-      "motherId": "ruchi-tiwari-gautam",
-      "spouseIds": [],
-      "occupation": null,
-      "location": "Mumbai, MH",
-      "bio": null,
-      "tags": [
-        "verified-source"
-      ]
-    },
-    {
-      "id": "adarsh-mishra",
-      "name": "आदर्श मिश्र (भूपे)",
-      "photo": "/photos/adarsh-mishra.jpeg",
-      "gender": "male",
-      "born": "18 MAY 1994",
-      "died": null,
-      "alive": true,
-      "parentId": "keshari-prasad",
-      "motherId": "prafulla-devi",
-      "spouseIds": [
-        "shreya-pandey-gautam"
-      ],
-      "occupation": "Indian Army, Education Core, MasterJi (मास्टरजी)",
-      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": "उन्होंने Government Science College से स्नातक की शिक्षा प्राप्त की, जो Awadhesh Pratap Singh University से संबद्ध है। वर्ष 2017 में उन्होंने दूसरी बार में AEC परीक्षा उत्तीर्ण कर Indian Army में प्रवेश प्राप्त किया। चयन प्रक्रिया के पश्चात वे Madhya Pradesh से AEC हेतु चयनित होने वाले पाँच अभ्यर्थियों में से एक रहे।\n\nवर्तमान में वे Indian Army के Army Education Corps में सेवाएं प्रदान कर रहे हैं। शिक्षा एवं मार्गदर्शन के प्रति अपने समर्पण के कारण वे ‘मास्टरजी’ (मास्टरजी) के नाम से प्रसिद्ध हैं। उन्होंने 10वीं, 12वीं एवं स्नातक स्तर के अनेक विद्यार्थियों को प्रेरित किया तथा उनका मार्गदर्शन किया है। बचपन से ही खेलकूद में अत्यंत सक्रिय रहे हैं, विशेष रूप से क्रिकेट के प्रति उनका विशेष लगाव रहा है।",
-      "tags": [
-        "army"
-      ]
-    },
-    {
-      "id": "shreya-pandey-gautam",
-      "name": "श्रीमती श्रेया पांडेय गौतम",
-      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=ruchi&backgroundColor=d1d4f9",
-      "gender": "female",
-      "born": "2000",
-      "died": null,
-      "alive": true,
-      "parentId": null,
-      "spouseIds": [
-        "adarsh-mishra"
-      ],
-      "occupation": "Student",
-      "location": "Ghurehata, Mauganj, M.P.",
-      "bio": null,
-      "tags": [
-        "verified-source"
-      ],
-      "motherId": null
-    },
-    {
-      "id": "avya-mishra",
-      "name": "आव्या मिश्रा",
-      "photo": "/photos/avya-mishra.jpeg",
-      "gender": "female",
-      "born": "26 OCTOBER 2025",
-      "died": "",
-      "alive": true,
-      "parentId": "adarsh-mishra",
-      "motherId": "shreya-pandey-gautam",
-      "spouseIds": [],
-      "occupation": null,
-      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": null,
-      "tags": [
-        "verified-source"
-      ]
     },
     {
       "id": "shri-aanande-ram",

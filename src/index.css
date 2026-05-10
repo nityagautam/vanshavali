@@ -1774,7 +1774,9 @@ button {
   .toolbar,
   .detail-panel,
   .sidebar-toast,
-  .tree-canvas {
+  .tree-canvas,
+  .mini-map,
+  .tree-credit {
     display: none !important;
   }
 

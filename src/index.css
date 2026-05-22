@@ -2140,6 +2140,11 @@ button {
 
 /* ── Responsive ── */
 @media (max-width: 768px) {
+  /* Header: tighten padding, hide stat pills (visible on About page) */
+  .app-header { padding: 0 12px; }
+  .header-meta { gap: 8px; }
+  .meta-pill   { display: none; }
+
   .detail-panel {
     position: fixed;
     right: 0;
@@ -2267,41 +2272,6 @@ button {
   border-color: rgba(255,255,255,0.55);
 }
 
-/* ══════════════════════════════════════════════════════════════
-   BOTTOM NAV  (mobile only)
-   ══════════════════════════════════════════════════════════════ */
-.bottom-nav {
-  display: none;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 56px;
-  background: var(--card-bg);
-  border-top: 1.5px solid var(--card-border);
-  z-index: 50;
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-}
-@media (max-width: 768px) {
-  .bottom-nav { display: flex; }
-}
-.bottom-nav-tab {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 3px;
-  color: var(--text-muted);
-  text-decoration: none;
-  font-size: 0.65rem;
-  font-weight: 500;
-  transition: color var(--transition);
-  padding-bottom: 2px;
-}
-.bottom-nav-tab.active { color: var(--saffron); }
-.bottom-nav-icon { font-size: 1.15rem; line-height: 1; }
-.bottom-nav-label { letter-spacing: 0.03em; }
 
 /* ══════════════════════════════════════════════════════════════
    FLOATING ACTION BUTTON
@@ -2315,9 +2285,6 @@ button {
   flex-direction: column-reverse;
   align-items: flex-end;
   gap: 10px;
-}
-@media (max-width: 768px) {
-  .fab-container { bottom: 68px; }
 }
 .fab-backdrop {
   position: fixed;

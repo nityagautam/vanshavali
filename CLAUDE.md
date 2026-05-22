@@ -78,7 +78,6 @@ main.jsx (BrowserRouter)
     │   │   │   └── Avatar
     │   │   └── FloatingActions (FAB — all tools)
     │   └── /about → AboutPage
-    └── BottomNav          (mobile only, fixed bottom, via CSS)
 ```
 
 ### Routing
@@ -90,7 +89,7 @@ main.jsx (BrowserRouter)
 ### Key logic
 
 **FloatingActions (FAB):**
-- Fixed bottom-right (`position: fixed`), lifts to `bottom: 68px` on mobile to clear BottomNav
+- Fixed bottom-right (`position: fixed`), `bottom: 24px right: 24px`
 - Main `⚙` button expands 5 action buttons vertically: 🔒/🔓 Login/Logout · ＋ Add Member · ↓ Export JSON · ⎙ Print Data · ⊞ Print Tree
 - All actions except Login/Logout are gated behind `isLoggedIn`. Clicking a locked action triggers `onAuthRequired(fn)` which stores the pending action and opens `LoginModal`. After successful login the pending action executes automatically.
 - `isLoggedIn` state lives in `App`, persisted to `sessionStorage` (clears on tab close)
@@ -131,8 +130,6 @@ main.jsx (BrowserRouter)
 **MiniMap (`src/components/MiniMap.jsx`):** Positioned absolutely in `.tree-section`. Returns `null` during print (`beforeprint`/`afterprint` events).
 
 **About page (`src/components/AboutPage.jsx`):** Full-page route at `/about`. Shows stats (computed from `people`), description, gotra info table, location + Maps link, disclaimer. "← Back to Tree" button navigates to `/`.
-
-**BottomNav (`src/components/BottomNav.jsx`):** Fixed bottom nav with 🌳 Tree / ℹ About tabs. Visible only on mobile via CSS (`display: none` on desktop, `display: flex` at `≤768px`). The header About link is visible on **all screen sizes** — both exist on mobile intentionally (header for quick reach, bottom nav for thumb-friendly access).
 
 **Credit line:** Tree area: `.tree-credit` (absolute, bottom-right of `.tree-section`) — hidden on mobile. About page: `.about-credit` at bottom of about body. Both read `meta.maintainer`.
 

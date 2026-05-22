@@ -7,7 +7,7 @@ import DetailPanel from './components/DetailPanel';
 import PrintView   from './components/PrintView';
 import MiniMap     from './components/MiniMap';
 import AboutPage   from './components/AboutPage';
-import BottomNav   from './components/BottomNav';
+
 import FloatingActions from './components/FloatingActions';
 import LoginModal  from './components/LoginModal';
 import { isAuthenticated, setAuthenticated } from './utils/auth';
@@ -367,8 +367,6 @@ export default function App() {
         </Routes>
       </div>
 
-      {/* Bottom nav (mobile only, via CSS) */}
-      <BottomNav />
     </div>
   );
 }

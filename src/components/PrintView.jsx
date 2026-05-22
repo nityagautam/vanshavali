@@ -114,7 +114,7 @@ function pickLang(hindi, english, lang) {
   return              { primary: hindi,  secondary: english };
 }
 
-export default function PrintView({ people, meta, lang = 'both' }) {
+export default function PrintView({ people, meta, about = {}, lang = 'both' }) {
   const personMap = Object.fromEntries(people.map(p => [p.id, p]));
   const genMap    = buildGenMap(people, personMap);
 
@@ -136,21 +136,19 @@ export default function PrintView({ people, meta, lang = 'both' }) {
     day: 'numeric', month: 'long', year: 'numeric',
   });
 
-  // Build address string from meta.location object if present
+  // Build address string from about.location object if present
   let locationStr = '';
-  if (meta.location && typeof meta.location === 'object') {
-    locationStr = Object.entries(meta.location)
+  if (about.location && typeof about.location === 'object') {
+    locationStr = Object.entries(about.location)
       .filter(([k, v]) => v && !/^https?:\/\//.test(String(v)) && !/^\d{5,}$/.test(String(v)) && !/lat|lng|lon|coord/i.test(k))
       .map(([, v]) => v)
       .join(', ');
   }
 
-  // All object-type meta entries (skip location — already rendered as string above)
-  const COVER_SKIP = new Set(['pageTitle', 'dynasty', 'gotra', 'subgotra', 'title',
-                               'description', 'descriptionHindi', 'lastUpdated', 'disclaimer', 'disclaimerHindi',
-                               'maintainer', 'blog', 'location']);
-  const metaObjects = Object.entries(meta).filter(
-    ([k, v]) => !COVER_SKIP.has(k) && v && typeof v === 'object' && !Array.isArray(v)
+  // All object-type about entries (skip location — already rendered as string above)
+  const ABOUT_SKIP = new Set(['description', 'descriptionHindi', 'disclaimer', 'disclaimerHindi', 'location']);
+  const aboutObjects = Object.entries(about).filter(
+    ([k, v]) => !ABOUT_SKIP.has(k) && v && typeof v === 'object' && !Array.isArray(v)
   );
 
   return (
@@ -158,8 +156,8 @@ export default function PrintView({ people, meta, lang = 'both' }) {
 
       {/* Cover / Dynasty Header */}
       <div className="pv-cover">
-        {(meta.disclaimerHindi || meta.disclaimer) && (() => {
-          const { primary: dp, secondary: ds } = pickLang(meta.disclaimerHindi, meta.disclaimer, lang);
+        {(about.disclaimerHindi || about.disclaimer) && (() => {
+          const { primary: dp, secondary: ds } = pickLang(about.disclaimerHindi, about.disclaimer, lang);
           return (dp || ds) ? (
             <div className="pv-cover-disclaimer">
               <span className="pv-disclaimer-label">⚠ अस्वीकरण / Disclaimer</span>
@@ -183,8 +181,8 @@ export default function PrintView({ people, meta, lang = 'both' }) {
           {meta.title    && <span>Title: {meta.title}</span>}
         </div>
         {locationStr && <div className="pv-cover-location">{locationStr}</div>}
-        {(meta.descriptionHindi || meta.description) && (() => {
-          const { primary: dp, secondary: ds } = pickLang(meta.descriptionHindi, meta.description, lang);
+        {(about.descriptionHindi || about.description) && (() => {
+          const { primary: dp, secondary: ds } = pickLang(about.descriptionHindi, about.description, lang);
           return (dp || ds) ? (
             <div className="pv-cover-desc">
               {dp && <p className="pv-cover-desc-hindi">{dp}</p>}
@@ -193,8 +191,8 @@ export default function PrintView({ people, meta, lang = 'both' }) {
           ) : null;
         })()}
 
-        {/* Dynamic object sections from meta (e.g. info, rituals, etc.) */}
-        {metaObjects.map(([key, obj]) => (
+        {/* Dynamic object sections from about (e.g. info) */}
+        {aboutObjects.map(([key, obj]) => (
           <div key={key} className="pv-cover-info-block">
             <div className="pv-cover-info-title">{toLabel(key)}</div>
             <div className="pv-cover-info-rows">

@@ -27,121 +27,139 @@ node scripts/backfill-motherid.js        # Adds motherId to people missing the k
 node scripts/add-placeholder-spouses.js  # Adds placeholder spouse for parents with no spouseIds
 ```
 
-Run both after adding new members to `family.json`. Order matters: run `backfill-motherid` first, then `add-placeholder-spouses` (which also back-fills `motherId` for children of newly-created placeholders). Both scripts are idempotent for existing entries — they only touch records missing the relevant data.
+Run both after adding new members to `family.json`. Order matters: run `backfill-motherid` first, then `add-placeholder-spouses`. Both scripts are idempotent.
 
 ## Architecture
 
-**Vanshavali** is a React + Vite single-page app for visualising and managing a Hindu family genealogy (वंशावली). There is no backend — all data lives in `src/data/family.json`.
+**Vanshavali** is a React + Vite SPA for visualising and managing a Hindu family genealogy (वंशावली). No backend — all data lives in `src/data/`. Routing via `react-router-dom` (`BrowserRouter` in `main.jsx`), with a `vercel.json` SPA rewrite so `/about` doesn't 404.
 
-### Data model (`src/data/family.json`)
+### Data files
 
-Two top-level keys:
+**`src/data/family.json`** — two top-level keys:
 
-- **`meta`** — dynasty metadata (gotra, location, maintainer, disclaimers, etc.). Key fields:
-  - `description` / `descriptionHindi` — English and Hindi long-form description of the dynasty
-  - `disclaimer` / `disclaimerHindi` — English and Hindi disclaimer text
-  - `maintainer` — shown as credit line "With ❤ by {maintainer}" in the tree area and sidebar
-  - `info` — nested object rendered as a table in the sidebar and print outputs
-  - `location` — nested object; rendered as address string + Google Maps link
+- **`meta`** — tree-level dynasty metadata only. Key fields: `pageTitle`, `dynasty`, `gotra`, `subgotra`, `title`, `lastUpdated`, `maintainer`, `blog`. Does NOT contain description, disclaimer, info, or location — those moved to `about.json`.
 
-- **`people`** — flat array of 335 person objects (248 real + 87 placeholders). Key fields:
-  - `id` — unique slug (used as lookup key everywhere)
-  - `parentId` — points to the father/primary parent; drives the tree hierarchy
-  - `motherId` — points to the mother's person `id`; shown as a clickable **Mother** chip in the detail panel. All people have this key (null if unknown). Backfill rule: defaults to `father.spouseIds[0]` if available.
-  - `spouseIds` — array of spouse IDs (bidirectional; both sides must list each other). Every person with children now has at least one entry — placeholder spouses (`tags: ["placeholder"]`) are created for parents with no recorded spouse.
-  - `alive`, `born`, `died`, `dom` (date of marriage), `tags`, `photo`, `bio`, `occupation`, `location`
-  - `tags`: special values — `"placeholder"` hides the person from stats, suppresses occupation/bio UI, and marks auto-generated placeholder spouses (named `"श्रीमती (अज्ञात)"` / `"श्री (अज्ञात)"`); `"root"` marks legendary ancestors
-  - **`alive` semantics**: `true` = living; anything else (`false`, `null`, missing) = deceased. Only `alive === true` counts as living everywhere in the UI (stats, card styling, detail panel "Living" badge, Print Tree `स्व.` prefix).
-  - **`photo`** paths must be relative to the site root (e.g. `/photos/foo.jpg`), NOT `public/photos/foo.jpg`. Vite serves `public/` at `/`.
+- **`people`** — flat array of person objects (248 real + 87 placeholders). Key fields:
+  - `id` — unique slug (lookup key everywhere)
+  - `parentId` — father/primary parent; drives the tree hierarchy
+  - `motherId` — mother's person `id`; shown as a clickable chip in the detail panel. All people have this key (null if unknown). Backfill rule: defaults to `father.spouseIds[0]`.
+  - `spouseIds` — bidirectional; both sides must list each other. Every parent has at least one entry (placeholder spouses auto-created).
+  - `alive`, `born`, `died`, `dom`, `tags`, `photo`, `bio`, `occupation`, `location`
+  - `tags`: `"placeholder"` = auto-generated unknown spouse (hides from stats, suppresses bio/occupation UI); `"root"` = legendary ancestor
+  - **`alive` semantics**: `true` = living; anything else = deceased. Only `alive === true` counts as living.
+  - **`photo`** paths must be relative to site root (e.g. `/photos/foo.jpg`), not `public/photos/foo.jpg`. Members without a real photo use a default DiceBear avatar URL (see below).
+
+**`src/data/about.json`** — About page and print content, independently editable:
+- `description` / `descriptionHindi` — long-form dynasty description
+- `disclaimer` / `disclaimerHindi` — disclaimer text
+- `info` — object rendered as a table (gotra details, etc.)
+- `location` — object with `village`, `city`, `district`, `state`, `country`, `pin`
+
+`\n` in description/disclaimer values is respected everywhere — `white-space: pre-wrap` in UI, `<br>` conversion in Print Tree HTML.
 
 ### Component tree
 
 ```
-App
-├── PrintView          (hidden; renders on Cmd+P / window.print())
-├── header             (inline JSX in App — includes lang toggle pill)
-├── Sidebar
-│   ├── AddMemberForm  (shown when "Add Member" tool is active)
-│   └── DynastyInfoPanel (inline in Sidebar.jsx)
-├── FamilyTree
-│   └── TreeNode (recursive)
-│       └── PersonCard (×1 primary + ×N spouses per node)
-│           └── Avatar
-└── DetailPanel        (shown when a person is selected)
-    └── Avatar
+main.jsx (BrowserRouter)
+└── App
+    ├── PrintView          (hidden on screen; renders on window.print())
+    ├── LoginModal         (overlay; triggered by FAB when not logged in)
+    ├── header             (inline JSX — lang toggle + About NavLink)
+    ├── Routes
+    │   ├── / → app-body
+    │   │   ├── tree-section
+    │   │   │   ├── toolbar (search, filters, depth, zoom)
+    │   │   │   ├── FamilyTree
+    │   │   │   │   └── TreeNode (recursive)
+    │   │   │   │       └── PersonCard (×1 primary + ×N spouses)
+    │   │   │   │           └── Avatar
+    │   │   │   └── MiniMap
+    │   │   ├── DetailPanel  (shown when a person is selected)
+    │   │   │   └── Avatar
+    │   │   └── FloatingActions (FAB — all tools)
+    │   └── /about → AboutPage
+    └── BottomNav          (mobile only, fixed bottom, via CSS)
 ```
+
+### Routing
+
+- `/` — tree view (full width, no sidebar)
+- `/about` — About page with dynasty info, stats, description, location, disclaimer
+- `vercel.json` rewrites all paths to `index.html` for SPA support
 
 ### Key logic
 
-**FamilyTree / TreeNode rendering:**
-- `FamilyTree` builds a `childrenMap` (parentId → children array) and finds root nodes — people with no `parentId` that are not a spouse of another root-level person. Male roots are treated as primary; their `spouseIds` render as attached "couple bubbles".
-- `TreeNode` recurses. Each node renders either a single `PersonCard` or a "couple bubble" (primary + spouses side-by-side with a ⚭ badge). Children are filtered to exclude people who list the current person as a spouse (avoids double-rendering spouses as children).
-- Nodes are collapsible (local `collapsed` state per `TreeNode`).
-- `depth` prop (0 = root) drives the 4-colour generation accent (`--gen-color` CSS variable on each `<li>`, rendered as a top stripe on `PersonCard`). Palette: `#1a3a6b` → `#1a6b3a` → `#6b1a4a` → `#7a4a00`, cycling every 4 levels.
-- `maxGen` prop (from App state, `null` = show all) force-collapses nodes at `depth >= maxGen - 1`. A `+N` badge (absolutely positioned, out of flow) shows the hidden child count. The toolbar **Depth** stepper controls `maxGen`.
-- `MiniMap` component (`src/components/MiniMap.jsx`) is positioned absolutely in `.tree-section` (not inside the scroll container). It reads `scrollLeft/Top/Width/Height` from `canvasRef`, re-reads on scroll, resize, and zoom change. Click navigates the viewport.
+**FloatingActions (FAB):**
+- Fixed bottom-right (`position: fixed`), lifts to `bottom: 68px` on mobile to clear BottomNav
+- Main `⚙` button expands 5 action buttons vertically: 🔒/🔓 Login/Logout · ＋ Add Member · ↓ Export JSON · ⎙ Print Data · ⊞ Print Tree
+- All actions except Login/Logout are gated behind `isLoggedIn`. Clicking a locked action triggers `onAuthRequired(fn)` which stores the pending action and opens `LoginModal`. After successful login the pending action executes automatically.
+- `isLoggedIn` state lives in `App`, persisted to `sessionStorage` (clears on tab close)
+
+**Login / auth (`src/utils/auth.js`):**
+- SHA-256 hash of the family password hardcoded as `PASSWORD_HASH`. Plaintext never in code.
+- `checkPassword(input)` — async, uses `window.crypto.subtle.digest`
+- `isAuthenticated()` / `setAuthenticated()` / `clearAuth()` — read/write `sessionStorage` key `vv-auth`
+- To change password: compute new SHA-256 hex digest and update `PASSWORD_HASH` in `auth.js`
 
 **Language toggle (`lang` state in App):**
-- 3-way pill in the header: `हिं` (Hindi only, default) · `दो` (both) · `EN` (English only)
+- 3-way pill in header: `हिं` (Hindi only, default) · `दो` (both) · `EN` (English only)
 - Persisted to `localStorage` key `vv-lang`
-- Controls which variant of `description`/`descriptionHindi` and `disclaimer`/`disclaimerHindi` is shown in: sidebar About panel, Print Data cover, Print Tree header
-- `pickLang(hindi, english, lang)` helper defined in both `Sidebar.jsx` and `PrintView.jsx`; returns `{ primary, secondary }` — secondary is `null` when lang is `'hi'` or `'en'`
-- All other content (names, gotra, member data) is unaffected by lang
+- `pickLang(hindi, english, lang)` helper defined locally in `AboutPage.jsx`, `PrintView.jsx`, and `src/utils/printTree.js`; returns `{ primary, secondary }` — secondary is `null` for `'hi'` or `'en'`
 
-**Credit line:**
-- Tree area: `.tree-credit` (absolute, bottom-right of `.tree-section`) — hidden on mobile (`display: none` at ≤768px)
-- Sidebar About panel: `.credit-line` (bottom border of `DynastyInfoPanel`)
-- Both read `meta.maintainer`; render "With ❤ by {maintainer}"
+**FamilyTree / TreeNode rendering:**
+- `FamilyTree` builds `childrenMap` (parentId → children) and finds roots — people with no `parentId` not claimed as a spouse by another root.
+- Each node: single `PersonCard` or "couple bubble" (primary + spouses with ⚭ badge).
+- `depth` prop drives 4-colour generation accent (`--gen-color`). Palette: `#1a3a6b` → `#1a6b3a` → `#6b1a4a` → `#7a4a00`, cycling every 4 levels.
+- `maxGen` (null = show all) force-collapses nodes at `depth >= maxGen - 1`. Toolbar **Depth** stepper controls this.
 
-**Toolbar filter pills:** Three compact pill groups dim non-matching nodes (same mechanism as search — preserves tree structure):
-- Gender: सभी · पु · स्त्री (EN: All · Male · Female)
-- Status: सभी · जी (जीवित) · मृ (मृत) (EN: All · Living · Deceased)
-- Marriage: सभी · वि (विवाहित) · अवि (अविवाहित) (EN: All · Married · Unmarried)
-- Labels switch automatically when `lang === 'en'`. Placeholders always pass (never dimmed). A ↺ reset button appears when any filter is active.
-- State: `filterGender`, `filterStatus`, `filterMarriage` in `App`. All three compose with search inside the `highlightIds` useMemo.
+**Highlight / dimming:** `App` computes `highlightIds` (a `Set`) from search + active filters. Nodes not in set get `dimmed` class; matches get `highlighted`. Placeholder spouses follow their real partner for status/marriage filters but respect their own gender for gender filter.
 
-**Search / highlight:** `App` computes `highlightIds` (a `Set`) from search + active filters. Nodes not in the set get `dimmed` class; matching nodes get `highlighted`.
+**Toolbar filter pills:** Three pill groups (Gender / Status / Marriage) compose with search in `highlightIds` useMemo. Labels switch between Hindi and English based on `lang`.
 
-**Add Member (sidebar):** `AddMemberForm` generates a slug ID from the name (strips Devanagari, lowercases, slugifies, appends a timestamp suffix). On submit it calls `onAddMember` in `App` (updates React state) and also POSTs to `/api/family` — this endpoint does not exist in the static build, so the write always fails gracefully and the user is prompted to use "Export JSON" instead.
+**Print Data:** `window.print()` → `@media print` CSS hides app chrome, reveals `#print-view` (`PrintView` component). Cover reads from `about` prop (description, disclaimer, info, location). MiniMap hidden via CSS and `beforeprint` event listener.
 
-**Export JSON:** Downloads the current in-memory `familyData` (merged `meta` + live `people` state) as `family.json` via a temporary object URL.
+**Print Tree:** `src/utils/printTree.js` — builds a coloured directory-style HTML tree, injects it as `#__vv_print_tree` overlay, calls `window.print()`, cleans up after 2s. Reads dynasty header from `meta`, content (description, disclaimer, info, location) from `about`.
 
-**Print Data:** Calls `window.print()` directly, which triggers the existing `@media print` CSS in `src/index.css` — hides app chrome, reveals `#print-view` (the `PrintView` component). Cover page shows: disclaimer, maintainer, dynasty title, gotra meta, location, description (language-aware), dynamic meta object sections, census stats.
+**Export JSON:** `src/utils/exportJSON.js` — downloads in-memory `familyData` as `family.json` via object URL.
 
-**Print Tree:** Generates a directory-style text tree from the `people` array (no DOM rendering) and injects it into the current page as a print-only overlay div (`#__vv_print_tree`). Key details:
-- Root detection: top-level people (`parentId: null`) keeping males always and females only if unclaimed as a spouse — avoids the bidirectional `spouseIds` trap where every person ends up in `allSpouseIds`.
-- 4-colour depth palette (`#1a3a6b` navy → `#1a6b3a` green → `#6b1a4a` burgundy → `#7a4a00` amber) cycling per generation.
-- Deceased members (`alive !== true`, not `placeholder`) are shown with `स्व.` prefix (स्वर्गीय — traditional Hindu "departed") in gray (`#888`).
-- Trunk segments (`│   `) are coloured with their own generation's colour; connectors (`├─`/`└─`) and names share the node's colour.
-- Header includes: disclaimer block (language-aware, red border), dynasty title, gotra info table from `meta.info`, description block (language-aware, gold border), legend explaining `स्व.`.
-- `nl(s)` helper: HTML-escapes a string and converts `\n` to `<br>` for inline HTML blocks.
-- Footer includes the blog URL from `meta.blog`.
-- `@media print { body > * { display: none !important } #__vv_print_tree { display: block !important } }` injected as a `<style>` tag; cleaned up 2 s after `window.print()` returns.
+**Add Member:** `AddMemberForm` opens in a FAB modal overlay. Generates slug ID from name. POSTs to `/api/family` (always fails on static hosting) — user prompted to use Export JSON instead.
 
-**Photo lightbox (`DetailPanel.jsx`):** Clicking the avatar in the detail panel (only when `person.photo` is set) opens a full-screen lightbox overlay. A ⊕ zoom hint appears on hover. Close via ✕ button, clicking the backdrop, or Escape key. Lightbox is scoped inside `<aside class="detail-panel">` using `position: fixed`.
+**Photo lightbox (`DetailPanel.jsx`):** Clicking the avatar (when `person.photo` set) opens a full-screen lightbox. Close via ✕, backdrop click, or Escape.
 
-**Avatar (`src/components/Avatar.jsx`):** Falls back to styled initials (श्री / श्रीमती for Devanagari names, initials for Latin) if no `person.photo` is set or the image fails to load.
+**Avatar (`src/components/Avatar.jsx`):** Falls back to styled initials if no photo or image fails.
 
-**Tag colours (`src/utils/tagColor.js`):** djb2-style hash of the tag string → deterministic pastel HSL colour.
+**MiniMap (`src/components/MiniMap.jsx`):** Positioned absolutely in `.tree-section`. Returns `null` during print (`beforeprint`/`afterprint` events).
+
+**About page (`src/components/AboutPage.jsx`):** Full-page route at `/about`. Shows stats (computed from `people`), description, gotra info table, location + Maps link, disclaimer. "← Back to Tree" button navigates to `/`.
+
+**BottomNav (`src/components/BottomNav.jsx`):** Fixed bottom nav with 🌳 Tree / ℹ About tabs. Visible only on mobile via CSS (`display: none` on desktop, `display: flex` at `≤768px`). The header About link is visible on **all screen sizes** — both exist on mobile intentionally (header for quick reach, bottom nav for thumb-friendly access).
+
+**Credit line:** Tree area: `.tree-credit` (absolute, bottom-right of `.tree-section`) — hidden on mobile. About page: `.about-credit` at bottom of about body. Both read `meta.maintainer`.
 
 ### Styling
 
-All CSS is in `src/index.css` (single file, no CSS modules). CSS custom properties (defined on `:root`) are used for the colour palette — `--gold`, `--saffron`, `--text-muted`, etc. The tree layout is pure CSS flexbox/`<ul><li>` — no third-party tree library.
+All CSS in `src/index.css` (single file, no CSS modules). CSS custom properties on `:root` for colour palette. Mobile breakpoint `≤768px`. Tree layout is pure CSS flexbox/`<ul><li>` — no third-party tree library.
 
-Mobile breakpoint at `≤768px`: toolbar fixed height removed (becomes `min-height`) so zoom/depth controls are always reachable; legend hidden; touch targets enlarged to 32px; tree-credit hidden.
+### Utilities
+
+- `src/utils/auth.js` — SHA-256 password check, sessionStorage auth state
+- `src/utils/exportJSON.js` — download familyData as JSON
+- `src/utils/printTree.js` — generate and print coloured text tree overlay
+- `src/utils/tagColor.js` — djb2 hash → deterministic pastel HSL colour for tags
 
 ### Data source
 
-`src/data/member-base.js` is the **master source** for the family member list. It is a raw JS object with a nested `{ name, children[] }` structure rooted at "श्री हृदयी राम". It does not contain IDs, parentIds, gender, dates, or any schema fields — just names and parent-child relationships.
+`src/data/member-base.js` is the master source — a raw JS nested `{ name, children[] }` object. `family.json` is derived from it: assign IDs, compute `parentId`, infer gender from name suffixes (`(पुत्री)` = female, `(पुत्र)` = male). After rebuilding, run both data scripts in order.
 
-`src/data/family.json` is the **app data file** derived from the master source. When the master source is updated, `family.json` must be rebuilt: assign slugified IDs, compute `parentId` for each member by tracing the nested tree, infer gender from name suffixes (`(पुत्री)` = female, `(पुत्र)` = male), and leave all unknown fields (`born`, `died`, `bio`, etc.) as `null`. Entries marked `(-1)` in the source died early; `(1)`/`(2)` suffixes indicate which wife's child in multi-wife households.
+### Default avatar photos
 
-After rebuilding, run both data scripts in order:
-1. `node scripts/backfill-motherid.js` — populates `motherId` from `father.spouseIds[0]`
-2. `node scripts/add-placeholder-spouses.js` — creates placeholder spouses for parents with no `spouseIds`, then updates children's `motherId` to point to the new placeholder
+Real photos are stored under `public/photos/` and referenced as `/photos/<filename>` in `family.json`. Members without a real photo use a static DiceBear URL as their `photo` value:
+
+- **Male default**: `https://api.dicebear.com/9.x/avataaars/svg?seed=lakshman-prasad&backgroundColor=d1d4f9`
+- **Female default**: `https://api.dicebear.com/9.x/avataaars/svg?seed=priya&top=longButNotTooLong,bun,straight02&hairColor=2c1b18,4a312c&skinColor=ae5d29,d08b5b,edb98a&facialHairProbability=0&backgroundColor=ffffff`
+
+These are the same URL for all males / all females respectively (not personalised). To update the default, do a bulk find-and-replace of the old URL in `family.json`. Placeholder spouses (`tags: ["placeholder"]`) are intentionally excluded from photo display in the UI.
 
 ### Adding / editing family data
 
-Edit `src/data/family.json` directly. The app hot-reloads in dev. For production, run `npm run build` and redeploy `dist/`. The "Export JSON" button in the sidebar exports the current in-memory state (useful after using "Add Member" in the UI, since the `/api/family` write endpoint is unavailable in static hosting).
-
-`\n` in `description`, `descriptionHindi`, `disclaimer`, `disclaimerHindi` values is respected everywhere — `white-space: pre-wrap` in the UI, `<br>` conversion in Print Tree HTML.
+Edit `src/data/family.json` directly. For about/dynasty content, edit `src/data/about.json`. The "Export JSON" FAB action exports current in-memory state (useful after using Add Member in the UI).

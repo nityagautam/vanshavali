@@ -18,7 +18,7 @@ export default function App() {
   const [search, setSearch]           = useState('');
   const [zoom, setZoom]               = useState(0.25);
   const [maxGen, setMaxGen]           = useState(null);
-  const [lang, setLang]               = useState(() => localStorage.getItem('vv-lang') || 'hi');
+  const [lang, setLang]               = useState('hi');
   const [filterGender,   setFilterGender]   = useState('all');
   const [filterStatus,   setFilterStatus]   = useState('all');
   const [filterMarriage, setFilterMarriage] = useState('all');
@@ -40,7 +40,7 @@ export default function App() {
     setPendingAction(null);
   };
 
-  const handleLang = (l) => { setLang(l); localStorage.setItem('vv-lang', l); };
+  const handleLang = (l) => { setLang(l); };
 
   const clampZoom  = useCallback(z => Math.min(1.5, Math.max(0.25, +z.toFixed(2))), []);
   const adjustZoom = useCallback(delta => setZoom(z => clampZoom(z + delta)), [clampZoom]);
@@ -334,6 +334,7 @@ export default function App() {
                   person={personMap[selectedPerson.id] || selectedPerson}
                   personMap={personMap}
                   people={people}
+                  lang={lang}
                   onClose={() => setSelected(null)}
                   onSelect={handleSelect}
                 />

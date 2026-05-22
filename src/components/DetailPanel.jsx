@@ -16,7 +16,32 @@ function toLabel(key) {
     .replace(/\b\w/g, c => c.toUpperCase());
 }
 
-export default function DetailPanel({ person, personMap, people, onClose, onSelect }) {
+const LABELS = {
+  hi: {
+    details: 'विवरण', about: 'परिचय', family: 'परिवार',
+    born: 'जन्म', died: 'मृत्यु', married: 'विवाह',
+    occupation: 'व्यवसाय', location: 'स्थान',
+    living: 'जीवित', deceased: 'स्वर्गीय',
+    father: 'पिता', mother: 'माता', spouse: 'जीवनसाथी',
+    child: 'संतान', sibling: 'भाई/बहन',
+    present: 'वर्तमान',
+    moreSiblings: (n) => `+${n} और भाई/बहन`,
+    noDetails: 'अभी कोई विवरण नहीं।',
+  },
+  en: {
+    details: 'Details', about: 'About', family: 'Family',
+    born: 'Born', died: 'Died', married: 'Married',
+    occupation: 'Occupation', location: 'Location',
+    living: 'Living', deceased: 'Deceased',
+    father: 'Father', mother: 'Mother', spouse: 'Spouse',
+    child: 'Child', sibling: 'Sibling',
+    present: 'present',
+    moreSiblings: (n) => `+${n} more siblings`,
+    noDetails: 'No details yet. Update family.json to add information.',
+  },
+};
+
+export default function DetailPanel({ person, personMap, people, onClose, onSelect, lang = 'hi' }) {
   const [lightbox, setLightbox] = useState(false);
 
   // Close lightbox on Escape key
@@ -52,6 +77,9 @@ export default function DetailPanel({ person, personMap, people, onClose, onSele
   const isPlaceholder = person.tags?.includes('placeholder');
   const isDeceased    = person.alive !== true && !isPlaceholder;
 
+  // 'both' uses Hindi labels since the app is Hindi-first
+  const t = lang === 'en' ? LABELS.en : LABELS.hi;
+
   return (
     <aside className="detail-panel">
       {/* ── Photo hero ── */}
@@ -72,17 +100,17 @@ export default function DetailPanel({ person, personMap, people, onClose, onSele
           )}
           {(born || died) && (
             <span className="detail-hero-years">
-              {born || '?'}{isDeceased ? ` – ${died || '?'}` : born ? ' – present' : ''}
+              {born || '?'}{isDeceased ? ` – ${died || '?'}` : born ? ` – ${t.present}` : ''}
             </span>
           )}
         </div>
         {/* Status + tags */}
         <div className="detail-hero-tags">
           {person.alive === true && !isPlaceholder && (
-            <span className="card-tag" style={{ background: 'rgba(209,250,229,0.9)', color: '#065F46', border: '1px solid rgba(110,231,183,0.6)' }}>Living</span>
+            <span className="card-tag" style={{ background: 'rgba(209,250,229,0.9)', color: '#065F46', border: '1px solid rgba(110,231,183,0.6)' }}>{t.living}</span>
           )}
           {isDeceased && (
-            <span className="card-tag" style={{ background: 'rgba(243,244,246,0.9)', color: '#6B7280', border: '1px solid rgba(209,213,219,0.6)' }}>Deceased</span>
+            <span className="card-tag" style={{ background: 'rgba(243,244,246,0.9)', color: '#6B7280', border: '1px solid rgba(209,213,219,0.6)' }}>{t.deceased}</span>
           )}
           {(person.tags || []).filter(t => t !== 'root').map(tag => (
             <span key={tag} className="card-tag" style={getTagStyle(tag)}>{tag}</span>
@@ -93,34 +121,34 @@ export default function DetailPanel({ person, personMap, people, onClose, onSele
       <div className="detail-body">
         {/* Details */}
         <div className="detail-section">
-          <div className="detail-section-title">Details</div>
+          <div className="detail-section-title">{t.details}</div>
           {born && (
             <div className="detail-row">
-              <span className="label">Born</span>
+              <span className="label">{t.born}</span>
               <span className="value">{born}</span>
             </div>
           )}
           {died && (
             <div className="detail-row">
-              <span className="label">Died</span>
+              <span className="label">{t.died}</span>
               <span className="value">{died}</span>
             </div>
           )}
           {dom && (
             <div className="detail-row">
-              <span className="label">Married</span>
+              <span className="label">{t.married}</span>
               <span className="value">{dom}</span>
             </div>
           )}
           {person.occupation && !isPlaceholder && (
             <div className="detail-row">
-              <span className="label">Occupation</span>
+              <span className="label">{t.occupation}</span>
               <span className="value">{person.occupation}</span>
             </div>
           )}
           {person.location && (
             <div className="detail-row">
-              <span className="label">Location</span>
+              <span className="label">{t.location}</span>
               <span className="value">{person.location}</span>
             </div>
           )}
@@ -134,7 +162,7 @@ export default function DetailPanel({ person, personMap, people, onClose, onSele
           ))}
           {!born && !died && !dom && !person.occupation && !person.location && extraFields.length === 0 && (
             <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-              No details yet. Update <code>family.json</code> to add information.
+              {t.noDetails}
             </div>
           )}
         </div>
@@ -142,7 +170,7 @@ export default function DetailPanel({ person, personMap, people, onClose, onSele
         {/* Bio */}
         {person.bio && (
           <div className="detail-section">
-            <div className="detail-section-title">About</div>
+            <div className="detail-section-title">{t.about}</div>
             <div className="detail-bio">{person.bio}</div>
           </div>
         )}
@@ -150,16 +178,16 @@ export default function DetailPanel({ person, personMap, people, onClose, onSele
         {/* Family */}
         {(father || mother || spouses.length > 0 || children.length > 0 || siblings.length > 0) && (
           <div className="detail-section">
-            <div className="detail-section-title">Family</div>
+            <div className="detail-section-title">{t.family}</div>
             <div className="detail-relations">
-              {father && <RelationChip label="Father" person={father} onSelect={onSelect} personMap={personMap} />}
-              {mother && <RelationChip label="Mother" person={mother} onSelect={onSelect} personMap={personMap} />}
-              {spouses.map(s   => <RelationChip key={s.id}  label="Spouse"  person={s}   onSelect={onSelect} personMap={personMap} />)}
-              {children.map(c  => <RelationChip key={c.id}  label="Child"   person={c}   onSelect={onSelect} personMap={personMap} />)}
-              {siblings.slice(0, 5).map(s => <RelationChip key={s.id} label="Sibling" person={s} onSelect={onSelect} personMap={personMap} />)}
+              {father && <RelationChip label={t.father} person={father} onSelect={onSelect} personMap={personMap} />}
+              {mother && <RelationChip label={t.mother} person={mother} onSelect={onSelect} personMap={personMap} />}
+              {spouses.map(s   => <RelationChip key={s.id}  label={t.spouse}  person={s}   onSelect={onSelect} personMap={personMap} />)}
+              {children.map(c  => <RelationChip key={c.id}  label={t.child}   person={c}   onSelect={onSelect} personMap={personMap} />)}
+              {siblings.slice(0, 5).map(s => <RelationChip key={s.id} label={t.sibling} person={s} onSelect={onSelect} personMap={personMap} />)}
               {siblings.length > 5 && (
                 <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', padding: '4px 10px' }}>
-                  +{siblings.length - 5} more siblings
+                  {t.moreSiblings(siblings.length - 5)}
                 </div>
               )}
             </div>

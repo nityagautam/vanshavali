@@ -102,7 +102,7 @@ main.jsx (BrowserRouter)
 
 **Language toggle (`lang` state in App):**
 - 3-way pill in header: `हिं` (Hindi only, default) · `दो` (both) · `EN` (English only)
-- Persisted to `localStorage` key `vv-lang`
+- Always resets to Hindi (`'hi'`) on page load — not persisted
 - `pickLang(hindi, english, lang)` helper defined locally in `AboutPage.jsx`, `PrintView.jsx`, and `src/utils/printTree.js`; returns `{ primary, secondary }` — secondary is `null` for `'hi'` or `'en'`
 
 **FamilyTree / TreeNode rendering:**

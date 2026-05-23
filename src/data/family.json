@@ -57,16 +57,11 @@
       "died": null,
       "alive": false,
       "parentId": "greatgrandfather",
-      "spouseIds": [
-        "ph-spouse-shri-shivdas"
-      ],
+      "spouseIds": ["ph-spouse-shri-shivdas"],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश (Ghurehata, Mauganj, Rewa, M.P.)",
       "bio": null,
-      "tags": [
-        "elder",
-        "verified-source"
-      ],
+      "tags": ["elder","verified-source"],
       "motherId": "grandfather-1-wife",
       "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=lakshman-prasad&backgroundColor=d1d4f9"
     },
@@ -977,40 +972,34 @@
       "died": null,
       "alive": true,
       "parentId": null,
-      "spouseIds": [
-        "keshari-prasad"
-      ],
+      "spouseIds": ["keshari-prasad"],
       "occupation": "Farmer",
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
       "bio": "Served home with 6 children.",
-      "tags": [
-        "farmer"
-      ],
+      "tags": ["farmer"],
       "motherId": null
     },
     {
       "id": "sudha-mishra",
       "name": "सुधा मिश्रा (शुक्ला)",
       "gender": "female",
-      "born": null,
+      "born": "12 August 1983",
       "died": null,
       "alive": true,
       "parentId": "keshari-prasad",
       "motherId": "prafulla-devi",
       "spouseIds": [],
       "occupation": null,
-      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": null,
-      "tags": [
-        "verified-source"
-      ],
+      "location": "Kaanchghar, Jabalpur, मध्य प्रदेश",
+      "bio": "सुधा मिश्रा (शुक्ला) जी, श्री केशरी प्रसाद गौतम जी की ज्येष्ठ पुत्री संतान हैं। उनका जन्म (१२-०८-१९८३) 12 अगस्त 1983 को हुआ। और उनका विवाह 'श्री संजय शुक्ला' से हुआ जो कि जबलपुर काँचघर के निवासी है।",
+      "tags": [""],
       "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=priya&top=longButNotTooLong,bun,straight02&hairColor=2c1b18,4a312c&skinColor=ae5d29,d08b5b,edb98a&facialHairProbability=0&backgroundColor=ffffff"
     },
     {
       "id": "aradhana-mishra",
       "name": "आराधना मिश्रा (शुक्ला)",
       "gender": "female",
-      "born": null,
+      "born": "१४/14 January",
       "died": null,
       "alive": true,
       "parentId": "keshari-prasad",
@@ -1018,46 +1007,40 @@
       "spouseIds": [],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": null,
-      "tags": [
-        "verified-source"
-      ],
+      "bio": "इनका जन्म १४/14 जनवरी को हुआ। और उनका विवाह 'श्री रजनीश शुक्ला' से हुआ जो कि रतंगवाँ धनिराम टोला के स्थानीय निवासी है।",
+      "tags": [""],
       "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=priya&top=longButNotTooLong,bun,straight02&hairColor=2c1b18,4a312c&skinColor=ae5d29,d08b5b,edb98a&facialHairProbability=0&backgroundColor=ffffff"
     },
     {
       "id": "archana-mishra",
       "name": "अर्चना मिश्रा (शुक्ला)",
       "gender": "female",
-      "born": null,
+      "born": "१४/14 जनवरी",
       "died": null,
       "alive": true,
       "parentId": "keshari-prasad",
       "motherId": "prafulla-devi",
       "spouseIds": [],
       "occupation": null,
-      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": null,
-      "tags": [
-        "verified-source"
-      ],
+      "location": "दादर पश्चिमी, हनुमना, मऊगंज, मध्य प्रदेश",
+      "bio": "इनका जन्म १४/14 जनवरी को हुआ। और उनका विवाह 'श्री सुरेद्र शुक्ला' से हुआ। ये दादर पश्चिमी के स्थानीय निवासी है।",
+      "tags": ["verified-source"],
       "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=priya&top=longButNotTooLong,bun,straight02&hairColor=2c1b18,4a312c&skinColor=ae5d29,d08b5b,edb98a&facialHairProbability=0&backgroundColor=ffffff"
     },
     {
       "id": "aarti-mishra-kp",
       "name": "आरती मिश्रा (शुक्ला)",
       "gender": "female",
-      "born": null,
+      "born": "१९/19 अप्रैल",
       "died": null,
       "alive": true,
       "parentId": "keshari-prasad",
       "motherId": "prafulla-devi",
       "spouseIds": [],
       "occupation": "शिक्षक (Teacher)",
-      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": null,
-      "tags": [
-        "verified-source"
-      ],
+      "location": "अमरपाटन, सतना, मध्य प्रदेश",
+      "bio": "इनका जन्म १९/19 अप्रैल को हुआ। और उनका विवाह 'श्री अम्युन्त शुक्ला' से हुआ जो कि अमरपाटन सतना के स्थानीय निवासी है।",
+      "tags": [""],
       "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=priya&top=longButNotTooLong,bun,straight02&hairColor=2c1b18,4a312c&skinColor=ae5d29,d08b5b,edb98a&facialHairProbability=0&backgroundColor=ffffff"
     },
     {
@@ -1065,22 +1048,17 @@
       "name": "श्री नित्य नारायण (आशुतोष)",
       "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=lakshman-prasad&backgroundColor=d1d4f9",
       "gender": "male",
-      "born": "11 JULY 1992",
+      "born": "११/11 जुलाई 1992",
       "dom": "WED 07 Dec 2022 (मार्गशीर्ष शुक्ल पक्ष चतुर्दशी)",
       "died": null,
       "alive": true,
       "parentId": "keshari-prasad",
       "motherId": "prafulla-devi",
-      "spouseIds": [
-        "ruchi-tiwari-gautam"
-      ],
+      "spouseIds": ["ruchi-tiwari-gautam"],
       "occupation": "Researcher / Seeker / Farmer",
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": "Self-described as 'a seeker'.",
-      "tags": [
-        "author",
-        "farmer"
-      ]
+      "tags": ["author","farmer","engineer"]
     },
     {
       "id": "ruchi-tiwari-gautam",
@@ -1093,15 +1071,11 @@
       "alive": true,
       "parentId": null,
       "motherId": null,
-      "spouseIds": [
-        "nitya-narayan"
-      ],
+      "spouseIds": ["nitya-narayan"],
       "occupation": "Engineer",
       "location": "Mumbai, MH",
       "bio": null,
-      "tags": [
-        "SW Engineer"
-      ]
+      "tags": ["SW Engineer"]
     },
     {
       "id": "adya-mishra",
@@ -1118,8 +1092,7 @@
       "location": "Mumbai, MH",
       "bio": null,
       "tags": [
-        "verified-source"
-      ]
+        "verified-source"]
     },
     {
       "id": "adarsh-mishra",

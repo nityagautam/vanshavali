@@ -34,3 +34,4 @@ build
 .env.*.local
 my.env
 .env*
+src/data/ordered-family.json

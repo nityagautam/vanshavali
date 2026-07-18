@@ -1,12 +1,13 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { Routes, Route, NavLink } from 'react-router-dom';
-import { CheckCircle2, AlertTriangle, Search, RotateCcw, Minus, Plus, Sun, Moon } from 'lucide-react';
+import { CheckCircle2, AlertTriangle, Search, RotateCcw, Minus, Plus, Sun, Moon, Network, List } from 'lucide-react';
 import initialData from './data/family.json';
 import aboutData   from './data/about.json';
 import FamilyTree  from './components/FamilyTree';
 import DetailPanel from './components/DetailPanel';
 import PrintView   from './components/PrintView';
 import MiniMap     from './components/MiniMap';
+import MobileTreeView from './components/MobileTreeView';
 import OnboardingLegend from './components/OnboardingLegend';
 import AboutPage   from './components/AboutPage';
 
@@ -41,6 +42,10 @@ export default function App() {
   // null = follow OS preference; 'light'/'dark' = explicit user override, persisted.
   const [theme,          setTheme]          = useState(() => localStorage.getItem('vv-theme') || null);
   const [systemDark,     setSystemDark]     = useState(() => window.matchMedia('(prefers-color-scheme: dark)').matches);
+  // 'tree' (pannable/zoomable) is always the default — the drill-down list
+  // view is purely opt-in via the toolbar toggle, never auto-switched by
+  // screen size. Persisted like the theme choice.
+  const [viewMode,       setViewMode]       = useState(() => localStorage.getItem('vv-view-mode') || 'tree');
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -49,6 +54,10 @@ export default function App() {
     mq.addEventListener('change', handler);
     return () => mq.removeEventListener('change', handler);
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('vv-view-mode', viewMode);
+  }, [viewMode]);
 
   useEffect(() => {
     if (theme) {
@@ -91,7 +100,7 @@ export default function App() {
 
   const handleLang = (l) => { setLang(l); };
 
-  const clampZoom  = useCallback(z => Math.min(1.5, Math.max(0.25, +z.toFixed(2))), []);
+  const clampZoom  = useCallback(z => Math.min(2, Math.max(0.25, +z.toFixed(2))), []);
   const adjustZoom = useCallback(delta => setZoom(z => clampZoom(z + delta)), [clampZoom]);
 
   const meta   = initialData.meta;
@@ -189,8 +198,8 @@ export default function App() {
   useEffect(() => {
     const onKey = (e) => {
       if (!e.ctrlKey && !e.metaKey) return;
-      if (e.key === '=' || e.key === '+') { e.preventDefault(); adjustZoom(+0.1); }
-      if (e.key === '-')                  { e.preventDefault(); adjustZoom(-0.1); }
+      if (e.key === '=' || e.key === '+') { e.preventDefault(); adjustZoom(+0.15); }
+      if (e.key === '-')                  { e.preventDefault(); adjustZoom(-0.15); }
       if (e.key === '0')                  { e.preventDefault(); setZoom(1); }
       if (e.key === 'k' || e.key === 'K') { e.preventDefault(); setPaletteOpen(o => !o); }
     };
@@ -472,31 +481,55 @@ export default function App() {
                     )}
                   </div>
 
-                  {/* Zoom control */}
-                  <div className="zoom-controls">
-                    <button className="zoom-btn" onClick={() => adjustZoom(-0.1)} title="Zoom out (Ctrl+−)"><Minus size={15} /></button>
-                    <button className="zoom-level" onClick={() => setZoom(1)} title="Reset zoom (Ctrl+0)">
-                      {Math.round(zoom * 100)}%
-                    </button>
-                    <button className="zoom-btn" onClick={() => adjustZoom(+0.1)} title="Zoom in (Ctrl+=)"><Plus size={15} /></button>
-                  </div>
+                  {/* Zoom control — not applicable to the drill-down list view */}
+                  {viewMode === 'tree' && (
+                    <div className="zoom-controls">
+                      <button className="zoom-btn" onClick={() => adjustZoom(-0.15)} title="Zoom out (Ctrl+−)"><Minus size={15} /></button>
+                      <button className="zoom-level" onClick={() => setZoom(1)} title="Reset zoom (Ctrl+0)">
+                        {Math.round(zoom * 100)}%
+                      </button>
+                      <button className="zoom-btn" onClick={() => adjustZoom(+0.15)} title="Zoom in (Ctrl+=)"><Plus size={15} /></button>
+                    </div>
+                  )}
+
+                  {/* View mode toggle */}
+                  <button
+                    className="view-mode-btn"
+                    onClick={() => setViewMode(m => m === 'tree' ? 'list' : 'tree')}
+                    title={viewMode === 'tree' ? 'Switch to list (drill-down) view' : 'Switch to tree view'}
+                    aria-label={viewMode === 'tree' ? 'Switch to list (drill-down) view' : 'Switch to tree view'}
+                  >
+                    {viewMode === 'tree' ? <List size={15} /> : <Network size={15} />}
+                  </button>
                 </div>
 
-                {/* Tree canvas */}
-                <div className="tree-canvas" ref={canvasRef}>
-                  <div style={{ zoom }}>
-                    <FamilyTree
-                      people={people}
-                      personMap={personMap}
-                      selectedId={selectedPerson?.id}
-                      onSelect={handleSelect}
-                      highlightIds={highlightIds}
-                      maxGen={maxGen}
-                    />
-                  </div>
-                </div>
+                {viewMode === 'list' ? (
+                  <MobileTreeView
+                    people={people}
+                    personMap={personMap}
+                    selectedPerson={selectedPerson}
+                    onSelect={handleSelect}
+                    highlightIds={highlightIds}
+                  />
+                ) : (
+                  <>
+                    {/* Tree canvas */}
+                    <div className="tree-canvas" ref={canvasRef}>
+                      <div style={{ zoom }}>
+                        <FamilyTree
+                          people={people}
+                          personMap={personMap}
+                          selectedId={selectedPerson?.id}
+                          onSelect={handleSelect}
+                          highlightIds={highlightIds}
+                          maxGen={maxGen}
+                        />
+                      </div>
+                    </div>
 
-                <MiniMap canvasRef={canvasRef} zoom={zoom} />
+                    <MiniMap canvasRef={canvasRef} zoom={zoom} />
+                  </>
+                )}
                 <OnboardingLegend />
 
                 {meta.maintainer && (

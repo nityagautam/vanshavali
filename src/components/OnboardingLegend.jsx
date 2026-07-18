@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, Sparkles } from 'lucide-react';
+import { X, Sparkles, List } from 'lucide-react';
 
 const STORAGE_KEY = 'vv-onboarding-dismissed';
 const GEN_COLORS = ['#1a3a6b', '#1a6b3a', '#6b1a4a', '#7a4a00'];
@@ -34,6 +34,10 @@ export default function OnboardingLegend() {
           A "?" avatar marks an unrecorded spouse
         </li>
         <li>Search, filter, and adjust Depth from the toolbar above</li>
+        <li>
+          <List size={14} aria-hidden="true" />
+          Toggle the toolbar's view button for a tap-to-drill-down list — handy on small screens
+        </li>
         <li>Click any card for full details</li>
       </ul>
     </div>

@@ -42,7 +42,7 @@ export default function FamilyTree({ people, personMap, selectedId, onSelect, hi
   }
 
   return (
-    <div className="org-tree">
+    <div className="org-tree" role="region" aria-label="Family tree">
       <ul>
         {roots.map(root => (
           <TreeNode

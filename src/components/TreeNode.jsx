@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Plus, Minus } from 'lucide-react';
 import PersonCard from './PersonCard';
 
 const GEN_COLORS = ['#1a3a6b', '#1a6b3a', '#6b1a4a', '#7a4a00'];
@@ -49,7 +50,7 @@ export default function TreeNode({
             />
             {spouses.map(spouse => (
               <div key={spouse.id} className="couple-bubble-pair">
-                <div className="couple-badge">⚭</div>
+                <div className="couple-badge" aria-hidden="true">⚭</div>
                 <PersonCard
                   person={spouse}
                   selected={selectedId === spouse.id}
@@ -66,8 +67,10 @@ export default function TreeNode({
               className="card-collapse-btn couple-collapse-btn"
               onClick={e => { e.stopPropagation(); setCollapsed(c => !c); }}
               title={collapsed ? 'Expand children' : 'Collapse children'}
+              aria-label={collapsed ? `Expand ${person.name}'s children` : `Collapse ${person.name}'s children`}
+              aria-expanded={!collapsed}
             >
-              {collapsed ? '+' : '−'}
+              {collapsed ? <Plus size={12} /> : <Minus size={12} />}
             </button>
           )}
         </div>
@@ -86,8 +89,10 @@ export default function TreeNode({
               className="card-collapse-btn"
               onClick={e => { e.stopPropagation(); setCollapsed(c => !c); }}
               title={collapsed ? 'Expand children' : 'Collapse children'}
+              aria-label={collapsed ? `Expand ${person.name}'s children` : `Collapse ${person.name}'s children`}
+              aria-expanded={!collapsed}
             >
-              {collapsed ? '+' : '−'}
+              {collapsed ? <Plus size={12} /> : <Minus size={12} />}
             </button>
           )}
         </div>

@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { LayoutGrid } from 'lucide-react';
 
 const MAP_W = 168;
 const MAP_H = 84;
@@ -81,7 +82,7 @@ export default function MiniMap({ canvasRef, zoom }) {
 
   return (
     <div className="mini-map" title="Click to navigate">
-      <div className="mini-map-label">⊞ Map</div>
+      <div className="mini-map-label"><LayoutGrid size={11} /> Map</div>
       <div className="mini-map-area" onClick={handleClick}>
         <div
           className="mini-map-viewport"

@@ -23,15 +23,91 @@
   --line-width: 2px;
   --card-bg: #FFFBF4;
   --card-border: #DFC98A;
+  --selected-bg: #FFF5E9;
+  --highlight-bg: #F0FBF5;
+  --shadow-sm: 0 1px 4px rgba(123, 79, 46, 0.10);
   --shadow: 0 2px 12px rgba(123, 79, 46, 0.12);
   --shadow-hover: 0 4px 20px rgba(123, 79, 46, 0.22);
+  --shadow-md: var(--shadow-hover);
+  --shadow-lg: 0 8px 48px rgba(0, 0, 0, 0.22);
+  --radius-sm: 6px;
   --radius: 10px;
+  --radius-lg: 16px;
+  --radius-full: 999px;
   --transition: 0.22s ease;
+
+  /* Spacing scale (4px base) — new code should use these instead of
+     hardcoded px values; existing rules aren't retrofitted. */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* Type scale — matches sizes already in use across the app so it can be
+     adopted incrementally without a visual diff. */
+  --text-xs: 0.72rem;
+  --text-sm: 0.78rem;
+  --text-base: 0.85rem;
+  --text-md: 0.95rem;
+  --text-lg: 1.1rem;
+  --text-xl: 1.4rem;
+  --text-2xl: 1.75rem;
+
+  /* z-index scale — keeps stacking order legible as more overlays get added. */
+  --z-header: 10;
+  --z-popover: 50;
+  --z-modal: 200;
+}
+
+/* ── Dark theme ──────────────────────────────────────────────────────────
+   Three-state: OS preference drives it by default; an explicit .theme-btn
+   choice (persisted in localStorage, applied as data-theme on <html>)
+   always wins over the OS setting in either direction. The saffron/gold/
+   brown accent palette is deliberately left unchanged — those already read
+   fine on a dark surface and are also used in the always-dark header. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --cream: #1C140B;
+    --cream-dark: #241B10;
+    --text-primary: #F5EAD7;
+    --text-secondary: #D9C2A0;
+    --text-muted: #A68B66;
+    --line-color: #7A5F35;
+    --card-bg: #2A2014;
+    --card-border: #4A3A22;
+    --selected-bg: #3A2A16;
+    --highlight-bg: #1E2A1E;
+    --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.35);
+    --shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+    --shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.5);
+    --shadow-md: var(--shadow-hover);
+  }
+}
+:root[data-theme="dark"] {
+  --cream: #1C140B;
+  --cream-dark: #241B10;
+  --text-primary: #F5EAD7;
+  --text-secondary: #D9C2A0;
+  --text-muted: #A68B66;
+  --line-color: #7A5F35;
+  --card-bg: #2A2014;
+  --card-border: #4A3A22;
+  --selected-bg: #3A2A16;
+  --highlight-bg: #1E2A1E;
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.35);
+  --shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  --shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.5);
+  --shadow-md: var(--shadow-hover);
 }
 
 html, body {
   height: 100%;
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Inter', 'Noto Sans Devanagari', system-ui, sans-serif;
   background: var(--cream);
   color: var(--text-primary);
   font-size: 14px;
@@ -42,6 +118,19 @@ html, body {
   height: 100%;
   display: flex;
   flex-direction: column;
+}
+
+/* ── Accessibility utilities ── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* ── Scrollbars ── */
@@ -55,6 +144,14 @@ button {
   font-family: inherit;
   border: none;
   background: none;
+}
+
+/* Keyboard-only focus ring — invisible for mouse/touch clicks, visible for
+   Tab navigation. Specific components (e.g. .person-card) override the
+   color to fit their context. */
+button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
 }
 
 /* ── Header ── */
@@ -94,7 +191,7 @@ button {
 }
 
 .header-title h1 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
   font-size: 1.75rem;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -233,6 +330,25 @@ button {
   color: #fff;
 }
 
+/* ── Theme toggle ── */
+.theme-toggle-btn {
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.2);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 50%;
+  color: rgba(255,255,255,0.8);
+  transition: all var(--transition);
+  flex-shrink: 0;
+}
+.theme-toggle-btn:hover {
+  color: #fff;
+  background: rgba(255,255,255,0.12);
+}
+
 /* ── Layout ── */
 .app-body {
   display: flex;
@@ -296,6 +412,34 @@ button {
   border-color: var(--gold);
 }
 
+.cmdk-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-width: 200px;
+  padding: 7px 14px;
+  border: 1.5px solid var(--card-border);
+  border-radius: 20px;
+  background: var(--card-bg);
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  white-space: nowrap;
+  transition: all var(--transition);
+}
+.cmdk-trigger:hover {
+  border-color: var(--gold);
+  color: var(--text-primary);
+}
+.cmdk-trigger kbd {
+  font-family: ui-monospace, monospace;
+  font-size: 0.68rem;
+  background: var(--cream-dark);
+  border: 1px solid var(--card-border);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
 .search-input::placeholder {
   color: var(--text-muted);
 }
@@ -324,9 +468,11 @@ button {
   border: none;
   background: none;
   color: var(--text-primary);
-  font-size: 1.1rem;
   line-height: 1;
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -406,10 +552,11 @@ button {
   border: none;
   cursor: pointer;
   color: var(--saffron);
-  font-size: 0.9rem;
   padding: 0 2px;
   line-height: 1;
   transition: color var(--transition);
+  display: flex;
+  align-items: center;
 }
 
 .filter-reset:hover {
@@ -438,9 +585,11 @@ button {
   border: none;
   background: none;
   color: var(--text-primary);
-  font-size: 1rem;
   line-height: 1;
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -461,10 +610,11 @@ button {
   background: none;
   cursor: pointer;
   color: var(--saffron);
-  font-size: 0.9rem;
   padding: 0 2px;
   line-height: 1;
   transition: color var(--transition);
+  display: flex;
+  align-items: center;
 }
 .gen-reset:hover { color: var(--gold); }
 
@@ -499,13 +649,88 @@ button {
   z-index: 1;
 }
 
+/* ── Onboarding legend (first-visit only, dismissible) ── */
+.onboarding-card {
+  position: absolute;
+  top: calc(var(--toolbar-h) + 16px);
+  left: 16px;
+  z-index: var(--z-popover);
+  width: 260px;
+  max-width: calc(100vw - 32px);
+  background: var(--card-bg);
+  border: 1.5px solid var(--card-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  padding: 14px 16px;
+  animation: fadeIn 0.2s ease;
+}
+.onboarding-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  color: var(--text-muted);
+  padding: 3px;
+  border-radius: 6px;
+  display: flex;
+  transition: all var(--transition);
+}
+.onboarding-close:hover { color: var(--text-primary); background: var(--cream-dark); }
+.onboarding-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--brown-dark);
+  margin-bottom: 8px;
+}
+.onboarding-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  list-style: none;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+.onboarding-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.onboarding-swatches {
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+}
+.onboarding-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.onboarding-swatch-ph {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--cream-dark);
+  border: 1px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
 /* ── Mini-map ── */
 .mini-map {
   position: absolute;
   bottom: 16px;
   left: 16px;
   width: 180px;
-  background: rgba(253, 248, 240, 0.94);
+  background: var(--card-bg);
   border: 1.5px solid var(--card-border);
   border-radius: 8px;
   padding: 6px;
@@ -520,11 +745,14 @@ button {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
 }
 .mini-map-area {
   width: 168px;
   height: 84px;
-  background: rgba(0,0,0,0.04);
+  background: var(--cream-dark);
   border-radius: 4px;
   position: relative;
   overflow: hidden;
@@ -678,7 +906,7 @@ button {
 }
 
 .sidebar-panel-title {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--brown-dark);
@@ -700,6 +928,9 @@ button {
   box-shadow: 0 4px 16px rgba(0,0,0,0.15);
   z-index: 1000;
   animation: toastIn 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
   white-space: nowrap;
 }
 
@@ -853,6 +1084,10 @@ button {
   background: linear-gradient(135deg, var(--brown) 0%, var(--saffron) 100%);
   border: none;
   transition: opacity var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 }
 .amf-btn-save:disabled { opacity: 0.6; cursor: not-allowed; }
 .amf-btn-save:not(:disabled):hover { opacity: 0.9; }
@@ -1005,7 +1240,7 @@ button {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(135deg, #fffaf0 0%, #fff8ee 100%);
+  background: var(--card-bg);
   border: 2px solid var(--gold);
   border-radius: 14px;
   padding: 8px 10px 12px;
@@ -1015,7 +1250,7 @@ button {
 .couple-bubble.dimmed     { opacity: 0.35; }
 .couple-bubble.highlighted {
   border-color: var(--green);
-  background: linear-gradient(135deg, #f0fbf5 0%, #e8f8f0 100%);
+  background: var(--highlight-bg);
   box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.2);
 }
 
@@ -1034,13 +1269,13 @@ button {
 
 .couple-bubble .person-card:hover {
   border-color: var(--gold);
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--card-bg);
   box-shadow: var(--shadow);
 }
 
 .couple-bubble .person-card.selected {
   border-color: var(--saffron);
-  background: rgba(255, 245, 233, 0.9);
+  background: var(--selected-bg);
 }
 
 .couple-bubble-pair {
@@ -1124,8 +1359,9 @@ button {
   border: 1.5px solid var(--card-border);
   border-radius: var(--radius);
   padding: 10px 14px;
-  min-width: 120px;
-  max-width: 170px;
+  min-width: 250px;
+  min-height: 200px;
+  max-width: 320px;
   cursor: pointer;
   transition: all var(--transition);
   box-shadow: var(--shadow);
@@ -1139,15 +1375,20 @@ button {
   transform: translateY(-2px);
 }
 
+.person-card:focus-visible {
+  outline: 2.5px solid var(--saffron);
+  outline-offset: 2px;
+}
+
 .person-card.selected {
   border-color: var(--saffron);
-  background: #FFF5E9;
+  background: var(--selected-bg);
   box-shadow: 0 0 0 3px rgba(232, 93, 4, 0.18), var(--shadow-hover);
 }
 
 .person-card.highlighted {
   border-color: var(--green);
-  background: #F0FBF5;
+  background: var(--highlight-bg);
   box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.2);
 }
 
@@ -1171,15 +1412,16 @@ button {
   color: var(--text-secondary);
 }
 
-/* card avatar sizing — via Avatar component */
+/* card avatar sizing — actual size set inline by Avatar.jsx (inline style
+   beats this selector); kept in sync here so it isn't a misleading value. */
 .person-card .avatar-sm {
-  width: 38px;
-  height: 38px;
+  width: 50px;
+  height: 50px;
   font-size: 1rem;
 }
 
 .card-name {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
   font-size: 0.75rem;
   font-weight: 600;
   color: var(--text-primary);
@@ -1280,12 +1522,14 @@ button {
   top: 10px;
   right: 12px;
   color: rgba(255,255,255,0.7);
-  font-size: 1rem;
   line-height: 1;
   padding: 4px 6px;
   border-radius: 6px;
   transition: all var(--transition);
   z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .detail-edit {
@@ -1293,12 +1537,14 @@ button {
   top: 10px;
   right: 44px;
   color: rgba(255,255,255,0.7);
-  font-size: 0.95rem;
   line-height: 1;
   padding: 4px 7px;
   border-radius: 6px;
   transition: all var(--transition);
   z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .detail-edit:hover {
   color: #fff;
@@ -1393,13 +1639,13 @@ button {
 
 .photo-lightbox-name {
   color: rgba(255,255,255,0.85);
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
   font-size: 1rem;
   text-align: center;
 }
 
 .detail-hero-name {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
   font-size: 0.95rem;
   font-weight: 700;
   color: #fff;
@@ -1557,7 +1803,7 @@ button {
 }
 
 .dip-dynasty-name {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
   font-size: 1.2rem;
   font-weight: 700;
   color: var(--gold-light);
@@ -1599,7 +1845,7 @@ button {
 }
 
 .dip-stat-num {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
   font-size: 1.4rem;
   font-weight: 700;
   color: var(--brown-dark);
@@ -1708,7 +1954,7 @@ button {
   font-size: 0.6rem;
   font-style: italic;
   font-weight: 700;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
   cursor: pointer;
   transition: all var(--transition);
   flex-shrink: 0;
@@ -1723,12 +1969,12 @@ button {
   box-shadow: 0 0 0 3px rgba(255,255,255,0.15);
 }
 
+/* Radix Popover positions itself (viewport collision avoidance included) —
+   no manual position/arrow-offset math needed like the old version. */
 .info-popup {
-  position: absolute;
-  top: calc(100% + 10px);
-  left: 0;
-  z-index: 200;
+  z-index: var(--z-popover);
   width: 300px;
+  max-width: 92vw;
   background: var(--card-bg);
   border: 1.5px solid var(--card-border);
   border-radius: 12px;
@@ -1737,29 +1983,12 @@ button {
   overflow: hidden;
 }
 
-/* If popup would overflow right side of viewport, open left instead */
-@media (max-width: 400px) {
-  .info-popup { left: auto; right: 0; width: 92vw; }
-}
-
 @keyframes popupFadeIn {
   from { opacity: 0; transform: translateY(-6px) scale(0.97); }
   to   { opacity: 1; transform: translateY(0)    scale(1); }
 }
 
-/* Arrow pointing up */
-.info-popup::before {
-  content: '';
-  position: absolute;
-  top: -7px;
-  left: 12px;
-  width: 12px;
-  height: 12px;
-  background: var(--card-bg);
-  border-left: 1.5px solid var(--card-border);
-  border-top: 1.5px solid var(--card-border);
-  transform: rotate(45deg);
-}
+.info-popup-arrow { fill: var(--card-bg); }
 
 .info-popup-header {
   display: flex;
@@ -1771,7 +2000,7 @@ button {
 }
 
 .info-popup-title {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
   font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.03em;
@@ -1779,12 +2008,13 @@ button {
 
 .info-popup-close {
   color: rgba(255,255,255,0.8);
-  font-size: 0.85rem;
   line-height: 1;
   padding: 2px 4px;
   border-radius: 4px;
   transition: color var(--transition);
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
 .info-popup-close:hover { color: #fff; }
@@ -1872,6 +2102,9 @@ button {
   font-size: 0.78rem;
   word-break: break-all;
   text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
 }
 
 .info-link:hover { text-decoration: underline; }
@@ -1897,6 +2130,7 @@ button {
   .sidebar-toast,
   .tree-canvas,
   .mini-map,
+  .onboarding-card,
   .tree-credit {
     display: none !important;
   }
@@ -2279,6 +2513,7 @@ button {
 
   .tree-credit { display: none; }
   .tree-canvas { padding: 24px 16px 72px; }
+  .cmdk-trigger kbd { display: none; }
 
   .org-tree li {
     padding: 0 8px;
@@ -2478,19 +2713,22 @@ button {
   pointer-events: none;
 }
 
-/* FAB Modal (Add Member) */
+/* FAB Modal (Add/Edit Member, Invite) — Radix Dialog renders Overlay and
+   Content as siblings (not nested), so centering lives on .fab-modal itself
+   via fixed positioning, not on the overlay via flex. */
 .fab-modal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.45);
-  z-index: 200;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  z-index: var(--z-modal);
   backdrop-filter: blur(3px);
   animation: fadeIn 0.15s ease;
 }
 .fab-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background: var(--card-bg);
   border-radius: 16px;
   width: 90vw;
@@ -2500,19 +2738,98 @@ button {
   display: flex;
   flex-direction: column;
   box-shadow: 0 8px 48px rgba(0,0,0,0.22);
+  z-index: calc(var(--z-modal) + 1);
   animation: fabModalIn 0.18s ease;
 }
 @keyframes fabModalIn {
-  from { opacity: 0; transform: translateY(16px) scale(0.97); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
+  from { opacity: 0; transform: translate(-50%, -50%) translateY(16px) scale(0.97); }
+  to   { opacity: 1; transform: translate(-50%, -50%) translateY(0) scale(1); }
 }
+
+/* ── Command palette (Ctrl/Cmd+K jump-to-person) ── */
+.cmdk-modal {
+  position: fixed;
+  top: 12vh;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  width: 90vw;
+  max-width: 800px;
+  max-height: 70vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-lg);
+  z-index: calc(var(--z-modal) + 1);
+  animation: cmdkIn 0.15s ease;
+}
+@keyframes cmdkIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(-8px) scale(0.98); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+}
+.cmdk-search-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--card-border);
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+.cmdk-input {
+  flex: 1;
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 1.05rem;
+  color: var(--text-primary);
+}
+.cmdk-list {
+  overflow-y: auto;
+  padding: 6px;
+}
+.cmdk-empty {
+  padding: 24px 12px;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.cmdk-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  text-align: left;
+  transition: background var(--transition);
+}
+.cmdk-item.active, .cmdk-item:hover { background: var(--cream-dark); }
+.cmdk-item-text { min-width: 0; }
+.cmdk-item-name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cmdk-item-sub {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .fab-modal-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 14px 16px 12px;
   border-bottom: 1px solid var(--card-border);
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--brown-dark);
@@ -2635,7 +2952,7 @@ button {
   flex-shrink: 0;
 }
 .about-banner-dynasty {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
   font-size: 1.4rem;
   font-weight: 700;
   color: var(--gold-light);
@@ -2693,7 +3010,7 @@ button {
   box-shadow: var(--shadow);
 }
 .about-stat-num {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--brown-dark);
@@ -2720,6 +3037,9 @@ button {
   color: var(--text-muted);
   border-bottom: 1px solid var(--cream-dark);
   padding-bottom: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .about-description {
@@ -2799,7 +3119,7 @@ button {
 .about-maps-btn:hover { background: var(--gold-light); border-color: var(--gold); }
 
 .about-disclaimer {
-  background: #fffaf8;
+  background: var(--card-bg);
   border: 1px solid #e8c9b0;
   border-left: 3px solid #c87941;
   border-radius: 8px;
@@ -2866,20 +3186,21 @@ button {
   inset: 0;
   background: rgba(0,0,0,0.55);
   z-index: 300;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
   backdrop-filter: blur(4px);
   animation: fadeIn 0.15s ease;
 }
 .login-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background: var(--card-bg);
   border-radius: 18px;
-  width: 100%;
+  width: calc(100vw - 32px);
   max-width: 360px;
   overflow: hidden;
   box-shadow: 0 12px 56px rgba(0,0,0,0.28);
+  z-index: 301;
   animation: fabModalIn 0.2s ease;
 }
 .login-header {
@@ -2896,7 +3217,7 @@ button {
   margin-bottom: 4px;
 }
 .login-title {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
   font-size: 1rem;
   font-weight: 700;
   color: var(--gold-light);
@@ -3004,10 +3325,10 @@ button {
 
 /* Shake animation on wrong password */
 @keyframes loginShake {
-  0%, 100% { transform: translateX(0); }
-  20%       { transform: translateX(-8px); }
-  40%       { transform: translateX(8px); }
-  60%       { transform: translateX(-5px); }
-  80%       { transform: translateX(5px); }
+  0%, 100% { transform: translate(-50%, -50%) translateX(0); }
+  20%       { transform: translate(-50%, -50%) translateX(-8px); }
+  40%       { transform: translate(-50%, -50%) translateX(8px); }
+  60%       { transform: translate(-50%, -50%) translateX(-5px); }
+  80%       { transform: translate(-50%, -50%) translateX(5px); }
 }
 .login-shake { animation: loginShake 0.45s ease; }

@@ -28,8 +28,19 @@ export default function PersonCard({ person, selected, highlighted, dimmed, onCl
     isDeceased   ? 'deceased-card' : '',
   ].filter(Boolean).join(' ');
 
+  const status = isPlaceholder ? '' : isDeceased ? ', deceased' : ', living';
+  const ariaLabel = `${person.name}${status}${yearsText ? `, ${yearsText}` : ''}`;
+
   return (
-    <div className={cls} onClick={onClick} title={person.name}>
+    <button
+      type="button"
+      className={cls}
+      onClick={onClick}
+      title={person.name}
+      aria-label={ariaLabel}
+      aria-pressed={selected}
+      data-person-id={person.id}
+    >
       <Avatar person={person} size="sm" />
       <div className="card-name">{person.name}</div>
       {yearsText && <div className="card-years">{yearsText}</div>}
@@ -39,6 +50,6 @@ export default function PersonCard({ person, selected, highlighted, dimmed, onCl
       {primaryTag && (
         <span className="card-tag" style={getTagStyle(primaryTag)}>{primaryTag}</span>
       )}
-    </div>
+    </button>
   );
 }

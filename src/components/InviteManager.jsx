@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
+import Modal from './Modal';
 import { getInviteStatus, generateInvite, resetInvite } from '../utils/inviteApi';
 
-export default function InviteManager({ onClose, showToast }) {
+export default function InviteManager({ open, onOpenChange, showToast }) {
   const [status, setStatus]   = useState(null);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy]       = useState(false);
@@ -14,7 +15,7 @@ export default function InviteManager({ onClose, showToast }) {
       .finally(() => setLoading(false));
   };
 
-  useEffect(load, []);
+  useEffect(() => { if (open) load(); }, [open]);
 
   const link = status?.token ? `${window.location.origin}/?invite=${status.token}` : null;
 
@@ -53,12 +54,7 @@ export default function InviteManager({ onClose, showToast }) {
   };
 
   return (
-    <div className="fab-modal-overlay" onClick={onClose}>
-      <div className="fab-modal" onClick={e => e.stopPropagation()}>
-        <div className="fab-modal-header">
-          <span>One-Time Invite Link</span>
-          <button onClick={onClose}>✕</button>
-        </div>
+    <Modal open={open} onOpenChange={onOpenChange} title="One-Time Invite Link">
         <div className="invite-body">
           {loading ? (
             <div className="invite-loading">Loading…</div>
@@ -96,7 +92,6 @@ export default function InviteManager({ onClose, showToast }) {
             </>
           )}
         </div>
-      </div>
-    </div>
+    </Modal>
   );
 }

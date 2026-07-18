@@ -1,17 +1,21 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { Routes, Route, NavLink } from 'react-router-dom';
+import { CheckCircle2, AlertTriangle, Search, RotateCcw, Minus, Plus, Sun, Moon } from 'lucide-react';
 import initialData from './data/family.json';
 import aboutData   from './data/about.json';
 import FamilyTree  from './components/FamilyTree';
 import DetailPanel from './components/DetailPanel';
 import PrintView   from './components/PrintView';
 import MiniMap     from './components/MiniMap';
+import OnboardingLegend from './components/OnboardingLegend';
 import AboutPage   from './components/AboutPage';
 
 import FloatingActions from './components/FloatingActions';
 import LoginModal  from './components/LoginModal';
 import UserBadge    from './components/UserBadge';
 import AddMemberForm from './components/AddMemberForm';
+import Modal from './components/Modal';
+import CommandPalette from './components/CommandPalette';
 import { isAuthenticated, setAuthenticated, checkSession } from './utils/auth';
 import { fetchFamilyData, editFamilyMember } from './utils/familyApi';
 import { consumeInvite } from './utils/inviteApi';
@@ -33,7 +37,31 @@ export default function App() {
   const [isAdmin,        setIsAdmin]        = useState(false);
   const [authMessage,    setAuthMessage]    = useState(null);
   const [editingPerson,  setEditingPerson]  = useState(null);
+  const [paletteOpen,    setPaletteOpen]    = useState(false);
+  // null = follow OS preference; 'light'/'dark' = explicit user override, persisted.
+  const [theme,          setTheme]          = useState(() => localStorage.getItem('vv-theme') || null);
+  const [systemDark,     setSystemDark]     = useState(() => window.matchMedia('(prefers-color-scheme: dark)').matches);
   const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    const handler = (e) => setSystemDark(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+
+  useEffect(() => {
+    if (theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('vv-theme', theme);
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.removeItem('vv-theme');
+    }
+  }, [theme]);
+
+  const isDark = theme ? theme === 'dark' : systemDark;
+  const toggleTheme = () => setTheme(isDark ? 'light' : 'dark');
 
   const handleAuthRequired = (action) => {
     setPendingAction(() => action);
@@ -81,13 +109,15 @@ export default function App() {
     el.scrollLeft = (el.scrollWidth - el.clientWidth) / 2;
   }, []);
 
-  // The bundled family.json renders instantly; once the live Blob-backed
-  // data loads, swap in whatever's actually been persisted since the last
+  // The bundled family.json renders instantly; once the live datastore
+  // responds, swap in whatever's actually been persisted since the last
   // build (e.g. members added through the app).
   useEffect(() => {
     fetchFamilyData()
       .then(data => { if (data?.people) setPeople(data.people); })
-      .catch(() => {});
+      .catch(() => {
+        setAuthMessage({ type: 'err', text: "Couldn't reach the server — showing the last saved version." });
+      });
   }, []);
 
   // Sync client auth state with the server-side Google OAuth session, if any
@@ -162,6 +192,7 @@ export default function App() {
       if (e.key === '=' || e.key === '+') { e.preventDefault(); adjustZoom(+0.1); }
       if (e.key === '-')                  { e.preventDefault(); adjustZoom(-0.1); }
       if (e.key === '0')                  { e.preventDefault(); setZoom(1); }
+      if (e.key === 'k' || e.key === 'K') { e.preventDefault(); setPaletteOpen(o => !o); }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
@@ -223,8 +254,29 @@ export default function App() {
     );
   }, [search, people, filterGender, filterStatus, filterMarriage, filtersActive, personMap]);
 
+  const scrollToPerson = useCallback((id) => {
+    const el = canvasRef.current?.querySelector(`[data-person-id="${CSS.escape(id)}"]`);
+    el?.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+  }, []);
+
+  // Search-to-center: scroll the first text-search match into view. Debounced
+  // so the viewport doesn't jump on every keystroke while still typing, and
+  // scoped to the search box specifically (not filter-pill changes, which
+  // are meant to narrow what's visible in place, not relocate the viewport).
+  useEffect(() => {
+    if (!search.trim() || !highlightIds || highlightIds.size === 0) return;
+    const t = setTimeout(() => scrollToPerson(highlightIds.values().next().value), 400);
+    return () => clearTimeout(t);
+  }, [search, highlightIds, scrollToPerson]);
+
   const handleSelect = (person) => {
     setSelected(prev => prev?.id === person.id ? null : person);
+  };
+
+  // Command-palette jump: the target may be off-screen, so select *and* scroll.
+  const handlePaletteSelect = (person) => {
+    setSelected(person);
+    scrollToPerson(person.id);
   };
 
   const totalGen = useMemo(() => {
@@ -256,27 +308,33 @@ export default function App() {
       {/* Invite redemption result */}
       {authMessage && (
         <div className={`sidebar-toast toast-${authMessage.type}`}>
-          {authMessage.type === 'ok' ? '✓' : '⚠'} {authMessage.text}
+          {authMessage.type === 'ok' ? <CheckCircle2 size={15} /> : <AlertTriangle size={15} />} {authMessage.text}
         </div>
       )}
 
       {/* Edit member modal — admin only */}
-      {editingPerson && (
-        <div className="fab-modal-overlay" onClick={() => setEditingPerson(null)}>
-          <div className="fab-modal" onClick={e => e.stopPropagation()}>
-            <div className="fab-modal-header">
-              <span>Edit {editingPerson.name}</span>
-              <button onClick={() => setEditingPerson(null)}>✕</button>
-            </div>
-            <AddMemberForm
-              people={people}
-              person={editingPerson}
-              onSubmit={handleEditMember}
-              onCancel={() => setEditingPerson(null)}
-            />
-          </div>
-        </div>
-      )}
+      <Modal
+        open={!!editingPerson}
+        onOpenChange={(o) => !o && setEditingPerson(null)}
+        title={editingPerson ? `Edit ${editingPerson.name}` : ''}
+      >
+        {editingPerson && (
+          <AddMemberForm
+            people={people}
+            person={editingPerson}
+            onSubmit={handleEditMember}
+            onCancel={() => setEditingPerson(null)}
+          />
+        )}
+      </Modal>
+
+      {/* Command palette — Ctrl/Cmd+K */}
+      <CommandPalette
+        open={paletteOpen}
+        onOpenChange={setPaletteOpen}
+        people={people}
+        onSelect={handlePaletteSelect}
+      />
 
       {/* Header */}
       <header className="app-header">
@@ -308,6 +366,14 @@ export default function App() {
                 >{label}</button>
               ))}
             </div>
+            <button
+              className="theme-toggle-btn"
+              onClick={toggleTheme}
+              title={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
+              aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
+            >
+              {isDark ? <Sun size={15} /> : <Moon size={15} />}
+            </button>
             {googleUser && <UserBadge user={googleUser} />}
           </div>
         </div>
@@ -323,7 +389,7 @@ export default function App() {
                 {/* Toolbar */}
                 <div className="toolbar">
                   <div className="search-wrap">
-                    <span className="search-icon">⌕</span>
+                    <span className="search-icon"><Search size={14} /></span>
                     <input
                       className="search-input"
                       type="text"
@@ -333,14 +399,13 @@ export default function App() {
                     />
                   </div>
 
-                  <div className="legend">
-                    <div className="legend-item"><div className="legend-dot male" /> Male</div>
-                    <div className="legend-item"><div className="legend-dot female" /> Female</div>
-                    <div className="legend-item"><div className="legend-line" /> Parent–Child</div>
-                    <div className="legend-item">
-                      <span style={{ color: 'var(--gold)', fontSize: '0.9rem' }}>⚭</span>&nbsp;Married
-                    </div>
-                  </div>
+                  <button
+                    className="cmdk-trigger"
+                    onClick={() => setPaletteOpen(true)}
+                    title="Jump to a family member"
+                  >
+                    Jump to… <kbd>Ctrl K</kbd>
+                  </button>
 
                   <div style={{ flex: 1 }} />
 
@@ -376,7 +441,7 @@ export default function App() {
                     {filtersActive && (
                       <button className="filter-reset"
                         onClick={() => { setFilterGender('all'); setFilterStatus('all'); setFilterMarriage('all'); }}
-                        title="Reset all filters">↺</button>
+                        title="Reset all filters"><RotateCcw size={13} /></button>
                     )}
                   </div>
 
@@ -397,23 +462,23 @@ export default function App() {
                     <span className="gen-label">Depth</span>
                     <button className="gen-btn"
                       onClick={() => setMaxGen(g => { const cur = g ?? totalGen; return cur > 1 ? cur - 1 : cur; })}
-                      disabled={maxGen === 1} title="Show one fewer generation">−</button>
+                      disabled={maxGen === 1} title="Show one fewer generation"><Minus size={13} /></button>
                     <span className="gen-value">{maxGen ?? 'All'}</span>
                     <button className="gen-btn"
                       onClick={() => setMaxGen(g => { if (g === null) return null; const n = g + 1; return n >= totalGen ? null : n; })}
-                      disabled={maxGen === null} title="Show one more generation">+</button>
+                      disabled={maxGen === null} title="Show one more generation"><Plus size={13} /></button>
                     {maxGen !== null && (
-                      <button className="gen-reset" onClick={() => setMaxGen(null)} title="Show all generations">↺</button>
+                      <button className="gen-reset" onClick={() => setMaxGen(null)} title="Show all generations"><RotateCcw size={13} /></button>
                     )}
                   </div>
 
                   {/* Zoom control */}
                   <div className="zoom-controls">
-                    <button className="zoom-btn" onClick={() => adjustZoom(-0.1)} title="Zoom out (Ctrl+−)">−</button>
+                    <button className="zoom-btn" onClick={() => adjustZoom(-0.1)} title="Zoom out (Ctrl+−)"><Minus size={15} /></button>
                     <button className="zoom-level" onClick={() => setZoom(1)} title="Reset zoom (Ctrl+0)">
                       {Math.round(zoom * 100)}%
                     </button>
-                    <button className="zoom-btn" onClick={() => adjustZoom(+0.1)} title="Zoom in (Ctrl+=)">+</button>
+                    <button className="zoom-btn" onClick={() => adjustZoom(+0.1)} title="Zoom in (Ctrl+=)"><Plus size={15} /></button>
                   </div>
                 </div>
 
@@ -432,6 +497,7 @@ export default function App() {
                 </div>
 
                 <MiniMap canvasRef={canvasRef} zoom={zoom} />
+                <OnboardingLegend />
 
                 {meta.maintainer && (
                   <div className="tree-credit" title={`Maintained & Developed by ${meta.maintainer}`}>

@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { Lock, Unlock, Plus, Link2, Download, Printer, LayoutGrid, X, Settings, CheckCircle2, AlertTriangle } from 'lucide-react';
+import Modal from './Modal';
 import AddMemberForm from './AddMemberForm';
 import InviteManager from './InviteManager';
 import { exportJSON } from '../utils/exportJSON';
@@ -36,29 +38,29 @@ export default function FloatingActions({
   const actions = [
     // Auth action: Login when logged out, Logout when logged in
     isLoggedIn
-      ? { id: 'logout',     icon: '🔓', label: 'Logout',      onClick: handleLogout }
-      : { id: 'login',      icon: '🔒', label: 'Login',       onClick: () => { setOpen(false); onAuthRequired(null); } },
+      ? { id: 'logout',     icon: Unlock, label: 'Logout',      onClick: handleLogout }
+      : { id: 'login',      icon: Lock,   label: 'Login',       onClick: () => { setOpen(false); onAuthRequired(null); } },
     {
-      id: 'add', icon: '＋', label: 'Add Member',
+      id: 'add', icon: Plus, label: 'Add Member',
       onClick: guard(() => setShowAddMember(true)),
     },
     // Invite-redeemed (non-admin) sessions can't manage invite links —
     // hide once we actually know that, but keep it visible pre-login so
     // an admin who hasn't logged in yet still sees it (guard() handles that).
     ...(!isLoggedIn || isAdmin ? [{
-      id: 'invite', icon: '🔗', label: 'Invite Link',
+      id: 'invite', icon: Link2, label: 'Invite Link',
       onClick: guard(() => setShowInvite(true)),
     }] : []),
     {
-      id: 'export', icon: '↓', label: 'Export JSON',
+      id: 'export', icon: Download, label: 'Export JSON',
       onClick: guard(() => { exportJSON(familyData); showToast('ok', 'family.json downloaded'); }),
     },
     {
-      id: 'print', icon: '⎙', label: 'Print Data',
+      id: 'print', icon: Printer, label: 'Print Data',
       onClick: guard(() => window.print()),
     },
     {
-      id: 'print-tree', icon: '⊞', label: 'Print Tree',
+      id: 'print-tree', icon: LayoutGrid, label: 'Print Tree',
       onClick: guard(() => printTree({ people, meta, about, lang, showToast })),
     },
   ];
@@ -88,7 +90,7 @@ export default function FloatingActions({
               >
                 <span className="fab-action-label">{a.label}</span>
                 <button className="fab-action" onClick={a.onClick} title={a.label}>
-                  {a.icon}
+                  <a.icon size={18} />
                 </button>
               </div>
             ))}
@@ -100,8 +102,8 @@ export default function FloatingActions({
           title={open ? 'Close' : 'Actions'}
           aria-expanded={open}
         >
-          {open ? '✕' : '⚙'}
-          {!isLoggedIn && <span className="fab-lock-badge">🔒</span>}
+          {open ? <X size={20} /> : <Settings size={20} />}
+          {!isLoggedIn && <span className="fab-lock-badge"><Lock size={11} /></span>}
         </button>
       </div>
 
@@ -109,31 +111,21 @@ export default function FloatingActions({
       {open && <div className="fab-backdrop" onClick={() => setOpen(false)} />}
 
       {/* Add Member modal */}
-      {showAddMember && (
-        <div className="fab-modal-overlay" onClick={() => setShowAddMember(false)}>
-          <div className="fab-modal" onClick={e => e.stopPropagation()}>
-            <div className="fab-modal-header">
-              <span>Add Family Member</span>
-              <button onClick={() => setShowAddMember(false)}>✕</button>
-            </div>
-            <AddMemberForm
-              people={people}
-              onSubmit={handleAddMember}
-              onCancel={() => setShowAddMember(false)}
-            />
-          </div>
-        </div>
-      )}
+      <Modal open={showAddMember} onOpenChange={setShowAddMember} title="Add Family Member">
+        <AddMemberForm
+          people={people}
+          onSubmit={handleAddMember}
+          onCancel={() => setShowAddMember(false)}
+        />
+      </Modal>
 
       {/* Invite link modal */}
-      {showInvite && (
-        <InviteManager onClose={() => setShowInvite(false)} showToast={showToast} />
-      )}
+      <InviteManager open={showInvite} onOpenChange={setShowInvite} showToast={showToast} />
 
       {/* Toast */}
       {toast && (
         <div className={`sidebar-toast toast-${toast.type}`}>
-          {toast.type === 'ok' ? '✓' : '⚠'} {toast.msg}
+          {toast.type === 'ok' ? <CheckCircle2 size={15} /> : <AlertTriangle size={15} />} {toast.msg}
         </div>
       )}
     </>

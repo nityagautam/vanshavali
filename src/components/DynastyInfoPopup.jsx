@@ -1,30 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
+import * as Popover from '@radix-ui/react-popover';
+import { Info, X, MapPin, ExternalLink } from 'lucide-react';
 
 export default function DynastyInfoPopup({ meta }) {
-  const [open, setOpen] = useState(false);
-  const popupRef = useRef(null);
-  const btnRef = useRef(null);
-
-  // Close on outside click
-  useEffect(() => {
-    if (!open) return;
-    const handler = (e) => {
-      if (!popupRef.current?.contains(e.target) && !btnRef.current?.contains(e.target)) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
-  }, [open]);
-
-  // Close on Escape
-  useEffect(() => {
-    if (!open) return;
-    const handler = (e) => { if (e.key === 'Escape') setOpen(false); };
-    document.addEventListener('keydown', handler);
-    return () => document.removeEventListener('keydown', handler);
-  }, [open]);
-
   const { location } = meta;
 
   // Build a human-readable label from a camelCase / lowercase key
@@ -50,7 +27,7 @@ export default function DynastyInfoPopup({ meta }) {
       if (!isNaN(lat) && !isNaN(lng))
         return (
           <a href={`https://www.google.com/maps?q=${lat},${lng}`} target="_blank" rel="noreferrer" className="info-link">
-            {str} ↗
+            {str} <ExternalLink size={12} />
           </a>
         );
     }
@@ -69,22 +46,26 @@ export default function DynastyInfoPopup({ meta }) {
   const fullAddress = addressSummaryKeys.map(k => location[k]).filter(Boolean).join(', ');
 
   return (
-    <span className="info-btn-wrap">
-      <button
-        ref={btnRef}
-        className={`info-btn ${open ? 'active' : ''}`}
-        onClick={() => setOpen(o => !o)}
-        title="Dynasty details"
-        aria-label="Show dynasty information"
-      >
-        i
-      </button>
-
-      {open && (
-        <div ref={popupRef} className="info-popup" role="dialog" aria-label="Dynasty information">
+    <Popover.Root>
+      <Popover.Trigger asChild>
+        <button className="info-btn" title="Dynasty details" aria-label="Show dynasty information">
+          <Info size={11} />
+        </button>
+      </Popover.Trigger>
+      <Popover.Portal>
+        <Popover.Content
+          className="info-popup"
+          side="bottom"
+          align="start"
+          sideOffset={10}
+          collisionPadding={16}
+        >
+          <Popover.Arrow className="info-popup-arrow" width={14} height={7} />
           <div className="info-popup-header">
             <span className="info-popup-title">Dynasty Information</span>
-            <button className="info-popup-close" onClick={() => setOpen(false)} aria-label="Close">✕</button>
+            <Popover.Close asChild>
+              <button className="info-popup-close" aria-label="Close"><X size={14} /></button>
+            </Popover.Close>
           </div>
 
           <div className="info-popup-body">
@@ -102,7 +83,7 @@ export default function DynastyInfoPopup({ meta }) {
               })}
               {fullAddress && (
                 <div className="info-full-address">
-                  <span className="info-address-icon">📍</span>
+                  <span className="info-address-icon"><MapPin size={13} /></span>
                   {fullAddress}
                 </div>
               )}
@@ -127,9 +108,9 @@ export default function DynastyInfoPopup({ meta }) {
               </Section>
             )}
           </div>
-        </div>
-      )}
-    </span>
+        </Popover.Content>
+      </Popover.Portal>
+    </Popover.Root>
   );
 }
 

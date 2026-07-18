@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Plus } from 'lucide-react';
 import { upload } from '@vercel/blob/client';
 
 function generateId(name) {
@@ -211,7 +212,7 @@ export default function AddMemberForm({ people, person, onSubmit, onCancel }) {
       <div className="amf-actions">
         <button type="button" className="amf-btn-cancel" onClick={onCancel}>Cancel</button>
         <button type="submit" className="amf-btn-save" disabled={saving}>
-          {saving ? 'Saving…' : isEdit ? 'Save Changes' : '+ Add Member'}
+          {saving ? 'Saving…' : isEdit ? 'Save Changes' : <><Plus size={14} /> Add Member</>}
         </button>
       </div>
     </form>

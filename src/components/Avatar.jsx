@@ -26,7 +26,7 @@ export default function Avatar({ person, size = 'sm', className = '' }) {
         .map(w => w[0]?.toUpperCase() || '')
         .join('');
 
-  const px = size === 'lg' ? 96 : 36;
+  const px = size === 'lg' ? 96 : size === 'sm' ? 50 : 36;
   const isSrimati = hasDevanagari && person.gender === 'female' && !isPlaceholder;
   const fontSize = size === 'lg'
     ? (isSrimati ? '0.85rem' : hasDevanagari ? '1.1rem' : '2rem')

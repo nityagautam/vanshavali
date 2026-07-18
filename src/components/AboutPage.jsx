@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, MapPin, ExternalLink, AlertTriangle } from 'lucide-react';
 
 function pickLang(hindi, english, lang) {
   if (lang === 'hi') return { primary: hindi,   secondary: null };
@@ -48,7 +49,7 @@ export default function AboutPage({ people, meta, about, lang, totalGen }) {
 
       {/* Back button */}
       <button className="about-back" onClick={() => navigate('/')}>
-        ← Back to Tree
+        <ArrowLeft size={14} /> Back to Tree
       </button>
 
       {/* Dynasty banner */}
@@ -84,6 +85,19 @@ export default function AboutPage({ people, meta, about, lang, totalGen }) {
           </div>
         </div>
 
+        {/* How to read the tree */}
+        <div className="about-section">
+          <div className="about-section-title">How to Read the Tree</div>
+          <div className="legend about-legend">
+            <div className="legend-item"><div className="legend-dot male" /> Male</div>
+            <div className="legend-item"><div className="legend-dot female" /> Female</div>
+            <div className="legend-item"><div className="legend-line" /> Parent–Child</div>
+            <div className="legend-item">
+              <span style={{ color: 'var(--gold)', fontSize: '0.9rem' }}>⚭</span>&nbsp;Married
+            </div>
+          </div>
+        </div>
+
         {/* Description */}
         {(descPrimary || descSecondary) && (
           <div className="about-section">
@@ -115,11 +129,11 @@ export default function AboutPage({ people, meta, about, lang, totalGen }) {
           <div className="about-section">
             <div className="about-section-title">Location</div>
             <div className="about-location">
-              <span className="about-location-icon">📍</span>
+              <span className="about-location-icon"><MapPin size={14} /></span>
               <span className="about-location-text">{locationStr}</span>
             </div>
             <a href={mapsUrl} target="_blank" rel="noreferrer" className="about-maps-btn">
-              View on Google Maps ↗
+              View on Google Maps <ExternalLink size={13} />
             </a>
           </div>
         )}
@@ -127,7 +141,7 @@ export default function AboutPage({ people, meta, about, lang, totalGen }) {
         {/* Disclaimer */}
         {(dclPrimary || dclSecondary) && (
           <div className="about-section">
-            <div className="about-section-title">⚠ Disclaimer</div>
+            <div className="about-section-title"><AlertTriangle size={14} /> Disclaimer</div>
             <div className="about-disclaimer">
               {dclPrimary   && <p className="about-disclaimer-text">{dclPrimary}</p>}
               {dclSecondary && <p className="about-disclaimer-text about-disclaimer-en">{dclSecondary}</p>}

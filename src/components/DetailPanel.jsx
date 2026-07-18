@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import * as Dialog from '@radix-ui/react-dialog';
+import { X, Pencil, ZoomIn } from 'lucide-react';
 import Avatar from './Avatar';
 import { getTagStyle } from '../utils/tagColor';
 
@@ -44,14 +46,6 @@ const LABELS = {
 export default function DetailPanel({ person, personMap, people, onClose, onSelect, onEdit, isAdmin, lang = 'hi' }) {
   const [lightbox, setLightbox] = useState(false);
 
-  // Close lightbox on Escape key
-  useEffect(() => {
-    if (!lightbox) return;
-    const onKey = (e) => { if (e.key === 'Escape') setLightbox(false); };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [lightbox]);
-
   const formatDate = (d) => {
     if (!d) return null;
     if (typeof d === 'number') return d.toString();
@@ -84,9 +78,9 @@ export default function DetailPanel({ person, personMap, people, onClose, onSele
     <aside className="detail-panel">
       {/* ── Photo hero ── */}
       <div className="detail-photo-hero">
-        <button className="detail-close" onClick={onClose} title="Close">✕</button>
+        <button className="detail-close" onClick={onClose} title="Close"><X size={16} /></button>
         {isAdmin && (
-          <button className="detail-edit" onClick={() => onEdit(person)} title="Edit member">✎</button>
+          <button className="detail-edit" onClick={() => onEdit(person)} title="Edit member"><Pencil size={14} /></button>
         )}
         <div
           className={`detail-photo-avatar-wrap${person.photo ? ' has-photo' : ''}`}
@@ -94,7 +88,7 @@ export default function DetailPanel({ person, personMap, people, onClose, onSele
           title={person.photo ? 'Click to enlarge photo' : undefined}
         >
           <Avatar person={person} size="lg" className="detail-photo-avatar" />
-          {person.photo && <span className="detail-photo-zoom-hint">⊕</span>}
+          {person.photo && <span className="detail-photo-zoom-hint"><ZoomIn size={18} /></span>}
         </div>
         <div className="detail-hero-name">{person.name}</div>
         <div className="detail-hero-sub">
@@ -113,7 +107,7 @@ export default function DetailPanel({ person, personMap, people, onClose, onSele
             <span className="card-tag" style={{ background: 'rgba(209,250,229,0.9)', color: '#065F46', border: '1px solid rgba(110,231,183,0.6)' }}>{t.living}</span>
           )}
           {isDeceased && (
-            <span className="card-tag" style={{ background: 'rgba(243,244,246,0.9)', color: '#6B7280', border: '1px solid rgba(209,213,219,0.6)' }}>{t.deceased}</span>
+            <span className="card-tag" style={{ background: 'rgba(243,244,246,0.9)', color: '#4B5563', border: '1px solid rgba(209,213,219,0.6)' }}>{t.deceased}</span>
           )}
           {(person.tags || []).filter(t => t !== 'root').map(tag => (
             <span key={tag} className="card-tag" style={getTagStyle(tag)}>{tag}</span>
@@ -199,18 +193,22 @@ export default function DetailPanel({ person, personMap, people, onClose, onSele
       </div>
 
       {/* ── Photo lightbox ── */}
-      {lightbox && (
-        <div className="photo-lightbox" onClick={() => setLightbox(false)}>
-          <button className="photo-lightbox-close" onClick={() => setLightbox(false)} title="Close (Esc)">✕</button>
-          <img
-            src={person.photo}
-            alt={person.name}
-            className="photo-lightbox-img"
-            onClick={e => e.stopPropagation()}
-          />
-          <div className="photo-lightbox-name">{person.name}</div>
-        </div>
-      )}
+      <Dialog.Root open={lightbox} onOpenChange={setLightbox}>
+        <Dialog.Portal>
+          <Dialog.Content
+            className="photo-lightbox"
+            onClick={e => { if (e.target === e.currentTarget) setLightbox(false); }}
+          >
+            <Dialog.Title asChild><span className="sr-only">{person.name} photo</span></Dialog.Title>
+            <Dialog.Description asChild><span className="sr-only">Enlarged photo of {person.name}</span></Dialog.Description>
+            <Dialog.Close asChild>
+              <button className="photo-lightbox-close" title="Close (Esc)"><X size={22} /></button>
+            </Dialog.Close>
+            <img src={person.photo} alt={person.name} className="photo-lightbox-img" />
+            <div className="photo-lightbox-name">{person.name}</div>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
     </aside>
   );
 }

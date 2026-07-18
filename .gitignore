@@ -29,3 +29,8 @@ build
 *.pdb
 *.opendb
 .vercel
+.env
+.env.local
+.env.*.local
+my.env
+.env*

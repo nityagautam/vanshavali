@@ -1,8 +1,9 @@
 import { useState } from 'react';
+import { upload } from '@vercel/blob/client';
 
 function generateId(name) {
   const base = name
-    .replace(/[\u0900-\u097F]+/g, '') // strip Devanagari
+    .replace(/[ऀ-ॿ]+/g, '') // strip Devanagari
     .toLowerCase()
     .trim()
     .replace(/[^a-z0-9]+/g, '-')
@@ -16,12 +17,55 @@ const EMPTY = {
   occupation: '', location: '', bio: '', tags: '', photo: '',
 };
 
-export default function AddMemberForm({ people, onAdd, onCancel }) {
-  const [form, setForm] = useState(EMPTY);
+function formFromPerson(person) {
+  return {
+    name:       person.name || '',
+    gender:     person.gender || 'male',
+    parentId:   person.parentId || '',
+    spouseId:   person.spouseIds?.[0] || '',
+    born:       person.born || '',
+    died:       person.died || '',
+    alive:      person.alive === true,
+    occupation: person.occupation || '',
+    location:   person.location || '',
+    bio:        person.bio || '',
+    tags:       (person.tags || []).join(', '),
+    photo:      person.photo || '',
+  };
+}
+
+export default function AddMemberForm({ people, person, onSubmit, onCancel }) {
+  const isEdit = !!person;
+  const [form, setForm] = useState(() => (isEdit ? formFromPerson(person) : EMPTY));
   const [saving, setSaving] = useState(false);
   const [error, setError]   = useState('');
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState('');
+
+  // Spouses beyond the first aren't editable in this single-select form —
+  // preserve them untouched instead of dropping them on save.
+  const extraSpouseIds = isEdit ? (person.spouseIds || []).slice(1) : [];
 
   const set = (field, val) => setForm(f => ({ ...f, [field]: val }));
+
+  const handlePhotoFile = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    setUploadError('');
+    try {
+      const blob = await upload(`photos/${Date.now()}-${file.name}`, file, {
+        access: 'public',
+        handleUploadUrl: '/api/photo-upload',
+      });
+      set('photo', blob.url);
+    } catch (err) {
+      setUploadError(err.message || 'Upload failed.');
+    } finally {
+      setUploading(false);
+      e.target.value = '';
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,15 +73,20 @@ export default function AddMemberForm({ people, onAdd, onCancel }) {
     setError('');
     setSaving(true);
 
-    const newPerson = {
-      id:         generateId(form.name),
+    const spouseIds = [
+      ...(form.spouseId ? [form.spouseId] : []),
+      ...extraSpouseIds,
+    ];
+
+    const payload = {
+      id:         isEdit ? person.id : generateId(form.name),
       name:       form.name.trim(),
       gender:     form.gender,
       born:       form.born.trim()  || null,
       died:       form.died.trim()  || null,
       alive:      form.alive,
       parentId:   form.parentId  || null,
-      spouseIds:  form.spouseId ? [form.spouseId] : [],
+      spouseIds,
       occupation: form.occupation.trim() || undefined,
       location:   form.location.trim()   || undefined,
       bio:        form.bio.trim()        || undefined,
@@ -46,16 +95,16 @@ export default function AddMemberForm({ people, onAdd, onCancel }) {
     };
 
     // Remove undefined keys
-    Object.keys(newPerson).forEach(k => newPerson[k] === undefined && delete newPerson[k]);
+    Object.keys(payload).forEach(k => payload[k] === undefined && delete payload[k]);
 
-    await onAdd(newPerson);
+    await onSubmit(payload);
     setSaving(false);
-    setForm(EMPTY);
+    if (!isEdit) setForm(EMPTY);
   };
 
-  // People usable as parents (non-spouses of the form's own person, basically everyone)
-  const parentOptions = people.filter(p => !p.tags?.includes('placeholder') || p.name);
-  const spouseOptions = people.filter(p => p.id !== form.parentId);
+  // People usable as parents/spouses (exclude self when editing)
+  const parentOptions = people.filter(p => p.id !== person?.id);
+  const spouseOptions = people.filter(p => p.id !== form.parentId && p.id !== person?.id);
 
   return (
     <form className="amf" onSubmit={handleSubmit} noValidate>
@@ -136,9 +185,19 @@ export default function AddMemberForm({ people, onAdd, onCancel }) {
           value={form.tags} onChange={e => set('tags', e.target.value)} />
 
         {/* Photo */}
-        <label className="amf-label">Photo URL</label>
-        <input className="amf-input" placeholder="https://… or /photos/name.jpg"
-          value={form.photo} onChange={e => set('photo', e.target.value)} />
+        <label className="amf-label">Photo</label>
+        <div>
+          <div className="amf-photo-row">
+            <input className="amf-input" placeholder="https://… or /photos/name.jpg"
+              value={form.photo} onChange={e => set('photo', e.target.value)} />
+            <label className={`amf-photo-upload-btn${uploading ? ' amf-photo-upload-btn-disabled' : ''}`}>
+              {uploading ? 'Uploading…' : 'Upload'}
+              <input type="file" accept="image/*" hidden onChange={handlePhotoFile} disabled={uploading} />
+            </label>
+          </div>
+          {uploadError && <div className="amf-error" style={{ margin: '4px 0 0' }}>{uploadError}</div>}
+          {form.photo && <img className="amf-photo-preview" src={form.photo} alt="Preview" />}
+        </div>
 
         {/* Bio */}
         <label className="amf-label">Bio</label>
@@ -152,7 +211,7 @@ export default function AddMemberForm({ people, onAdd, onCancel }) {
       <div className="amf-actions">
         <button type="button" className="amf-btn-cancel" onClick={onCancel}>Cancel</button>
         <button type="submit" className="amf-btn-save" disabled={saving}>
-          {saving ? 'Saving…' : '+ Add Member'}
+          {saving ? 'Saving…' : isEdit ? 'Save Changes' : '+ Add Member'}
         </button>
       </div>
     </form>

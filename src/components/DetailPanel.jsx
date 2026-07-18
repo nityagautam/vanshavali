@@ -41,7 +41,7 @@ const LABELS = {
   },
 };
 
-export default function DetailPanel({ person, personMap, people, onClose, onSelect, lang = 'hi' }) {
+export default function DetailPanel({ person, personMap, people, onClose, onSelect, onEdit, isAdmin, lang = 'hi' }) {
   const [lightbox, setLightbox] = useState(false);
 
   // Close lightbox on Escape key
@@ -85,6 +85,9 @@ export default function DetailPanel({ person, personMap, people, onClose, onSele
       {/* ── Photo hero ── */}
       <div className="detail-photo-hero">
         <button className="detail-close" onClick={onClose} title="Close">✕</button>
+        {isAdmin && (
+          <button className="detail-edit" onClick={() => onEdit(person)} title="Edit member">✎</button>
+        )}
         <div
           className={`detail-photo-avatar-wrap${person.photo ? ' has-photo' : ''}`}
           onClick={() => person.photo && setLightbox(true)}

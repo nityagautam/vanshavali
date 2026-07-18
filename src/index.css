@@ -151,6 +151,78 @@ button {
   white-space: nowrap;
 }
 
+/* ── Signed-in user badge ── */
+.user-badge {
+  position: relative;
+  display: flex;
+}
+
+.user-badge-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1.5px solid rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+}
+.user-badge-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.user-badge-icon span {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.user-badge-popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-hover);
+  padding: 10px 14px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity var(--transition), transform var(--transition), visibility var(--transition);
+  z-index: 50;
+}
+.user-badge:hover .user-badge-popover {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.user-badge-popover-photo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.user-badge-popover-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.user-badge-popover-email {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
 .lang-btn:hover {
   color: #fff;
   background: rgba(255,255,255,0.12);
@@ -709,6 +781,38 @@ button {
   cursor: pointer;
 }
 
+.amf-photo-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.amf-photo-row .amf-input { margin: 4px 0; }
+
+.amf-photo-upload-btn {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: var(--cream-dark);
+  border: 1.5px solid var(--card-border);
+  border-radius: 6px;
+  padding: 7px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--transition);
+}
+.amf-photo-upload-btn:hover { background: var(--gold-light); }
+.amf-photo-upload-btn-disabled { opacity: 0.6; cursor: not-allowed; }
+
+.amf-photo-preview {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1.5px solid var(--card-border);
+  margin-top: 6px;
+}
+
 .amf-error {
   font-size: 0.75rem;
   color: #991B1B;
@@ -1182,6 +1286,23 @@ button {
   border-radius: 6px;
   transition: all var(--transition);
   z-index: 1;
+}
+
+.detail-edit {
+  position: absolute;
+  top: 10px;
+  right: 44px;
+  color: rgba(255,255,255,0.7);
+  font-size: 0.95rem;
+  line-height: 1;
+  padding: 4px 7px;
+  border-radius: 6px;
+  transition: all var(--transition);
+  z-index: 1;
+}
+.detail-edit:hover {
+  color: #fff;
+  background: rgba(255,255,255,0.15);
 }
 
 .detail-close:hover {
@@ -2409,6 +2530,76 @@ button {
   background: var(--cream-dark);
 }
 
+.invite-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.invite-loading {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 12px 0;
+}
+.invite-help {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+.invite-status-pill {
+  align-self: flex-start;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: var(--cream-dark);
+  color: var(--text-secondary);
+  border: 1px solid var(--card-border);
+}
+.invite-status-pill.active { background: #DCFCE7; color: #166534; border-color: #BBF7D0; }
+.invite-status-pill.used   { background: #FEE2E2; color: #991B1B; border-color: #FECACA; }
+
+.invite-link-row {
+  display: flex;
+  gap: 6px;
+}
+.invite-link-input {
+  flex: 1;
+  font-size: 0.75rem;
+  font-family: monospace;
+  color: var(--text-primary);
+  background: var(--cream);
+  border: 1.5px solid var(--card-border);
+  border-radius: 6px;
+  padding: 7px 8px;
+  min-width: 0;
+}
+.invite-copy-btn {
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: var(--cream-dark);
+  border: 1.5px solid var(--card-border);
+  border-radius: 6px;
+  padding: 7px 12px;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+.invite-copy-btn:hover { background: var(--gold-light); }
+
+.invite-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.invite-actions .amf-btn-save,
+.invite-actions .amf-btn-cancel {
+  flex: 1;
+}
+
 /* ══════════════════════════════════════════════════════════════
    ABOUT PAGE
    ══════════════════════════════════════════════════════════════ */
@@ -2777,6 +2968,39 @@ button {
   transition: all var(--transition);
 }
 .login-cancel:hover { background: var(--cream-dark); color: var(--text-primary); }
+
+.login-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 4px 20px 0;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+.login-divider::before, .login-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--card-border);
+}
+.login-google-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 14px 20px 20px;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: #fff;
+  border: 1.5px solid var(--card-border);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--transition);
+}
+.login-google-btn:hover { background: var(--cream-dark); }
 
 /* Shake animation on wrong password */
 @keyframes loginShake {

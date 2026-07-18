@@ -1,13 +1,17 @@
-// SHA-256 hash of the family password. Plaintext never stored here.
-const PASSWORD_HASH = '3f3e200366b0657986a8a4bffd2a7e88665ccf49a689d58b9f73b9d450da2cd0';
-
-export async function checkPassword(input) {
-  const encoded    = new TextEncoder().encode(input);
-  const hashBuffer = await window.crypto.subtle.digest('SHA-256', encoded);
-  const hashHex    = Array.from(new Uint8Array(hashBuffer))
-    .map(b => b.toString(16).padStart(2, '0'))
-    .join('');
-  return hashHex === PASSWORD_HASH;
+export async function login(password) {
+  try {
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ password }),
+    });
+    if (res.ok) return { ok: true };
+    const data = await res.json().catch(() => ({}));
+    return { ok: false, error: data.error || 'Incorrect password.' };
+  } catch {
+    return { ok: false, error: 'Could not reach the server. Please try again.' };
+  }
 }
 
 export function isAuthenticated() {
@@ -20,4 +24,17 @@ export function setAuthenticated() {
 
 export function clearAuth() {
   sessionStorage.removeItem('vv-auth');
+  fetch('/api/auth/logout', { method: 'POST', credentials: 'include' }).catch(() => {});
+}
+
+// Checks the server-side session (HTTP-only cookie) — set by either
+// password login or Google OAuth.
+export async function checkSession() {
+  try {
+    const res = await fetch('/api/auth/session', { credentials: 'include' });
+    if (!res.ok) return { authenticated: false };
+    return await res.json();
+  } catch {
+    return { authenticated: false };
+  }
 }

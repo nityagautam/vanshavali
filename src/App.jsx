@@ -10,7 +10,11 @@ import AboutPage   from './components/AboutPage';
 
 import FloatingActions from './components/FloatingActions';
 import LoginModal  from './components/LoginModal';
-import { isAuthenticated, setAuthenticated } from './utils/auth';
+import UserBadge    from './components/UserBadge';
+import AddMemberForm from './components/AddMemberForm';
+import { isAuthenticated, setAuthenticated, checkSession } from './utils/auth';
+import { fetchFamilyData, editFamilyMember } from './utils/familyApi';
+import { consumeInvite } from './utils/inviteApi';
 
 export default function App() {
   const [people, setPeople]           = useState(initialData.people);
@@ -25,6 +29,10 @@ export default function App() {
   const [isLoggedIn,     setIsLoggedIn]     = useState(() => isAuthenticated());
   const [loginOpen,      setLoginOpen]      = useState(false);
   const [pendingAction,  setPendingAction]  = useState(null);
+  const [googleUser,     setGoogleUser]     = useState(null);
+  const [isAdmin,        setIsAdmin]        = useState(false);
+  const [authMessage,    setAuthMessage]    = useState(null);
+  const [editingPerson,  setEditingPerson]  = useState(null);
   const canvasRef = useRef(null);
 
   const handleAuthRequired = (action) => {
@@ -32,9 +40,22 @@ export default function App() {
     setLoginOpen(true);
   };
 
+  const handleEditMember = async (payload) => {
+    try {
+      const { people: updated } = await editFamilyMember(payload);
+      setPeople(updated);
+      setSelected(prev => (prev && prev.id === payload.id) ? updated.find(p => p.id === payload.id) : prev);
+      setEditingPerson(null);
+      setAuthMessage({ type: 'ok', text: `"${payload.name}" updated.` });
+    } catch (err) {
+      setAuthMessage({ type: 'err', text: err.message || 'Could not save changes — please try again.' });
+    }
+  };
+
   const handleLoginSuccess = () => {
     setAuthenticated();
     setIsLoggedIn(true);
+    setIsAdmin(true); // password login is always admin-level
     setLoginOpen(false);
     pendingAction?.();
     setPendingAction(null);
@@ -59,6 +80,71 @@ export default function App() {
     if (!el) return;
     el.scrollLeft = (el.scrollWidth - el.clientWidth) / 2;
   }, []);
+
+  // The bundled family.json renders instantly; once the live Blob-backed
+  // data loads, swap in whatever's actually been persisted since the last
+  // build (e.g. members added through the app).
+  useEffect(() => {
+    fetchFamilyData()
+      .then(data => { if (data?.people) setPeople(data.people); })
+      .catch(() => {});
+  }, []);
+
+  // Sync client auth state with the server-side Google OAuth session, if any
+  // (covers both a fresh redirect back from Google and a page reload while
+  // a session cookie is still valid).
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const googleLogin = params.get('googleLogin');
+
+    if (googleLogin) {
+      params.delete('googleLogin');
+      const rest = params.toString();
+      window.history.replaceState({}, '', window.location.pathname + (rest ? `?${rest}` : ''));
+    }
+
+    if (googleLogin === 'denied') {
+      console.warn('Google sign-in was denied — check the allowlisted emails.');
+      return;
+    }
+
+    checkSession().then(({ authenticated, name, email, picture, isAdmin: adminSession }) => {
+      if (authenticated) {
+        setAuthenticated();
+        setIsLoggedIn(true);
+        setIsAdmin(!!adminSession);
+        if (email) setGoogleUser({ name, email, picture });
+      }
+    });
+  }, []);
+
+  // Redeem a one-time invite link (?invite=<token>), if present.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const inviteToken = params.get('invite');
+    if (!inviteToken) return;
+
+    params.delete('invite');
+    const rest = params.toString();
+    window.history.replaceState({}, '', window.location.pathname + (rest ? `?${rest}` : ''));
+
+    consumeInvite(inviteToken)
+      .then(() => {
+        setAuthenticated();
+        setIsLoggedIn(true);
+        setIsAdmin(false); // invite-redeemed sessions can't manage further invites
+        setAuthMessage({ type: 'ok', text: 'Invite accepted — you are logged in.' });
+      })
+      .catch(err => {
+        setAuthMessage({ type: 'err', text: err.message || 'This invite link is invalid or already used.' });
+      });
+  }, []);
+
+  useEffect(() => {
+    if (!authMessage) return;
+    const t = setTimeout(() => setAuthMessage(null), 5000);
+    return () => clearTimeout(t);
+  }, [authMessage]);
 
   useEffect(() => {
     const el = canvasRef.current;
@@ -167,6 +253,31 @@ export default function App() {
         onClose={() => { setLoginOpen(false); setPendingAction(null); }}
       />
 
+      {/* Invite redemption result */}
+      {authMessage && (
+        <div className={`sidebar-toast toast-${authMessage.type}`}>
+          {authMessage.type === 'ok' ? '✓' : '⚠'} {authMessage.text}
+        </div>
+      )}
+
+      {/* Edit member modal — admin only */}
+      {editingPerson && (
+        <div className="fab-modal-overlay" onClick={() => setEditingPerson(null)}>
+          <div className="fab-modal" onClick={e => e.stopPropagation()}>
+            <div className="fab-modal-header">
+              <span>Edit {editingPerson.name}</span>
+              <button onClick={() => setEditingPerson(null)}>✕</button>
+            </div>
+            <AddMemberForm
+              people={people}
+              person={editingPerson}
+              onSubmit={handleEditMember}
+              onCancel={() => setEditingPerson(null)}
+            />
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <header className="app-header">
         <div className="header-inner">
@@ -197,6 +308,7 @@ export default function App() {
                 >{label}</button>
               ))}
             </div>
+            {googleUser && <UserBadge user={googleUser} />}
           </div>
         </div>
       </header>
@@ -337,6 +449,8 @@ export default function App() {
                   lang={lang}
                   onClose={() => setSelected(null)}
                   onSelect={handleSelect}
+                  onEdit={setEditingPerson}
+                  isAdmin={isAdmin}
                 />
               )}
 
@@ -349,8 +463,9 @@ export default function App() {
                 lang={lang}
                 onAddMember={setPeople}
                 isLoggedIn={isLoggedIn}
+                isAdmin={isAdmin}
                 onAuthRequired={handleAuthRequired}
-                onLogout={() => setIsLoggedIn(false)}
+                onLogout={() => { setIsLoggedIn(false); setGoogleUser(null); setIsAdmin(false); }}
               />
             </div>
           } />

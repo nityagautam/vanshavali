@@ -1,15 +1,18 @@
 import { useState } from 'react';
 import AddMemberForm from './AddMemberForm';
+import InviteManager from './InviteManager';
 import { exportJSON } from '../utils/exportJSON';
 import { printTree }  from '../utils/printTree';
 import { clearAuth }  from '../utils/auth';
+import { addFamilyMember } from '../utils/familyApi';
 
 export default function FloatingActions({
   people, familyData, meta, about, lang, onAddMember,
-  isLoggedIn, onAuthRequired, onLogout,
+  isLoggedIn, isAdmin, onAuthRequired, onLogout,
 }) {
   const [open, setOpen]               = useState(false);
   const [showAddMember, setShowAddMember] = useState(false);
+  const [showInvite, setShowInvite]   = useState(false);
   const [toast, setToast]             = useState(null);
 
   const showToast = (type, msg) => {
@@ -39,6 +42,13 @@ export default function FloatingActions({
       id: 'add', icon: '＋', label: 'Add Member',
       onClick: guard(() => setShowAddMember(true)),
     },
+    // Invite-redeemed (non-admin) sessions can't manage invite links —
+    // hide once we actually know that, but keep it visible pre-login so
+    // an admin who hasn't logged in yet still sees it (guard() handles that).
+    ...(!isLoggedIn || isAdmin ? [{
+      id: 'invite', icon: '🔗', label: 'Invite Link',
+      onClick: guard(() => setShowInvite(true)),
+    }] : []),
     {
       id: 'export', icon: '↓', label: 'Export JSON',
       onClick: guard(() => { exportJSON(familyData); showToast('ok', 'family.json downloaded'); }),
@@ -54,27 +64,13 @@ export default function FloatingActions({
   ];
 
   const handleAddMember = async (newPerson) => {
-    let updated = [...people, newPerson];
-    if (newPerson.spouseIds?.length) {
-      const sid = newPerson.spouseIds[0];
-      updated = updated.map(p =>
-        p.id === sid && !p.spouseIds?.includes(newPerson.id)
-          ? { ...p, spouseIds: [...(p.spouseIds || []), newPerson.id] }
-          : p
-      );
-    }
-    onAddMember(updated);
     try {
-      const res  = await fetch('/api/family', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...familyData, people: updated }),
-      });
-      const json = await res.json();
-      if (json.ok) { showToast('ok', `"${newPerson.name}" saved to family.json`); setShowAddMember(false); }
-      else throw new Error(json.error);
-    } catch {
-      showToast('err', 'Cannot write file here — use Export JSON to save manually.');
+      const { people: updated } = await addFamilyMember(newPerson);
+      onAddMember(updated);
+      showToast('ok', `"${newPerson.name}" added and saved`);
+      setShowAddMember(false);
+    } catch (err) {
+      showToast('err', err.message || 'Could not save — please try again.');
     }
   };
 
@@ -122,11 +118,16 @@ export default function FloatingActions({
             </div>
             <AddMemberForm
               people={people}
-              onAdd={handleAddMember}
+              onSubmit={handleAddMember}
               onCancel={() => setShowAddMember(false)}
             />
           </div>
         </div>
+      )}
+
+      {/* Invite link modal */}
+      {showInvite && (
+        <InviteManager onClose={() => setShowInvite(false)} showToast={showToast} />
       )}
 
       {/* Toast */}

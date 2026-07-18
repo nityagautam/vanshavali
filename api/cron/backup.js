@@ -14,7 +14,7 @@ export default async function handler(req, res) {
 
   await put(pathname, JSON.stringify(data, null, 2), {
     access: 'public',
-    contentType: 'application/json',
+    contentType: 'application/json; charset=utf-8',
     addRandomSuffix: false,
   });
 

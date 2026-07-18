@@ -3313,6 +3313,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
   width: 16px;
   height: 16px;
   background: var(--card-bg);
+  color: var(--text-primary);
   border-radius: 50%;
   display: flex;
   align-items: center;

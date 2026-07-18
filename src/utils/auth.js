@@ -1,5 +1,5 @@
 // SHA-256 hash of the family password. Plaintext never stored here.
-const PASSWORD_HASH = 'e5aac6d94670b1f06946f65649e24b61b9898d9687fb2a70be4041cd98b8f58c';
+const PASSWORD_HASH = '3f3e200366b0657986a8a4bffd2a7e88665ccf49a689d58b9f73b9d450da2cd0';
 
 export async function checkPassword(input) {
   const encoded    = new TextEncoder().encode(input);

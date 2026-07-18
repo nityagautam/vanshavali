@@ -111,9 +111,15 @@ export default function AddMemberForm({ people, person, onSubmit, onCancel }) {
   const parentOptions = people.filter(p => p.id !== person?.id);
   const spouseOptions = people.filter(p => p.id !== form.parentId && p.id !== person?.id);
 
+  // No parent + a spouse selected = married into the family, not born into
+  // it — they render inside their spouse's couple bubble regardless of
+  // sort_order, so sibling positioning is meaningless for them.
+  const isMarriedInSpouse = !form.parentId && !!form.spouseId;
+
   // Existing children of the currently-selected parent (root-level when
   // parentId is empty) — lets the admin place the new person exactly
-  // instead of always appending as the youngest.
+  // instead of always appending as the youngest. Not shown for a
+  // married-in spouse (see isMarriedInSpouse above).
   const siblingOptions = people.filter(p =>
     (p.parentId || '') === (form.parentId || '') && p.id !== person?.id
   );
@@ -148,14 +154,20 @@ export default function AddMemberForm({ people, person, onSubmit, onCancel }) {
         {/* Parent */}
         <label className="amf-label">Father / Parent</label>
         <select className="amf-select" value={form.parentId} onChange={e => setForm(f => ({ ...f, parentId: e.target.value, insertAfterId: '' }))}>
-          <option value="">— None (root ancestor) —</option>
+          <option value="">{form.spouseId ? '— None (married in, no blood parent) —' : '— None (root ancestor) —'}</option>
           {parentOptions.map(p => (
             <option key={p.id} value={p.id}>{p.name}</option>
           ))}
         </select>
+        {isMarriedInSpouse && (
+          <div className="amf-hint" style={{ gridColumn: '2 / -1', fontSize: '0.78rem', color: 'var(--text-muted)', margin: '-6px 0 4px' }}>
+            No parent, married to the selected spouse — they'll appear next to their spouse in the tree, not as a separate ancestor.
+          </div>
+        )}
 
-        {/* Position among siblings — new additions only; editing never repositions */}
-        {!isEdit && siblingOptions.length > 0 && (
+        {/* Position among siblings — new additions only; editing never repositions;
+            meaningless for a married-in spouse, see isMarriedInSpouse above */}
+        {!isEdit && !isMarriedInSpouse && siblingOptions.length > 0 && (
           <>
             <label className="amf-label">Position</label>
             <select className="amf-select" value={form.insertAfterId} onChange={e => set('insertAfterId', e.target.value)}>

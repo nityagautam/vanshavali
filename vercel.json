@@ -1,4 +1,10 @@
 {
-  "rewrites": [{ "source": "/about", "destination": "/index.html" }],
+  "rewrites": [
+    { "source": "/about", "destination": "/index.html" },
+    { "source": "/api/invite/status", "destination": "/api/invite?action=status" },
+    { "source": "/api/invite/generate", "destination": "/api/invite?action=generate" },
+    { "source": "/api/invite/reset", "destination": "/api/invite?action=reset" },
+    { "source": "/api/invite/consume", "destination": "/api/invite?action=consume" }
+  ],
   "crons": [{ "path": "/api/cron/backup", "schedule": "0 3 * * *" }]
 }

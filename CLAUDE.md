@@ -16,46 +16,77 @@ npm run preview   # Preview production build locally
 vercel --prod     # Build and deploy to production (https://vanshavali-ten.vercel.app)
 ```
 
-The project is linked to Vercel project `nitya-narayan-gautams-projects/vanshavali`. Running `vercel --prod` uploads the source, runs `npm run build` on Vercel's servers, and promotes to production in one step. No separate `npm run build` needed locally before deploying.
+The project is linked to Vercel project `nitya-narayan-gautams-projects/vanshavali`. `vercel --prod` uploads the local working tree, runs `npm run build` on Vercel's servers, and promotes to production in one step — it is **not** triggered by pushing to GitHub (`origin/main` is source-of-truth history, but deploys are always a manual `vercel --prod` from the CLI). No separate local `npm run build` needed first.
 
 No test suite or linter is configured.
 
-### Data scripts
+### Vercel Hobby plan: 12-function cap
+
+The project is on the Hobby plan, which caps a single deployment at **12 Serverless Functions**. Every file directly under `api/` (and its subdirectories) counts as one function, *except* files/folders under `api/_lib/` (underscore-prefixed, excluded from routing). Currently at **10/12** — check before adding a new `api/*.js` file:
 
 ```bash
-node scripts/backfill-motherid.js        # Adds motherId to people missing the key
-node scripts/add-placeholder-spouses.js  # Adds placeholder spouse for parents with no spouseIds
+find api -type f -name "*.js" | grep -v "/_lib/" | wc -l
 ```
 
-Run both after adding new members to `family.json`. Order matters: run `backfill-motherid` first, then `add-placeholder-spouses`. Both scripts are idempotent.
+If a new endpoint would push past 12, fold it into an existing file instead of adding one, dispatched by a body field or query param — see `api/invite.js` (four routes consolidated into one, aliased back to their original `/api/invite/status|generate|reset|consume` paths via `vercel.json` rewrites) and `api/family/edit.js` (normal field-edit vs. sibling-reorder dispatched via a `move` body field). This has already broken a deploy once (`deploy_failed: No more than 12 Serverless Functions...`) — don't reintroduce it.
+
+### Data scripts
+
+Two generations of scripts exist — JSON-file scripts operate on `src/data/family.json` (used only when regenerating the bundled seed data from `member-base.js`); `-db.js` scripts operate on the live Neon Postgres table and are what you actually want for any live data fix:
+
+```bash
+node scripts/backfill-motherid.js            # family.json: adds motherId to people missing the key
+node scripts/add-placeholder-spouses.js      # family.json: adds placeholder spouse for parents with no spouseIds
+
+node --env-file=.env.local scripts/backfill-motherid-db.js           # same, against live Postgres
+node --env-file=.env.local scripts/add-placeholder-spouses-db.js     # same, against live Postgres
+node --env-file=.env.local scripts/migrate-to-postgres.js            # ⚠ DROPs and reseeds the whole `people` table from family.json — one-time bootstrap only, never rerun against a live-edited DB
+```
+
+Run the JSON pair in order (`backfill-motherid` → `add-placeholder-spouses`) after regenerating `family.json` from `member-base.js`. All are idempotent except `migrate-to-postgres.js`, which is destructive by design (see its docstring). To target production specifically rather than whatever `.env.local` points at: `vercel env pull .env.production.local --environment=production` first, then pass that file to `--env-file`.
 
 ## Architecture
 
-**Vanshavali** is a React + Vite SPA for visualising and managing a Hindu family genealogy (वंशावली). No backend — all data lives in `src/data/`. Routing via `react-router-dom` (`BrowserRouter` in `main.jsx`), with a `vercel.json` SPA rewrite so `/about` doesn't 404.
+**Vanshavali** is a React + Vite SPA for visualising and managing a Hindu family genealogy (वंशावली), backed by Vercel Serverless Functions, Neon Postgres, Upstash Redis, and Vercel Blob. Routing via `react-router-dom` (`BrowserRouter` in `main.jsx`), with a `vercel.json` rewrite so `/about` doesn't 404 and four rewrites aliasing the invite routes onto `api/invite.js` (see the function-cap note above).
 
-### Data files
+### Data: bundled seed vs. live datastore
 
-**`src/data/family.json`** — two top-level keys:
+- **`src/data/family.json`** ships in the build as an instantly-rendered snapshot (`meta` + `people`), then `App.jsx` fetches `/api/family` on load and swaps `people` for whatever's actually live in Postgres. `meta` is **never** written by the app — it's hand-edited in `family.json` and shipped on the next `vercel --prod`, per the comment in `api/_lib/db.js`.
+- **Neon Postgres `people` table** is the real source of truth for `people` once the app has loaded. Schema: same fields as the JSON shape (`id`, `name`, `gender`, `born`, `died`, `dom`, `alive`, `parent_id`, `mother_id`, `spouse_ids` JSONB, `occupation`, `location`, `bio`, `photo`, `tags` JSONB) plus `sort_order NUMERIC` — see "Ordering" below for why it's `NUMERIC` and not `INTEGER`.
+- **`src/data/about.json`** — About page and print content, independently hand-edited, never touched by the app:
+  - `description` / `descriptionHindi` — long-form dynasty description
+  - `disclaimer` / `disclaimerHindi` — disclaimer text
+  - `info` — object rendered as a table (gotra details, etc.)
+  - `location` — object with `village`, `city`, `district`, `state`, `country`, `pin`
 
-- **`meta`** — tree-level dynasty metadata only. Key fields: `pageTitle`, `dynasty`, `gotra`, `subgotra`, `title`, `lastUpdated`, `maintainer`, `blog`. Does NOT contain description, disclaimer, info, or location — those moved to `about.json`.
+  `\n` in description/disclaimer values is respected everywhere — `white-space: pre-wrap` in UI, `<br>` conversion in Print Tree HTML.
 
-- **`people`** — flat array of person objects (248 real + 87 placeholders). Key fields:
-  - `id` — unique slug (lookup key everywhere)
-  - `parentId` — father/primary parent; drives the tree hierarchy
-  - `motherId` — mother's person `id`; shown as a clickable chip in the detail panel. All people have this key (null if unknown). Backfill rule: defaults to `father.spouseIds[0]`.
-  - `spouseIds` — bidirectional; both sides must list each other. Every parent has at least one entry (placeholder spouses auto-created).
-  - `alive`, `born`, `died`, `dom`, `tags`, `photo`, `bio`, `occupation`, `location`
-  - `tags`: `"placeholder"` = auto-generated unknown spouse (hides from stats, suppresses bio/occupation UI); `"root"` = legendary ancestor
-  - **`alive` semantics**: `true` = living; anything else = deceased. Only `alive === true` counts as living.
-  - **`photo`** paths must be relative to site root (e.g. `/photos/foo.jpg`), not `public/photos/foo.jpg`. Members without a real photo use a default DiceBear avatar URL (see below).
+Person fields not otherwise noted: `tags`: `"placeholder"` = auto-generated unknown spouse (hides from stats, suppresses bio/occupation UI); `"root"` = legendary ancestor. **`alive` semantics**: `true` = living; anything else = deceased. **`photo`** paths are relative to site root (`/photos/foo.jpg`) or a full Blob/DiceBear URL — never `public/photos/foo.jpg`.
 
-**`src/data/about.json`** — About page and print content, independently editable:
-- `description` / `descriptionHindi` — long-form dynasty description
-- `disclaimer` / `disclaimerHindi` — disclaimer text
-- `info` — object rendered as a table (gotra details, etc.)
-- `location` — object with `village`, `city`, `district`, `state`, `country`, `pin`
+### Ordering (`sort_order`)
 
-`\n` in description/disclaimer values is respected everywhere — `white-space: pre-wrap` in UI, `<br>` conversion in Print Tree HTML.
+Sibling render order (who shows first under a given parent) is driven entirely by the `sort_order` column — `getFamilyData()` in `api/_lib/db.js` always does `ORDER BY sort_order`, and `FamilyTree.jsx` groups children by `parentId` while preserving that relative order. It's `NUMERIC`, not `INTEGER`, specifically so a new value can be inserted *between* two existing adjacent values (e.g. `5.5` between siblings `5` and `6`) without renumbering anyone else.
+
+- **Adding a member**: `AddMemberForm`'s "Position" picker (add-only, not shown when editing) sends an optional `insertAfterId` — `''`/omitted = append as youngest (default), `'__first__'` (the `FIRST_SIBLING` sentinel, mirrored server-side as `INSERT_AS_FIRST_SIBLING`) = insert as eldest, or an existing sibling's id = insert immediately after them. `computeInsertSortOrder()` in `api/_lib/db.js` bisects between the two neighboring siblings.
+- **Repositioning an existing member**: `DetailPanel`'s Move Up/Down buttons (admin-only, shown when the person has siblings) POST `{ id, move: 'up'|'down' }` to `api/family/edit.js`, which calls `moveSibling()` — a pairwise `sort_order` swap with the adjacent sibling, not a bisection. No-ops (`{ moved: false }`) at the first/last boundary rather than erroring; the UI disables the button in that case using the `sortOrder` field `getFamilyData()` returns on every person (read-only — stripped on any write path since `personSchema` doesn't define it).
+- Editing a person's other fields never touches `sort_order` (`upsertPeople`'s `ON CONFLICT DO UPDATE` never sets it).
+- `upsertPeople(people, { sortOrderOverrides })` accepts an optional `{ [id]: number }` map to place a *new* row somewhere other than the default append; existing rows always keep their stored value regardless.
+
+### Auth
+
+Server-side sessions (HTTP-only cookie), not client-side-only — `src/utils/auth.js` is now a thin wrapper around `api/auth/*`, not the source of truth:
+
+- **Password login** — `api/auth/login.js` checks against `PASSWORD_HASH` (SHA-256, env var, plaintext never in code) and sets a signed session cookie via `api/_lib/session.js`. Always admin-level.
+- **Google OAuth** — `api/auth/google/login.js` (redirect to Google) + `api/auth/google/callback.js` (exchange code, check `ALLOWED_EMAILS` via `api/_lib/allowlist.js`, set session cookie). Admin-level only if the email is allowlisted.
+- **Invite links** — one-time links redeemed via `api/invite.js` (`?action=consume`, aliased from `/api/invite/consume`), backed by Upstash Redis (`api/_lib/inviteStore.js`, atomic `SET NX` to prevent double-redemption). Sets a session, but `method: 'invite'` — logged in, **not** admin.
+- **`requireSession(req)`** (`api/_lib/requireSession.js`) — any valid session, used by `api/family.js`'s POST (add member: password, Google-admin, *or* invite-redeemed can all add members).
+- **`requireAdminSession(req)`** — valid session *and* `method !== 'invite'`. Used by `api/family/edit.js` (edit/reorder), `api/invite.js`'s generate/reset/status actions, `api/photo-upload.js`.
+- Client state: `isLoggedIn` + `isAdmin` in `App.jsx`, `isLoggedIn` persisted to `sessionStorage` (`vv-auth`, clears on tab close); `isAdmin` is re-derived from `checkSession()` on load, not persisted independently.
+
+### Photos & backups (Vercel Blob)
+
+- **Uploads**: `AddMemberForm`'s photo field uses `@vercel/blob/client`'s `upload()`, which requests a token from `api/photo-upload.js` (admin-only) then uploads directly from the browser to Blob — the file body never transits the serverless function.
+- **Nightly backup**: `api/cron/backup.js`, scheduled via `vercel.json`'s `crons` (`0 3 * * *`, Hobby's daily-only limit), auth'd by `CRON_SECRET` bearer token. Snapshots `getFamilyData()` to `backups/family-<timestamp>.json` in Blob (`access: 'public'`), then prunes down to the newest 7 (count-based, not date-based, so a missed run doesn't wipe backups still inside the window). `contentType` is explicitly `application/json; charset=utf-8` — omitting the charset previously made browsers viewing the raw URL misdecode the Devanagari text as Latin-1 (mojibake) even though the underlying UTF-8 bytes were always correct.
 
 ### Component tree
 
@@ -63,100 +94,88 @@ Run both after adding new members to `family.json`. Order matters: run `backfill
 main.jsx (BrowserRouter)
 └── App
     ├── PrintView          (hidden on screen; renders on window.print())
-    ├── LoginModal         (overlay; triggered by FAB when not logged in)
-    ├── header             (inline JSX — lang toggle + About NavLink)
+    ├── LoginModal         (Radix Dialog; triggered by FAB or any gated action when not logged in)
+    ├── header             (inline JSX — lang toggle, theme toggle, About NavLink, UserBadge)
     ├── Routes
     │   ├── / → app-body
     │   │   ├── tree-section
-    │   │   │   ├── toolbar (search, filters, depth, zoom)
-    │   │   │   ├── FamilyTree
+    │   │   │   ├── toolbar (search, Ctrl/Cmd+K trigger, filters, depth, zoom, view-mode toggle)
+    │   │   │   ├── OnboardingLegend      (dismissible first-visit card, localStorage-persisted)
+    │   │   │   ├── FamilyTree (viewMode === 'tree')
     │   │   │   │   └── TreeNode (recursive)
     │   │   │   │       └── PersonCard (×1 primary + ×N spouses)
     │   │   │   │           └── Avatar
+    │   │   │   ├── MobileTreeView (viewMode === 'list' — opt-in drill-down, not auto-switched by screen size)
     │   │   │   └── MiniMap
-    │   │   ├── DetailPanel  (shown when a person is selected)
+    │   │   ├── DetailPanel  (shown when a person is selected; Edit + Move Up/Down when isAdmin)
     │   │   │   └── Avatar
+    │   │   ├── CommandPalette (Ctrl/Cmd+K jump-to-person)
     │   │   └── FloatingActions (FAB — all tools)
+    │   │       ├── AddMemberForm  (Modal)
+    │   │       └── InviteManager  (Modal, admin-only)
     │   └── /about → AboutPage
 ```
+
+`Modal.jsx` is a shared Radix `Dialog` wrapper used by `AddMemberForm`'s FAB modal, `LoginModal`, and `InviteManager` — Radix renders `Dialog.Overlay`/`Dialog.Content` as siblings (not nested), so their CSS self-centers via `position: fixed` + `transform: translate(-50%,-50%)` rather than relying on a flex-centering wrapper.
 
 ### Routing
 
 - `/` — tree view (full width, no sidebar)
 - `/about` — About page with dynasty info, stats, description, location, disclaimer
-- `vercel.json` rewrites all paths to `index.html` for SPA support
+- `vercel.json` rewrites `/about` to `index.html` (SPA support) plus the four invite-route aliases noted above
 
 ### Key logic
 
-**FloatingActions (FAB):**
-- Fixed bottom-right (`position: fixed`), `bottom: 24px right: 24px`
-- Main `⚙` button expands 5 action buttons vertically: 🔒/🔓 Login/Logout · ＋ Add Member · ↓ Export JSON · ⎙ Print Data · ⊞ Print Tree
-- All actions except Login/Logout are gated behind `isLoggedIn`. Clicking a locked action triggers `onAuthRequired(fn)` which stores the pending action and opens `LoginModal`. After successful login the pending action executes automatically.
-- `isLoggedIn` state lives in `App`, persisted to `sessionStorage` (clears on tab close)
+**Theme (light/dark):** `theme` state in `App.jsx` (`null` = follow system, `'light'`/`'dark'` = explicit override), persisted to `localStorage('vv-theme')`. `isDark = theme ? theme === 'dark' : systemDark` (system preference via `matchMedia`). Toggled via the header's Sun/Moon button; applies `data-theme` attribute on `<html>`. CSS: `@media (prefers-color-scheme: dark) :root:not([data-theme="light"])` for the system-follow case, `:root[data-theme="dark"]` for the explicit override — both must be kept in sync when adding new themed colors, or a color that's correct in one path silently breaks in the other (this exact bug happened with hardcoded card backgrounds).
 
-**Login / auth (`src/utils/auth.js`):**
-- SHA-256 hash of the family password hardcoded as `PASSWORD_HASH`. Plaintext never in code.
-- `checkPassword(input)` — async, uses `window.crypto.subtle.digest`
-- `isAuthenticated()` / `setAuthenticated()` / `clearAuth()` — read/write `sessionStorage` key `vv-auth`
-- To change password: compute new SHA-256 hex digest and update `PASSWORD_HASH` in `auth.js`
+**View mode (tree/list):** `viewMode` state (`'tree'` default, `'list'` = `MobileTreeView`'s tap-to-drill-down layout), persisted to `localStorage('vv-view-mode')`, toggled via a toolbar button next to zoom controls. Available at any width — not auto-switched by screen size (an earlier auto-detect-by-`matchMedia` approach was explicitly replaced with a manual toggle per user preference).
 
-**Language toggle (`lang` state in App):**
-- 3-way pill in header: `हिं` (Hindi only, default) · `दो` (both) · `EN` (English only)
-- Always resets to Hindi (`'hi'`) on page load — not persisted
-- `pickLang(hindi, english, lang)` helper defined locally in `AboutPage.jsx`, `PrintView.jsx`, and `src/utils/printTree.js`; returns `{ primary, secondary }` — secondary is `null` for `'hi'` or `'en'`
+**Command palette (Ctrl/Cmd+K):** `CommandPalette.jsx`, opened via the `k`/`K` keydown handler in `App.jsx` or the toolbar's `.cmdk-trigger` button. Searches all people (not capped to 8 except in the empty-query "browse" state — active searches show up to 50 with a truncation footnote), selecting scrolls the tree to `[data-person-id]` via `CSS.escape()` + `scrollIntoView`.
 
-**FamilyTree / TreeNode rendering:**
-- `FamilyTree` builds `childrenMap` (parentId → children) and finds roots — people with no `parentId` not claimed as a spouse by another root.
-- Each node: single `PersonCard` or "couple bubble" (primary + spouses with ⚭ badge).
-- `depth` prop drives 4-colour generation accent (`--gen-color`). Palette: `#1a3a6b` → `#1a6b3a` → `#6b1a4a` → `#7a4a00`, cycling every 4 levels.
-- `maxGen` (null = show all) force-collapses nodes at `depth >= maxGen - 1`. Toolbar **Depth** stepper controls this.
+**FloatingActions (FAB):** Fixed bottom-right. Main `⚙` button expands action buttons: Login/Logout · Add Member · Invite Link (hidden once a non-admin session confirms it can't manage invites) · Export JSON · Print Data · Print Tree. All but Login/Logout are gated behind `isLoggedIn` — `onAuthRequired(fn)` stores the pending action and opens `LoginModal`; it auto-runs after successful login. Edit Member is **not** in the FAB — it's the pencil icon in `DetailPanel`, admin-only.
 
-**Highlight / dimming:** `App` computes `highlightIds` (a `Set`) from search + active filters. Nodes not in set get `dimmed` class; matches get `highlighted`. Placeholder spouses follow their real partner for status/marriage filters but respect their own gender for gender filter.
+**FamilyTree / TreeNode rendering:** `FamilyTree` builds `childrenMap` (parentId → children, order preserved from the `sort_order`-sorted `people` array) and finds roots — people with no `parentId` not claimed as a spouse by another root. Each node: single `PersonCard` or "couple bubble" (primary + spouses with ⚭ badge). `depth` drives a 4-colour generation accent (`--gen-color`), cycling every 4 levels. `maxGen` (null = show all) force-collapses nodes at `depth >= maxGen - 1` via the toolbar **Depth** stepper.
 
-**Toolbar filter pills:** Three pill groups (Gender / Status / Marriage) compose with search in `highlightIds` useMemo. Labels switch between Hindi and English based on `lang`.
+**Highlight / dimming:** `App` computes `highlightIds` (a `Set`) from search + active filters. Nodes not in set get `dimmed`; matches get `highlighted`. Placeholder spouses follow their real partner for status/marriage filters but respect their own gender for gender filter.
 
-**Print Data:** `window.print()` → `@media print` CSS hides app chrome, reveals `#print-view` (`PrintView` component). Cover reads from `about` prop (description, disclaimer, info, location). MiniMap hidden via CSS and `beforeprint` event listener.
+**Add Member:** `AddMemberForm` (in a FAB `Modal`) generates a slug ID from the name, POSTs to `/api/family` (any logged-in session — see Auth). Also used, in edit mode, by `DetailPanel`'s pencil icon → `App.jsx`'s `handleEditMember` → `/api/family/edit`.
 
-**Print Tree:** `src/utils/printTree.js` — builds a coloured directory-style HTML tree, injects it as `#__vv_print_tree` overlay, calls `window.print()`, cleans up after 2s. Reads dynasty header from `meta`, content (description, disclaimer, info, location) from `about`.
-
-**Export JSON:** `src/utils/exportJSON.js` — downloads in-memory `familyData` as `family.json` via object URL.
-
-**Add Member:** `AddMemberForm` opens in a FAB modal overlay. Generates slug ID from name. POSTs to `/api/family` (always fails on static hosting) — user prompted to use Export JSON instead.
-
-**Photo lightbox (`DetailPanel.jsx`):** Clicking the avatar (when `person.photo` set) opens a full-screen lightbox. Close via ✕, backdrop click, or Escape.
+**Photo lightbox (`DetailPanel.jsx`):** Clicking the avatar (when `person.photo` set) opens a full-screen lightbox (Radix Dialog). Close via ✕, backdrop click, or Escape.
 
 **Avatar (`src/components/Avatar.jsx`):** Falls back to styled initials if no photo or image fails.
 
-**MiniMap (`src/components/MiniMap.jsx`):** Positioned absolutely in `.tree-section`. Returns `null` during print (`beforeprint`/`afterprint` events).
+**MiniMap (`src/components/MiniMap.jsx`):** Positioned absolutely in `.tree-section`; hidden during `viewMode === 'list'` and print (`beforeprint`/`afterprint`).
 
-**About page (`src/components/AboutPage.jsx`):** Full-page route at `/about`. Shows stats (computed from `people`), description, gotra info table, location + Maps link, disclaimer. "← Back to Tree" button navigates to `/`.
+**About page:** Full-page route at `/about`. Stats computed from `people`, "How to Read the Tree" legend, description, gotra info table, location + Maps link, disclaimer.
 
-**Credit line:** Tree area: `.tree-credit` (absolute, bottom-right of `.tree-section`) — hidden on mobile. About page: `.about-credit` at bottom of about body. Both read `meta.maintainer`.
+**Print Data / Print Tree / Export JSON:** unchanged from static-SPA days — `window.print()` reveals `PrintView`; `src/utils/printTree.js` builds a directory-style overlay; `src/utils/exportJSON.js` downloads in-memory `familyData` (useful after live edits, since the bundled `family.json` in the repo doesn't auto-update from Postgres writes).
 
 ### Styling
 
-All CSS in `src/index.css` (single file, no CSS modules). CSS custom properties on `:root` for colour palette. Mobile breakpoint `≤768px`. Tree layout is pure CSS flexbox/`<ul><li>` — no third-party tree library.
+All CSS in `src/index.css` (single file, no CSS modules). CSS custom properties on `:root` for the color palette, plus a design-token scale (spacing/type/radius/shadow/z-index). Mobile breakpoint `≤768px`. Tree layout is pure CSS flexbox/`<ul><li>` — no third-party tree library. `lucide-react` for icons (tree-shaken). Devanagari text relies on font-family fallback pairing (`Noto Sans/Serif Devanagari` alongside Inter/Playfair Display in `index.html`'s Google Fonts link) — fallback is per-glyph, so mixed Hindi/Latin renders correctly without extra markup.
 
 ### Utilities
 
-- `src/utils/auth.js` — SHA-256 password check, sessionStorage auth state
-- `src/utils/exportJSON.js` — download familyData as JSON
+- `src/utils/auth.js` — thin client wrapper around `api/auth/*` (login/logout/session check), sessionStorage flag
+- `src/utils/familyApi.js` — `fetchFamilyData`, `addFamilyMember`, `editFamilyMember`, `moveSibling`
+- `src/utils/inviteApi.js` — status/generate/reset/consume against `api/invite.js`
+- `src/utils/exportJSON.js` — download in-memory `familyData` as JSON
 - `src/utils/printTree.js` — generate and print coloured text tree overlay
 - `src/utils/tagColor.js` — djb2 hash → deterministic pastel HSL colour for tags
 
-### Data source
+### Data source (bundled seed)
 
-`src/data/member-base.js` is the master source — a raw JS nested `{ name, children[] }` object. `family.json` is derived from it: assign IDs, compute `parentId`, infer gender from name suffixes (`(पुत्री)` = female, `(पुत्र)` = male). After rebuilding, run both data scripts in order.
+`src/data/member-base.js` is the master source for a from-scratch rebuild — a raw JS nested `{ name, children[] }` object. `family.json` is derived from it: assign IDs, compute `parentId`, infer gender from name suffixes (`(पुत्री)` = female, `(पुत्र)` = male). After rebuilding, run the JSON-file data scripts in order, then `migrate-to-postgres.js` if this is meant to replace live production data (⚠ destructive — see Data scripts above).
 
 ### Default avatar photos
 
-Real photos are stored under `public/photos/` and referenced as `/photos/<filename>` in `family.json`. Members without a real photo use a static DiceBear URL as their `photo` value:
+Real photos are stored under `public/photos/` (repo-bundled) or Vercel Blob (uploaded via Add Member), referenced as `/photos/<filename>` or a full Blob URL in the person's `photo` field. Members without a real photo use a static DiceBear URL:
 
 - **Male default**: `https://api.dicebear.com/9.x/avataaars/svg?seed=lakshman-prasad&backgroundColor=d1d4f9`
 - **Female default**: `https://api.dicebear.com/9.x/avataaars/svg?seed=priya&top=longButNotTooLong,bun,straight02&hairColor=2c1b18,4a312c&skinColor=ae5d29,d08b5b,edb98a&facialHairProbability=0&backgroundColor=ffffff`
 
-These are the same URL for all males / all females respectively (not personalised). To update the default, do a bulk find-and-replace of the old URL in `family.json`. Placeholder spouses (`tags: ["placeholder"]`) are intentionally excluded from photo display in the UI.
+Same URL for all males / all females respectively (not personalised). Placeholder spouses (`tags: ["placeholder"]`) are intentionally excluded from photo display in the UI.
 
 ### Adding / editing family data
 
-Edit `src/data/family.json` directly. For about/dynasty content, edit `src/data/about.json`. The "Export JSON" FAB action exports current in-memory state (useful after using Add Member in the UI).
+Prefer the live app (Add Member / Edit Member / Move Up-Down, all backed by Postgres) over hand-editing `family.json` — the JSON file is only the initial-paint snapshot and is **not** kept in sync with live writes. Use Export JSON after live edits if you want an updated snapshot to commit back into the repo. For about/dynasty content (never live-editable), edit `src/data/about.json` directly and redeploy.

@@ -1,4 +1,4 @@
-import { getFamilyData, upsertPeople } from '../_lib/db.js';
+import { getFamilyData, upsertPeople, moveSibling } from '../_lib/db.js';
 import { requireAdminSession } from '../_lib/requireSession.js';
 import { personSchema } from '../_lib/familySchema.js';
 import { rateLimit } from '../_lib/rateLimit.js';
@@ -33,6 +33,17 @@ export default async function handler(req, res) {
   const existing = current.people.find(p => p.id === id);
   if (!existing) {
     res.status(404).json({ error: `No member with id "${id}" exists.` });
+    return;
+  }
+
+  // Sibling reorder is a distinct, lightweight action (swap sort_order with
+  // a neighbor) — handled here rather than as its own function to stay
+  // under Vercel Hobby's 12-function cap, same reasoning as api/invite.js.
+  const move = req.body?.move;
+  if (move === 'up' || move === 'down') {
+    const result = await moveSibling(id, move);
+    const fresh = await getFamilyData();
+    res.status(200).json({ ok: true, ...result, people: fresh.people });
     return;
   }
 

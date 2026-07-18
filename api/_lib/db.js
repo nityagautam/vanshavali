@@ -25,6 +25,10 @@ function rowToPerson(row) {
     bio: row.bio,
     photo: row.photo,
     tags: normalizeArray(row.tags),
+    // Read-only positioning info for the admin reorder UI — never accepted
+    // back from the client (personSchema doesn't define it, so it's
+    // stripped on the way into any edit/insert).
+    sortOrder: Number(row.sort_order),
   };
   if (row.dom) person.dom = row.dom;
   return person;
@@ -109,4 +113,31 @@ export async function computeInsertSortOrder(parentId, insertAfterId) {
   const afterVal = Number(siblings[idx].sort_order);
   const next = siblings[idx + 1];
   return next ? (afterVal + Number(next.sort_order)) / 2 : afterVal + 1;
+}
+
+// Moves a person one slot earlier ('up') or later ('down') among their
+// siblings (same parentId) by swapping sort_order with that neighbor.
+// A plain pairwise swap, not a bisection — simpler and exact, since both
+// values already exist and only these two rows need to change. Returns
+// { moved: false } as a no-op if already first/last, rather than erroring.
+export async function moveSibling(id, direction) {
+  const sql = neon(process.env.DATABASE_URL);
+  const rows = await sql`SELECT id, parent_id, sort_order FROM people ORDER BY sort_order`;
+
+  const person = rows.find(r => r.id === id);
+  if (!person) throw new Error(`No member with id "${id}" exists.`);
+
+  const norm = v => v ?? null;
+  const siblings = rows.filter(r => norm(r.parent_id) === norm(person.parent_id));
+  const idx = siblings.findIndex(s => s.id === id);
+  const swapIdx = direction === 'up' ? idx - 1 : idx + 1;
+
+  if (swapIdx < 0 || swapIdx >= siblings.length) return { moved: false };
+
+  const other = siblings[swapIdx];
+  await sql.transaction([
+    sql`UPDATE people SET sort_order = ${Number(other.sort_order)} WHERE id = ${person.id}`,
+    sql`UPDATE people SET sort_order = ${Number(person.sort_order)} WHERE id = ${other.id}`,
+  ]);
+  return { moved: true };
 }

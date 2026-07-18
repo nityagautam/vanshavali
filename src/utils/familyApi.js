@@ -27,3 +27,15 @@ export async function editFamilyMember(payload) {
   if (!res.ok) throw new Error(data.error || 'Failed to save changes.');
   return data; // { ok, people }
 }
+
+export async function moveSibling(id, direction) {
+  const res = await fetch('/api/family/edit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({ id, move: direction }),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || 'Failed to reorder.');
+  return data; // { ok, moved, people }
+}

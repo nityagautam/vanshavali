@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
-import { X, Pencil, ZoomIn } from 'lucide-react';
+import { X, Pencil, ZoomIn, ArrowUp, ArrowDown } from 'lucide-react';
 import Avatar from './Avatar';
 import { getTagStyle } from '../utils/tagColor';
 
@@ -43,7 +43,7 @@ const LABELS = {
   },
 };
 
-export default function DetailPanel({ person, personMap, people, onClose, onSelect, onEdit, isAdmin, lang = 'hi' }) {
+export default function DetailPanel({ person, personMap, people, onClose, onSelect, onEdit, onReorder, isAdmin, lang = 'hi' }) {
   const [lightbox, setLightbox] = useState(false);
 
   const formatDate = (d) => {
@@ -64,9 +64,18 @@ export default function DetailPanel({ person, personMap, people, onClose, onSele
   const children = people.filter(p => p.parentId === person.id);
   const father   = person.parentId ? personMap[person.parentId] : null;
   const mother   = person.motherId ? personMap[person.motherId] : null;
-  const siblings = person.parentId
-    ? people.filter(p => p.parentId === person.parentId && p.id !== person.id)
-    : [];
+  // Normalized so root-level people (parentId null) compare against other
+  // roots too, matching how the backend groups siblings for reordering.
+  const siblings = people.filter(p => (p.parentId || null) === (person.parentId || null) && p.id !== person.id);
+
+  // Position among ALL same-parent siblings (including self) in sort_order —
+  // used to disable Move Up/Down at the boundaries. sortOrder is undefined
+  // for the bundled build-time snapshot before the live datastore responds;
+  // treat that as "unknown position" and just leave the buttons enabled.
+  const orderedSiblings = [...siblings, person].sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+  const ownIndex = orderedSiblings.findIndex(p => p.id === person.id);
+  const canMoveUp   = person.sortOrder !== undefined && ownIndex > 0;
+  const canMoveDown = person.sortOrder !== undefined && ownIndex < orderedSiblings.length - 1;
 
   const isPlaceholder = person.tags?.includes('placeholder');
   const isDeceased    = person.alive !== true && !isPlaceholder;
@@ -81,6 +90,26 @@ export default function DetailPanel({ person, personMap, people, onClose, onSele
         <button className="detail-close" onClick={onClose} title="Close"><X size={16} /></button>
         {isAdmin && (
           <button className="detail-edit" onClick={() => onEdit(person)} title="Edit member"><Pencil size={14} /></button>
+        )}
+        {isAdmin && siblings.length > 0 && (
+          <>
+            <button
+              className="detail-move-up"
+              onClick={() => onReorder(person, 'up')}
+              disabled={!canMoveUp}
+              title="Move up (earlier among siblings)"
+            >
+              <ArrowUp size={14} />
+            </button>
+            <button
+              className="detail-move-down"
+              onClick={() => onReorder(person, 'down')}
+              disabled={!canMoveDown}
+              title="Move down (later among siblings)"
+            >
+              <ArrowDown size={14} />
+            </button>
+          </>
         )}
         <div
           className={`detail-photo-avatar-wrap${person.photo ? ' has-photo' : ''}`}

@@ -18,7 +18,7 @@ import AddMemberForm from './components/AddMemberForm';
 import Modal from './components/Modal';
 import CommandPalette from './components/CommandPalette';
 import { isAuthenticated, setAuthenticated, checkSession } from './utils/auth';
-import { fetchFamilyData, editFamilyMember } from './utils/familyApi';
+import { fetchFamilyData, editFamilyMember, moveSibling } from './utils/familyApi';
 import { consumeInvite } from './utils/inviteApi';
 
 export default function App() {
@@ -86,6 +86,16 @@ export default function App() {
       setAuthMessage({ type: 'ok', text: `"${payload.name}" updated.` });
     } catch (err) {
       setAuthMessage({ type: 'err', text: err.message || 'Could not save changes — please try again.' });
+    }
+  };
+
+  const handleReorder = async (person, direction) => {
+    try {
+      const { people: updated, moved } = await moveSibling(person.id, direction);
+      setPeople(updated);
+      if (!moved) setAuthMessage({ type: 'err', text: `"${person.name}" is already ${direction === 'up' ? 'first' : 'last'} among their siblings.` });
+    } catch (err) {
+      setAuthMessage({ type: 'err', text: err.message || 'Could not reorder — please try again.' });
     }
   };
 
@@ -549,6 +559,7 @@ export default function App() {
                   onClose={() => setSelected(null)}
                   onSelect={handleSelect}
                   onEdit={setEditingPerson}
+                  onReorder={handleReorder}
                   isAdmin={isAdmin}
                 />
               )}

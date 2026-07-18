@@ -1,5 +1,7 @@
-import { put } from '@vercel/blob';
+import { put, list, del } from '@vercel/blob';
 import { getFamilyData } from '../_lib/db.js';
+
+const RETAIN_DAYS = 7;
 
 export default async function handler(req, res) {
   const authHeader = req.headers.authorization;
@@ -18,5 +20,14 @@ export default async function handler(req, res) {
     addRandomSuffix: false,
   });
 
-  res.status(200).json({ ok: true, pathname, peopleCount: data.people.length });
+  // Rolling retention: keep the newest RETAIN_DAYS backups, prune the rest.
+  // Count-based rather than date-based so a missed/late cron run doesn't
+  // wipe out everything still within the window.
+  const { blobs } = await list({ prefix: 'backups/' });
+  const stale = blobs
+    .sort((a, b) => new Date(b.uploadedAt) - new Date(a.uploadedAt))
+    .slice(RETAIN_DAYS);
+  await Promise.all(stale.map(b => del(b.url)));
+
+  res.status(200).json({ ok: true, pathname, peopleCount: data.people.length, pruned: stale.length });
 }

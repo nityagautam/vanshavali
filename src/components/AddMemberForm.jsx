@@ -12,8 +12,12 @@ function generateId(name) {
   return `${base}-${Date.now().toString(36)}`;
 }
 
+// Sentinel for "insert as the eldest (first) sibling" — must match
+// api/_lib/db.js's INSERT_AS_FIRST_SIBLING.
+const FIRST_SIBLING = '__first__';
+
 const EMPTY = {
-  name: '', gender: 'male', parentId: '', spouseId: '',
+  name: '', gender: 'male', parentId: '', spouseId: '', insertAfterId: '',
   born: '', died: '', alive: true,
   occupation: '', location: '', bio: '', tags: '', photo: '',
 };
@@ -98,7 +102,7 @@ export default function AddMemberForm({ people, person, onSubmit, onCancel }) {
     // Remove undefined keys
     Object.keys(payload).forEach(k => payload[k] === undefined && delete payload[k]);
 
-    await onSubmit(payload);
+    await onSubmit(payload, isEdit ? undefined : (form.insertAfterId || undefined));
     setSaving(false);
     if (!isEdit) setForm(EMPTY);
   };
@@ -106,6 +110,13 @@ export default function AddMemberForm({ people, person, onSubmit, onCancel }) {
   // People usable as parents/spouses (exclude self when editing)
   const parentOptions = people.filter(p => p.id !== person?.id);
   const spouseOptions = people.filter(p => p.id !== form.parentId && p.id !== person?.id);
+
+  // Existing children of the currently-selected parent (root-level when
+  // parentId is empty) — lets the admin place the new person exactly
+  // instead of always appending as the youngest.
+  const siblingOptions = people.filter(p =>
+    (p.parentId || '') === (form.parentId || '') && p.id !== person?.id
+  );
 
   return (
     <form className="amf" onSubmit={handleSubmit} noValidate>
@@ -136,12 +147,26 @@ export default function AddMemberForm({ people, person, onSubmit, onCancel }) {
 
         {/* Parent */}
         <label className="amf-label">Father / Parent</label>
-        <select className="amf-select" value={form.parentId} onChange={e => set('parentId', e.target.value)}>
+        <select className="amf-select" value={form.parentId} onChange={e => setForm(f => ({ ...f, parentId: e.target.value, insertAfterId: '' }))}>
           <option value="">— None (root ancestor) —</option>
           {parentOptions.map(p => (
             <option key={p.id} value={p.id}>{p.name}</option>
           ))}
         </select>
+
+        {/* Position among siblings — new additions only; editing never repositions */}
+        {!isEdit && siblingOptions.length > 0 && (
+          <>
+            <label className="amf-label">Position</label>
+            <select className="amf-select" value={form.insertAfterId} onChange={e => set('insertAfterId', e.target.value)}>
+              <option value="">— Add as youngest (default) —</option>
+              <option value={FIRST_SIBLING}>— Add as eldest —</option>
+              {siblingOptions.map(p => (
+                <option key={p.id} value={p.id}>Insert after: {p.name}</option>
+              ))}
+            </select>
+          </>
+        )}
 
         {/* Spouse */}
         <label className="amf-label">Spouse</label>

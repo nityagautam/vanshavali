@@ -32,7 +32,7 @@ async function main() {
       bio TEXT,
       photo TEXT,
       tags JSONB NOT NULL DEFAULT '[]',
-      sort_order INTEGER NOT NULL
+      sort_order NUMERIC NOT NULL
     )
   `;
 

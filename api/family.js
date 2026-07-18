@@ -1,4 +1,4 @@
-import { getFamilyData, upsertPeople } from './_lib/db.js';
+import { getFamilyData, upsertPeople, computeInsertSortOrder } from './_lib/db.js';
 import { requireSession } from './_lib/requireSession.js';
 import { personSchema } from './_lib/familySchema.js';
 import { rateLimit } from './_lib/rateLimit.js';
@@ -65,12 +65,13 @@ export default async function handler(req, res) {
     }
   }
 
-  await upsertPeople([person, ...changedSpouses]);
+  const insertAfterId = req.body?.insertAfterId || null;
+  const sortOrder = await computeInsertSortOrder(person.parentId ?? null, insertAfterId);
+  await upsertPeople([person, ...changedSpouses], { sortOrderOverrides: { [person.id]: sortOrder } });
 
-  const people = [
-    ...current.people.map(p => changedSpouses.find(s => s.id === p.id) || p),
-    person,
-  ];
+  // Re-fetch rather than splice the new person into `current.people` —
+  // insertAfterId can place them anywhere in sibling order, not just last.
+  const fresh = await getFamilyData();
 
-  res.status(200).json({ ok: true, people });
+  res.status(200).json({ ok: true, people: fresh.people });
 }

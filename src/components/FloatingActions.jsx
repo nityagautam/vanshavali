@@ -65,9 +65,9 @@ export default function FloatingActions({
     },
   ];
 
-  const handleAddMember = async (newPerson) => {
+  const handleAddMember = async (newPerson, insertAfterId) => {
     try {
-      const { people: updated } = await addFamilyMember(newPerson);
+      const { people: updated } = await addFamilyMember(newPerson, insertAfterId);
       onAddMember(updated);
       showToast('ok', `"${newPerson.name}" added and saved`);
       setShowAddMember(false);

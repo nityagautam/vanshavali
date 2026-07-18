@@ -4,12 +4,12 @@ export async function fetchFamilyData() {
   return res.json();
 }
 
-export async function addFamilyMember(person) {
+export async function addFamilyMember(person, insertAfterId) {
   const res = await fetch('/api/family', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
-    body: JSON.stringify({ person }),
+    body: JSON.stringify({ person, insertAfterId: insertAfterId || undefined }),
   });
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data.error || 'Failed to save member.');

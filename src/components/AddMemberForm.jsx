@@ -120,9 +120,19 @@ export default function AddMemberForm({ people, person, onSubmit, onCancel }) {
   // parentId is empty) — lets the admin place the new person exactly
   // instead of always appending as the youngest. Not shown for a
   // married-in spouse (see isMarriedInSpouse above).
-  const siblingOptions = people.filter(p =>
-    (p.parentId || '') === (form.parentId || '') && p.id !== person?.id
-  );
+  //
+  // At root level, parentId===null also covers unrelated married-in and
+  // placeholder spouses elsewhere in the tree — isGenuineRoot excludes
+  // those so this list only offers actual root ancestors as siblings.
+  const isGenuineRoot = (p) => {
+    if (p.parentId) return false;
+    const isSpouseOfLineageMember = people.some(other => other.parentId && (other.spouseIds || []).includes(p.id));
+    const isSpouseOfMaleRoot = people.some(other => !other.parentId && other.gender === 'male' && (other.spouseIds || []).includes(p.id));
+    return !isSpouseOfLineageMember && !isSpouseOfMaleRoot;
+  };
+  const siblingOptions = form.parentId
+    ? people.filter(p => p.parentId === form.parentId && p.id !== person?.id)
+    : people.filter(p => isGenuineRoot(p) && p.id !== person?.id);
 
   return (
     <form className="amf" onSubmit={handleSubmit} noValidate>

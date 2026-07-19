@@ -64,9 +64,21 @@ export default function DetailPanel({ person, personMap, people, onClose, onSele
   const children = people.filter(p => p.parentId === person.id);
   const father   = person.parentId ? personMap[person.parentId] : null;
   const mother   = person.motherId ? personMap[person.motherId] : null;
-  // Normalized so root-level people (parentId null) compare against other
-  // roots too, matching how the backend groups siblings for reordering.
-  const siblings = people.filter(p => (p.parentId || null) === (person.parentId || null) && p.id !== person.id);
+  // parentId===null covers three unrelated cases: genuine unattached roots,
+  // married-in spouses, and placeholder spouses. Only true roots have real
+  // "siblings" — a married-in spouse has no blood relatives here at all, so
+  // grouping them by shared null parentId would wrongly show every spouse
+  // in the whole tree as everyone else's sibling. Mirrors FamilyTree.jsx's
+  // own root-detection logic.
+  const isGenuineRoot = (p) => {
+    if (p.parentId) return false;
+    const isSpouseOfLineageMember = people.some(other => other.parentId && (other.spouseIds || []).includes(p.id));
+    const isSpouseOfMaleRoot = people.some(other => !other.parentId && other.gender === 'male' && (other.spouseIds || []).includes(p.id));
+    return !isSpouseOfLineageMember && !isSpouseOfMaleRoot;
+  };
+  const siblings = person.parentId
+    ? people.filter(p => p.parentId === person.parentId && p.id !== person.id)
+    : (isGenuineRoot(person) ? people.filter(p => isGenuineRoot(p) && p.id !== person.id) : []);
 
   // Position among ALL same-parent siblings (including self) in sort_order —
   // used to disable Move Up/Down at the boundaries. sortOrder is undefined

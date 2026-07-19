@@ -9,6 +9,7 @@ const KNOWN_FIELDS = new Set([
   'id', 'name', 'gender', 'born', 'died', 'alive', 'dom',
   'parentId', 'motherId', 'spouseIds', 'occupation',
   'location', 'bio', 'tags', 'photo',
+  'sortOrder', // internal ordering metadata — shown separately, admin-only
 ]);
 
 function toLabel(key) {
@@ -206,6 +207,12 @@ export default function DetailPanel({ person, personMap, people, onClose, onSele
               </span>
             </div>
           ))}
+          {isAdmin && person.sortOrder !== undefined && (
+            <div className="detail-row" style={{ color: 'var(--text-muted)' }}>
+              <span className="label">Sort Order</span>
+              <span className="value">{person.sortOrder}</span>
+            </div>
+          )}
           {!born && !died && !dom && !person.occupation && !person.location && extraFields.length === 0 && (
             <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
               {t.noDetails}

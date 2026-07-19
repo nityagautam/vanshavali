@@ -17,7 +17,7 @@ function generateId(name) {
 const FIRST_SIBLING = '__first__';
 
 const EMPTY = {
-  name: '', gender: 'male', parentId: '', spouseId: '', insertAfterId: '',
+  name: '', gender: 'male', parentId: '', motherId: '', spouseId: '', insertAfterId: '',
   born: '', died: '', alive: true,
   occupation: '', location: '', bio: '', tags: '', photo: '',
 };
@@ -27,6 +27,7 @@ function formFromPerson(person) {
     name:       person.name || '',
     gender:     person.gender || 'male',
     parentId:   person.parentId || '',
+    motherId:   person.motherId || '',
     spouseId:   person.spouseIds?.[0] || '',
     born:       person.born || '',
     died:       person.died || '',
@@ -91,6 +92,7 @@ export default function AddMemberForm({ people, person, onSubmit, onCancel }) {
       died:       form.died.trim()  || null,
       alive:      form.alive,
       parentId:   form.parentId  || null,
+      motherId:   form.motherId  || null,
       spouseIds,
       occupation: form.occupation.trim() || undefined,
       location:   form.location.trim()   || undefined,
@@ -134,6 +136,12 @@ export default function AddMemberForm({ people, person, onSubmit, onCancel }) {
     ? people.filter(p => p.parentId === form.parentId && p.id !== person?.id)
     : people.filter(p => isGenuineRoot(p) && p.id !== person?.id);
 
+  // Mother options are the selected father's own spouses — parentId alone
+  // can't distinguish which wife a child belongs to when there's more than
+  // one, so this is a separate, explicit choice rather than inferred.
+  const father = people.find(p => p.id === form.parentId);
+  const motherOptions = father ? (father.spouseIds || []).map(id => people.find(p => p.id === id)).filter(Boolean) : [];
+
   return (
     <form className="amf" onSubmit={handleSubmit} noValidate>
       <div className="amf-grid">
@@ -163,7 +171,17 @@ export default function AddMemberForm({ people, person, onSubmit, onCancel }) {
 
         {/* Parent */}
         <label className="amf-label">Father / Parent</label>
-        <select className="amf-select" value={form.parentId} onChange={e => setForm(f => ({ ...f, parentId: e.target.value, insertAfterId: '' }))}>
+        <select className="amf-select" value={form.parentId} onChange={e => {
+          const newParentId = e.target.value;
+          const newFather = people.find(p => p.id === newParentId);
+          const newMotherOptions = newFather ? (newFather.spouseIds || []).map(id => people.find(p => p.id === id)).filter(Boolean) : [];
+          setForm(f => ({
+            ...f,
+            parentId: newParentId,
+            insertAfterId: '',
+            motherId: newMotherOptions.length === 1 ? newMotherOptions[0].id : '',
+          }));
+        }}>
           <option value="">{form.spouseId ? '— None (married in, no blood parent) —' : '— None (root ancestor) —'}</option>
           {parentOptions.map(p => (
             <option key={p.id} value={p.id}>{p.name}</option>
@@ -173,6 +191,20 @@ export default function AddMemberForm({ people, person, onSubmit, onCancel }) {
           <div className="amf-hint" style={{ gridColumn: '2 / -1', fontSize: '0.78rem', color: 'var(--text-muted)', margin: '-6px 0 4px' }}>
             No parent, married to the selected spouse — they'll appear next to their spouse in the tree, not as a separate ancestor.
           </div>
+        )}
+
+        {/* Mother — only meaningful once a father is picked, and only worth
+            asking when he has more than one spouse on record */}
+        {father && motherOptions.length > 0 && (
+          <>
+            <label className="amf-label">Mother</label>
+            <select className="amf-select" value={form.motherId} onChange={e => set('motherId', e.target.value)}>
+              {motherOptions.length > 1 && <option value="">— Select mother —</option>}
+              {motherOptions.map(m => (
+                <option key={m.id} value={m.id}>{m.name}</option>
+              ))}
+            </select>
+          </>
         )}
 
         {/* Position among siblings — new additions only; editing never repositions;

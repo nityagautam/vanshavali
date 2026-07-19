@@ -1,5 +1,5 @@
 import { serializeCookie, isSecureRequest } from '../../_lib/cookies.js';
-import { createSessionToken, SESSION_COOKIE, SESSION_MAX_AGE } from '../../_lib/session.js';
+import { createSessionToken, SESSION_COOKIE } from '../../_lib/session.js';
 import { isAllowedEmail } from '../../_lib/allowlist.js';
 import { rateLimit } from '../../_lib/rateLimit.js';
 
@@ -70,12 +70,12 @@ export default async function handler(req, res) {
     return;
   }
 
-  const token = createSessionToken({ email: claims.email, name: claims.name, picture: claims.picture });
+  const { token, maxAge } = createSessionToken({ method: 'google', email: claims.email, name: claims.name, picture: claims.picture });
   const secure = isSecureRequest(req);
 
   res.setHeader('Set-Cookie', [
     serializeCookie(STATE_COOKIE, '', { maxAge: 0, secure }),
-    serializeCookie(SESSION_COOKIE, token, { maxAge: SESSION_MAX_AGE, secure }),
+    serializeCookie(SESSION_COOKIE, token, { maxAge, secure }),
   ]);
 
   res.redirect('/?googleLogin=success');

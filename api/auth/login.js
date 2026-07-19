@@ -1,6 +1,6 @@
 import crypto from 'node:crypto';
 import { serializeCookie, isSecureRequest } from '../_lib/cookies.js';
-import { createSessionToken, SESSION_COOKIE, SESSION_MAX_AGE } from '../_lib/session.js';
+import { createSessionToken, SESSION_COOKIE } from '../_lib/session.js';
 import { rateLimit } from '../_lib/rateLimit.js';
 
 export default function handler(req, res) {
@@ -40,9 +40,9 @@ export default function handler(req, res) {
     return;
   }
 
-  const token = createSessionToken({ method: 'password' });
+  const { token, maxAge } = createSessionToken({ method: 'password' });
   res.setHeader('Set-Cookie', serializeCookie(SESSION_COOKIE, token, {
-    maxAge: SESSION_MAX_AGE,
+    maxAge,
     secure: isSecureRequest(req),
   }));
   res.status(200).json({ ok: true });

@@ -1,6 +1,6 @@
 import crypto from 'node:crypto';
 import { getActiveToken, setActiveToken, tryConsume, clearConsumed, isConsumed } from './_lib/inviteStore.js';
-import { createSessionToken, SESSION_COOKIE, SESSION_MAX_AGE } from './_lib/session.js';
+import { createSessionToken, SESSION_COOKIE } from './_lib/session.js';
 import { serializeCookie, isSecureRequest } from './_lib/cookies.js';
 import { requireAdminSession } from './_lib/requireSession.js';
 import { rateLimit } from './_lib/rateLimit.js';
@@ -120,9 +120,9 @@ async function consume(req, res) {
     return;
   }
 
-  const sessionToken = createSessionToken({ method: 'invite' });
+  const { token: sessionToken, maxAge } = createSessionToken({ method: 'invite' });
   res.setHeader('Set-Cookie', serializeCookie(SESSION_COOKIE, sessionToken, {
-    maxAge: SESSION_MAX_AGE,
+    maxAge,
     secure: isSecureRequest(req),
   }));
 

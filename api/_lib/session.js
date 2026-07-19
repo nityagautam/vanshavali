@@ -1,7 +1,16 @@
 import crypto from 'node:crypto';
 
-export const SESSION_COOKIE  = 'vv_session';
-export const SESSION_MAX_AGE = 60 * 60 * 24 * 30; // 30 days, in seconds
+export const SESSION_COOKIE = 'vv_session';
+
+// How long a session lasts depends on how it was created — Google is a
+// verified, allowlisted identity so it gets the longer window; password and
+// invite are both shared/temporary-style access, so both get a short one.
+const SESSION_MAX_AGE_BY_METHOD = {
+  google:   60 * 60 * 24 * 7, // 7 days
+  password: 60 * 60 * 24 * 1, // 1 day
+  invite:   60 * 60 * 24 * 1, // 1 day
+};
+const DEFAULT_SESSION_MAX_AGE = SESSION_MAX_AGE_BY_METHOD.password;
 
 function sign(body) {
   const secret = process.env.SESSION_SECRET;
@@ -9,9 +18,12 @@ function sign(body) {
   return crypto.createHmac('sha256', secret).update(body).digest('base64url');
 }
 
+// Returns { token, maxAge } — maxAge is derived from data.method so the
+// cookie's Max-Age and the token's own embedded expiry always agree.
 export function createSessionToken(data) {
-  const body = Buffer.from(JSON.stringify({ ...data, exp: Date.now() + SESSION_MAX_AGE * 1000 })).toString('base64url');
-  return `${body}.${sign(body)}`;
+  const maxAge = SESSION_MAX_AGE_BY_METHOD[data.method] ?? DEFAULT_SESSION_MAX_AGE;
+  const body = Buffer.from(JSON.stringify({ ...data, exp: Date.now() + maxAge * 1000 })).toString('base64url');
+  return { token: `${body}.${sign(body)}`, maxAge };
 }
 
 export function verifySessionToken(token) {

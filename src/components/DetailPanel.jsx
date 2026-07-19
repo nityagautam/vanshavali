@@ -61,7 +61,15 @@ export default function DetailPanel({ person, personMap, people, onClose, onSele
     ([key, val]) => !KNOWN_FIELDS.has(key) && val !== null && val !== undefined && val !== ''
   );
   const spouses  = (person.spouseIds || []).map(id => personMap[id]).filter(Boolean);
-  const children = people.filter(p => p.parentId === person.id);
+  // parentId is always the father/primary parent, so it alone can't tell a
+  // wife's own children apart from her co-wives'. If this person is ever
+  // listed as parentId for someone, they're the primary side — show every
+  // child, across all spouses. Otherwise (a spouse, not the primary line)
+  // show only the children whose motherId points at them specifically.
+  const childrenAsPrimary = people.filter(p => p.parentId === person.id);
+  const children = childrenAsPrimary.length > 0
+    ? childrenAsPrimary
+    : people.filter(p => p.motherId === person.id);
   const father   = person.parentId ? personMap[person.parentId] : null;
   const mother   = person.motherId ? personMap[person.motherId] : null;
   // parentId===null covers three unrelated cases: genuine unattached roots,

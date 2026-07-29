@@ -3129,10 +3129,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
 
 .about-stats {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
 }
 .about-stat {
-  flex: 1;
+  flex: 1 1 80px;
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: 10px;

@@ -37,6 +37,8 @@ Two generations of scripts exist — JSON-file scripts operate on `src/data/fami
 ```bash
 node scripts/backfill-motherid.js            # family.json: adds motherId to people missing the key
 node scripts/add-placeholder-spouses.js      # family.json: adds placeholder spouse for parents with no spouseIds
+node scripts/sort-placeholder-spouses.js     # family.json: reorders so each placeholder spouse sits right after their real partner
+node scripts/sort-family.cjs                 # review-only: emits src/data/ordered-family.json as a nested tree (does NOT write family.json)
 
 node --env-file=.env.local scripts/backfill-motherid-db.js           # same, against live Postgres
 node --env-file=.env.local scripts/add-placeholder-spouses-db.js     # same, against live Postgres
@@ -61,14 +63,14 @@ Run the JSON pair in order (`backfill-motherid` → `add-placeholder-spouses`) a
 
   `\n` in description/disclaimer values is respected everywhere — `white-space: pre-wrap` in UI, `<br>` conversion in Print Tree HTML.
 
-Person fields not otherwise noted: `tags`: `"placeholder"` = auto-generated unknown spouse (hides from stats, suppresses bio/occupation UI); `"root"` = legendary ancestor. **`alive` semantics**: `true` = living; anything else = deceased. **`photo`** paths are relative to site root (`/photos/foo.jpg`) or a full Blob/DiceBear URL — never `public/photos/foo.jpg`.
+Person fields not otherwise noted: `tags`: `"placeholder"` = auto-generated *unknown spouse* — a real person (they have children) whose life data is missing, so bio/occupation UI is suppressed and they're excluded from photo display. **Stats semantics**: placeholders *are* counted in the "Members" total (`people.length`, in both the main-page pill and About/Print census) since they were real members, but they're bucketed as **"Unknown"** rather than forced into Living/Deceased — so `Living + Deceased + Unknown === Members`, where Living/Deceased are computed only over non-placeholder people. The "Unknown" tile/row only renders when `unknownCount > 0`, so filling in a placeholder's real data (dropping the tag) auto-shifts them into Living/Deceased with no code change. `"root"` = legendary ancestor. **`alive` semantics**: `true` = living; anything else = deceased. **`photo`** paths are relative to site root (`/photos/foo.jpg`) or a full Blob/DiceBear URL — never `public/photos/foo.jpg`.
 
 ### Ordering (`sort_order`)
 
 Sibling render order (who shows first under a given parent) is driven entirely by the `sort_order` column — `getFamilyData()` in `api/_lib/db.js` always does `ORDER BY sort_order`, and `FamilyTree.jsx` groups children by `parentId` while preserving that relative order. It's `NUMERIC`, not `INTEGER`, specifically so a new value can be inserted *between* two existing adjacent values (e.g. `5.5` between siblings `5` and `6`) without renumbering anyone else.
 
 - **Adding a member**: `AddMemberForm`'s "Position" picker (add-only, not shown when editing) sends an optional `insertAfterId` — `''`/omitted = append as youngest (default), `'__first__'` (the `FIRST_SIBLING` sentinel, mirrored server-side as `INSERT_AS_FIRST_SIBLING`) = insert as eldest, or an existing sibling's id = insert immediately after them. `computeInsertSortOrder()` in `api/_lib/db.js` bisects between the two neighboring siblings.
-- **Repositioning an existing member**: `DetailPanel`'s Move Up/Down buttons (admin-only, shown when the person has siblings) POST `{ id, move: 'up'|'down' }` to `api/family/edit.js`, which calls `moveSibling()` — a pairwise `sort_order` swap with the adjacent sibling, not a bisection. No-ops (`{ moved: false }`) at the first/last boundary rather than erroring; the UI disables the button in that case using the `sortOrder` field `getFamilyData()` returns on every person (read-only — stripped on any write path since `personSchema` doesn't define it).
+- **Repositioning an existing member**: `DetailPanel`'s Move Up/Down buttons (admin-only, shown when the person has siblings) POST `{ id, move: 'up'|'down' }` to `api/family/edit.js`, which calls `moveSibling()` — a pairwise `sort_order` swap with the adjacent sibling, not a bisection. No-ops (`{ moved: false }`) at the first/last boundary rather than erroring; the UI disables the button in that case using the `sortOrder` field `getFamilyData()` returns on every person (read-only — stripped on any write path since `personSchema` in `api/_lib/familySchema.js` doesn't define it). The raw `sortOrder` value is only surfaced in `DetailPanel` when `isAdmin` — non-admins never see it.
 - Editing a person's other fields never touches `sort_order` (`upsertPeople`'s `ON CONFLICT DO UPDATE` never sets it).
 - `upsertPeople(people, { sortOrderOverrides })` accepts an optional `{ [id]: number }` map to place a *new* row somewhere other than the default append; existing rows always keep their stored value regardless.
 
@@ -81,6 +83,7 @@ Server-side sessions (HTTP-only cookie), not client-side-only — `src/utils/aut
 - **Invite links** — one-time links redeemed via `api/invite.js` (`?action=consume`, aliased from `/api/invite/consume`), backed by Upstash Redis (`api/_lib/inviteStore.js`, atomic `SET NX` to prevent double-redemption). Sets a session, but `method: 'invite'` — logged in, **not** admin.
 - **`requireSession(req)`** (`api/_lib/requireSession.js`) — any valid session, used by `api/family.js`'s POST (add member: password, Google-admin, *or* invite-redeemed can all add members).
 - **`requireAdminSession(req)`** — valid session *and* `method !== 'invite'`. Used by `api/family/edit.js` (edit/reorder), `api/invite.js`'s generate/reset/status actions, `api/photo-upload.js`.
+- **Session expiry varies by login method** — `SESSION_MAX_AGE_BY_METHOD` in `api/_lib/session.js`: Google = 7 days, password & invite = 1 day (falling back to the password value for any unknown method). `createSessionToken({ method })` returns `{ token, maxAge }` and stamps `exp` into the token body from the same `maxAge`, so the cookie's `Max-Age` and the token's own embedded expiry always agree.
 - Client state: `isLoggedIn` + `isAdmin` in `App.jsx`, `isLoggedIn` persisted to `sessionStorage` (`vv-auth`, clears on tab close); `isAdmin` is re-derived from `checkSession()` on load, not persisted independently.
 
 ### Photos & backups (Vercel Blob)
@@ -138,7 +141,9 @@ main.jsx (BrowserRouter)
 
 **Highlight / dimming:** `App` computes `highlightIds` (a `Set`) from search + active filters. Nodes not in set get `dimmed`; matches get `highlighted`. Placeholder spouses follow their real partner for status/marriage filters but respect their own gender for gender filter.
 
-**Add Member:** `AddMemberForm` (in a FAB `Modal`) generates a slug ID from the name, POSTs to `/api/family` (any logged-in session — see Auth). Also used, in edit mode, by `DetailPanel`'s pencil icon → `App.jsx`'s `handleEditMember` → `/api/family/edit`.
+**Add Member:** `AddMemberForm` (in a FAB `Modal`) generates a slug ID from the name, POSTs to `/api/family` (any logged-in session — see Auth). Also used, in edit mode, by `DetailPanel`'s pencil icon → `App.jsx`'s `handleEditMember` → `/api/family/edit`. The **Mother** field is a dropdown whose options are *the selected father's own `spouseIds`* (so a child's mother must be one of the father's wives) — it only appears once a father is picked and that father has at least one spouse, auto-selects when there's exactly one, and writes `motherId`. The Position picker's sibling/root grouping mirrors `DetailPanel`'s `isGenuineRoot()` logic (see below) so an unattached new root isn't grouped with married-in/placeholder spouses.
+
+**DetailPanel children & siblings:** Children shown for a person depend on which side of the couple they are — if the person is ever some other person's `parentId` (the primary/father-line parent), they see *every* child across all spouses; otherwise they see only children whose `motherId` points at them, so with multiple wives each one sees just her own kids. Sibling grouping (for Move Up/Down eligibility) uses `isGenuineRoot()` — mirroring `FamilyTree.jsx`'s root detection — so only real root ancestors compare against other roots; a married-in or placeholder spouse correctly shows no siblings and no Move Up/Down.
 
 **Photo lightbox (`DetailPanel.jsx`):** Clicking the avatar (when `person.photo` set) opens a full-screen lightbox (Radix Dialog). Close via ✕, backdrop click, or Escape.
 

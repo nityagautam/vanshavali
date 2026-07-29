@@ -25,9 +25,14 @@ function renderValue(key, val) {
 export default function AboutPage({ people, meta, about, lang, totalGen }) {
   const navigate = useNavigate();
 
-  const livingCount   = people.filter(p => p.alive === true).length;
-  const deceasedCount = people.filter(p => p.alive !== true && !p.tags?.includes('placeholder')).length;
-  const realCount     = people.filter(p => !p.tags?.includes('placeholder')).length;
+  // Placeholder spouses are real people (they have children) whose life data is
+  // unknown — counted as members, but bucketed as "Unknown" rather than forced
+  // into Living/Deceased. So: Living + Deceased + Unknown === Members.
+  const realPeople    = people.filter(p => !p.tags?.includes('placeholder'));
+  const memberCount   = people.length;
+  const unknownCount  = people.length - realPeople.length;
+  const livingCount   = realPeople.filter(p => p.alive === true).length;
+  const deceasedCount = realPeople.filter(p => p.alive !== true).length;
 
   const { primary: descPrimary, secondary: descSecondary } =
     pickLang(about?.descriptionHindi, about?.description, lang);
@@ -68,7 +73,7 @@ export default function AboutPage({ people, meta, about, lang, totalGen }) {
         {/* Stats */}
         <div className="about-stats">
           <div className="about-stat">
-            <span className="about-stat-num">{realCount}</span>
+            <span className="about-stat-num">{memberCount}</span>
             <span className="about-stat-lbl">Members</span>
           </div>
           <div className="about-stat">
@@ -83,6 +88,12 @@ export default function AboutPage({ people, meta, about, lang, totalGen }) {
             <span className="about-stat-num">{deceasedCount}</span>
             <span className="about-stat-lbl">Deceased</span>
           </div>
+          {unknownCount > 0 && (
+            <div className="about-stat">
+              <span className="about-stat-num">{unknownCount}</span>
+              <span className="about-stat-lbl">Unknown</span>
+            </div>
+          )}
         </div>
 
         {/* How to read the tree */}

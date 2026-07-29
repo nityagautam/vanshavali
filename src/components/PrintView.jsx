@@ -132,6 +132,13 @@ export default function PrintView({ people, meta, about = {}, lang = 'both' }) {
 
   const genNums = Object.keys(byGen).map(Number).sort((a, b) => a - b);
 
+  // Placeholder spouses are real people with unknown life data — counted as
+  // members, bucketed as "Unknown". So Living + Deceased + Unknown == Total Members.
+  const realPeople    = people.filter(p => !p.tags?.includes('placeholder'));
+  const unknownCount  = people.length - realPeople.length;
+  const livingCount   = realPeople.filter(p => p.alive === true).length;
+  const deceasedCount = realPeople.filter(p => p.alive !== true).length;
+
   const today = new Date().toLocaleDateString('en-IN', {
     day: 'numeric', month: 'long', year: 'numeric',
   });
@@ -217,12 +224,18 @@ export default function PrintView({ people, meta, about = {}, lang = 'both' }) {
             </div>
             <div className="pv-cover-info-row">
               <span className="pv-cover-info-label">Living</span>
-              <span className="pv-cover-info-value">{people.filter(p => p.alive === true).length}</span>
+              <span className="pv-cover-info-value">{livingCount}</span>
             </div>
             <div className="pv-cover-info-row">
               <span className="pv-cover-info-label">Deceased</span>
-              <span className="pv-cover-info-value">{people.filter(p => p.alive !== true && !p.tags?.includes('placeholder')).length}</span>
+              <span className="pv-cover-info-value">{deceasedCount}</span>
             </div>
+            {unknownCount > 0 && (
+              <div className="pv-cover-info-row">
+                <span className="pv-cover-info-label">Unknown</span>
+                <span className="pv-cover-info-value">{unknownCount}</span>
+              </div>
+            )}
             <div className="pv-cover-info-row">
               <span className="pv-cover-info-label">Generations</span>
               <span className="pv-cover-info-value">{genNums.length}</span>

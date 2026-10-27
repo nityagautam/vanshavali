@@ -3481,3 +3481,78 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
   80%       { transform: translate(-50%, -50%) translateX(5px); }
 }
 .login-shake { animation: loginShake 0.45s ease; }
+
+/* ══════════════════════════════════════════════════════════════
+   MOBILE FOUNDATIONS (PRD 001, Phase 1)
+   Viewport, safe areas, touch targets, reduced motion.
+   ══════════════════════════════════════════════════════════════ */
+
+/* Dynamic viewport height: 100vh overshoots behind mobile browser chrome. */
+.app-shell {
+  height: 100vh;
+  height: 100dvh;
+  box-sizing: border-box;
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+html { -webkit-tap-highlight-color: transparent; }
+button, a, [role="button"], .person-card, .mobile-child-row { touch-action: manipulation; }
+.tree-canvas { overscroll-behavior: contain; }
+
+/* Keep fixed UI clear of the home indicator / notch. */
+.fab-container {
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  right: calc(24px + env(safe-area-inset-right, 0px));
+}
+.sidebar-toast { bottom: calc(24px + env(safe-area-inset-bottom, 0px)); }
+.tree-canvas { padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
+
+@media (max-width: 768px) {
+  .detail-panel { padding-bottom: env(safe-area-inset-bottom, 0px); }
+  .tree-canvas { padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)); }
+}
+
+/* Touch targets: keep the visual size, grow the hit area to >=44px. */
+@media (pointer: coarse) {
+  .zoom-btn, .gen-btn, .view-mode-btn, .theme-toggle-btn,
+  .lang-btn, .filter-pill-btn, .header-about-link {
+    position: relative;
+  }
+  .zoom-btn::after, .gen-btn::after, .view-mode-btn::after, .theme-toggle-btn::after,
+  .lang-btn::after, .filter-pill-btn::after, .header-about-link::after {
+    content: '';
+    position: absolute;
+    inset: -9px -4px;
+  }
+  .zoom-btn, .gen-btn { width: 36px; height: 36px; }
+  .view-mode-btn      { width: 36px; height: 36px; }
+  .theme-toggle-btn   { width: 34px; height: 34px; }
+  .filter-pill-btn    { height: 32px; padding: 2px 12px; }
+  .lang-btn           { padding: 6px 12px; }
+  .toolbar            { gap: 10px; row-gap: 8px; }
+
+  /* Panel actions are real 44px buttons, spaced so they don't overlap. */
+  .detail-close, .detail-edit, .detail-move-up, .detail-move-down {
+    min-width: 44px; min-height: 44px; top: 6px;
+  }
+  .detail-close     { right: 6px; }
+  .detail-edit      { right: 50px; }
+  .detail-move-down { right: 94px; }
+  .detail-move-up   { right: 138px; }
+
+  .fab-action { width: 48px; height: 48px; }
+  .mobile-back-btn { min-height: 44px; padding: 5px 14px 5px 8px; }
+  .mobile-child-row { min-height: 52px; }
+  .cmdk-trigger, .search-input { min-height: 44px; }
+}
+
+/* Respect the OS "reduce motion" setting. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

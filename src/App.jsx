@@ -21,11 +21,23 @@ import { isAuthenticated, setAuthenticated, checkSession } from './utils/auth';
 import { fetchFamilyData, editFamilyMember, moveSibling } from './utils/familyApi';
 import { consumeInvite } from './utils/inviteApi';
 
+// A 343-person tree is thousands of px wide, so "fit to width" is unreadable.
+// Start at a readable scale instead (phones a bit larger), and remember the
+// user's last zoom per device.
+const ZOOM_KEY = 'vv-zoom';
+function initialZoom() {
+  try {
+    const saved = parseFloat(localStorage.getItem(ZOOM_KEY));
+    if (saved >= 0.25 && saved <= 2) return saved;
+  } catch { /* storage unavailable */ }
+  return window.matchMedia('(max-width: 768px)').matches ? 0.7 : 0.6;
+}
+
 export default function App() {
   const [people, setPeople]           = useState(initialData.people);
   const [selectedPerson, setSelected] = useState(null);
   const [search, setSearch]           = useState('');
-  const [zoom, setZoom]               = useState(0.25);
+  const [zoom, setZoom]               = useState(initialZoom);
   const [maxGen, setMaxGen]           = useState(null);
   const [lang, setLang]               = useState('hi');
   const [filterGender,   setFilterGender]   = useState('all');
@@ -112,6 +124,10 @@ export default function App() {
 
   const clampZoom  = useCallback(z => Math.min(2, Math.max(0.25, +z.toFixed(2))), []);
   const adjustZoom = useCallback(delta => setZoom(z => clampZoom(z + delta)), [clampZoom]);
+
+  useEffect(() => {
+    try { localStorage.setItem(ZOOM_KEY, String(zoom)); } catch { /* ignore */ }
+  }, [zoom]);
 
   const meta   = initialData.meta;
   const about  = aboutData;
@@ -275,7 +291,8 @@ export default function App() {
 
   const scrollToPerson = useCallback((id) => {
     const el = canvasRef.current?.querySelector(`[data-person-id="${CSS.escape(id)}"]`);
-    el?.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    el?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center', inline: 'center' });
   }, []);
 
   // Search-to-center: scroll the first text-search match into view. Debounced

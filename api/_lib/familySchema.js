@@ -6,6 +6,10 @@ export const personSchema = z.object({
   gender: z.enum(['male', 'female']),
   born: z.string().nullable().optional(),
   died: z.string().nullable().optional(),
+  // Marriage date. The edit form has no field for it, but it must stay in the
+  // schema: zod strips unknown keys, so omitting it here made every edit of a
+  // person silently erase their stored dom.
+  dom: z.string().nullable().optional(),
   alive: z.boolean().optional(),
   parentId: z.string().nullable().optional(),
   motherId: z.string().nullable().optional(),

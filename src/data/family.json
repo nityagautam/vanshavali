@@ -28,7 +28,8 @@
         "legendary"
       ],
       "motherId": null,
-      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=lakshman-prasad&backgroundColor=d1d4f9"
+      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=lakshman-prasad&backgroundColor=d1d4f9",
+      "occupation": null
     },
     {
       "id": "grandfather-1-wife",
@@ -47,7 +48,8 @@
         "great grand-mother"
       ],
       "motherId": null,
-      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=priya&top=longButNotTooLong,bun,straight02&hairColor=2c1b18,4a312c&skinColor=ae5d29,d08b5b,edb98a&facialHairProbability=0&backgroundColor=ffffff"
+      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=priya&top=longButNotTooLong,bun,straight02&hairColor=2c1b18,4a312c&skinColor=ae5d29,d08b5b,edb98a&facialHairProbability=0&backgroundColor=ffffff",
+      "occupation": null
     },
     {
       "id": "shri-shivdas",
@@ -619,7 +621,8 @@
       "bio": "“श्री लक्ष्मण प्रसाद गौतम” जी गौतम परिवार की वंशावली परंपरा के प्रमुख संरक्षकों में से एक थे। इनका विवाह ग्राम-मलैगँवा,तहसील-देवतालब में मलैहा पांडेय ब्राह्मण (ससुर - ब्रिटिश आर्मी सूबेदार श्री रामचंद्र पांडेय, जो की ब्रिटिश की ख़िलाफ़ बग़ावत के बाद स्वतंत्रता सेनानी हुए, इसी संघर्ष में मरणोपरांत आपने स्वयं उनको मुखाग्नि दी थी) परिवार में हुआ था। \n\n वे राज्य शासन के लोक निर्माण विभाग (PWD) में मिस्त्री के पद पर कार्यरत रहे। अपने कर्मनिष्ठ, अनुशासित एवं सरल व्यक्तित्व के साथ उन्होंने पारिवारिक इतिहास, वंश संबंधी विवरणों एवं पूर्वजों की स्मृतियों को पीढ़ी-दर-पीढ़ी सुरक्षित रखने में महत्वपूर्ण भूमिका निभाई। मौखिक परंपरा द्वारा प्राप्त वंशावली ज्ञान को उन्होंने अत्यंत श्रद्धा, स्मरण शक्ति एवं समर्पण के साथ संरक्षित किया, जिसके कारण परिवार की अनेक ऐतिहासिक जानकारियाँ आज भी सुरक्षित हैं। उन्हें परिवार में वंश परंपरा, संस्कृति एवं पारिवारिक मूल्यों के आदरणीय संवाहक के रूप में स्मरण किया जाता है।",
       "tags": [
         "legendary",
-        "GOAT"
+        "GOAT",
+        "record-keeper"
       ]
     },
     {
@@ -639,7 +642,8 @@
       "tags": [
         "elder"
       ],
-      "motherId": null
+      "motherId": null,
+      "occupation": null
     },
     {
       "id": "indrakali",
@@ -754,7 +758,8 @@
         "verified-source"
       ],
       "motherId": null,
-      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=priya&top=longButNotTooLong,bun,straight02&hairColor=2c1b18,4a312c&skinColor=ae5d29,d08b5b,edb98a&facialHairProbability=0&backgroundColor=ffffff"
+      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=priya&top=longButNotTooLong,bun,straight02&hairColor=2c1b18,4a312c&skinColor=ae5d29,d08b5b,edb98a&facialHairProbability=0&backgroundColor=ffffff",
+      "parentId": null
     },
     {
       "id": "ayush-d",
@@ -829,7 +834,8 @@
         "verified-source"
       ],
       "motherId": null,
-      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=priya&top=longButNotTooLong,bun,straight02&hairColor=2c1b18,4a312c&skinColor=ae5d29,d08b5b,edb98a&facialHairProbability=0&backgroundColor=ffffff"
+      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=priya&top=longButNotTooLong,bun,straight02&hairColor=2c1b18,4a312c&skinColor=ae5d29,d08b5b,edb98a&facialHairProbability=0&backgroundColor=ffffff",
+      "parentId": null
     },
     {
       "id": "child1-anand",
@@ -904,14 +910,15 @@
         "verified-source"
       ],
       "motherId": null,
-      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=priya&top=longButNotTooLong,bun,straight02&hairColor=2c1b18,4a312c&skinColor=ae5d29,d08b5b,edb98a&facialHairProbability=0&backgroundColor=ffffff"
+      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=priya&top=longButNotTooLong,bun,straight02&hairColor=2c1b18,4a312c&skinColor=ae5d29,d08b5b,edb98a&facialHairProbability=0&backgroundColor=ffffff",
+      "parentId": null
     },
     {
       "id": "child1-anant",
-      "name": "1st child",
+      "name": "आयांश मिश्र",
       "photo": "/photos/child1-anant.jpeg",
       "gender": "male",
-      "born": null,
+      "born": "2021",
       "died": null,
       "alive": true,
       "parentId": "anant-sp",
@@ -926,10 +933,10 @@
     },
     {
       "id": "child2-anant",
-      "name": "2nd child",
+      "name": "काश्वी मिश्रा",
       "photo": "/photos/child2-anant.jpeg",
       "gender": "female",
-      "born": null,
+      "born": "2024",
       "died": null,
       "alive": true,
       "parentId": "anant-sp",
@@ -955,13 +962,12 @@
       "spouseIds": [
         "prafulla-devi"
       ],
-      "occupation": "सेवानिवृत्त कप्तान (Captain), भारतीय सेना (Indian Army)",
+      "occupation": "सेवानिवृत्त कप्तान, भारतीय सेना",
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": "“श्री केशरी प्रसाद मिश्र” जी भारतीय सेना में कप्तान (Captain) के पद पर सेवाएँ प्रदान कर दिसंबर 2019 में सेवानिवृत्त हुए। इनका विवाह ग्राम-हसलो,तहसील-देवतालब में सोनौरा पाठक (गोत्र-) ब्राह्मण के घर में हुआ था। उनका जन्म 13 फ़रवरी 1966 को हुआ। वे “श्री लक्ष्मण प्रसाद गौतम” जी के कनिष्ठ पुत्र हैं तथा गौतम परिवार के प्रतिष्ठित एवं विशिष्ट सदस्यों में गिने जाते हैं। अपने सैन्य जीवन में उन्होंने अनुशासन, साहस, राष्ट्रसेवा एवं कर्तव्यनिष्ठा के आदर्शों का पालन किया।\n\nअपने अंतिम कार्यकाल के दौरान महाराष्ट्र में उन्हें NCC कैडेट्स की राइफल शूटिंग टीम का नेतृत्व करने का अवसर प्राप्त हुआ, जिसने स्वर्ण पदक अर्जित कर उल्लेखनीय उपलब्धि हासिल की। इस गौरवपूर्ण उपलब्धि के उपलक्ष्य में उन्हें महाराष्ट्र के तत्कालीन मुख्यमंत्री Devendra Fadnavis तथा शिक्षा एवं खेल मंत्री Vinod Tawde के साथ सम्मान समारोह एवं रात्रि भोज में सम्मिलित होने का अवसर प्राप्त हुआ।\n\nपारिवारिक वंशावली, पूर्वजों की स्मृतियों एवं वंश संबंधी विवरणों के संरक्षण एवं संवर्धन में उनका महत्वपूर्ण योगदान रहा है। उनके प्रयासों से परिवार की अनेक ऐतिहासिक जानकारियाँ सुरक्षित रूप से संरक्षित हो सकीं। उन्हें परिवार में सम्मान, सेवा, नेतृत्व एवं परंपरा के आदरणीय संवाहक के रूप में स्मरण किया जाता है।",
       "tags": [
-        "verified-source",
-        "RETD CAPTAIN",
-        "ExArmy"
+        "ExArmy",
+        "record-keeper"
       ],
       "motherId": "lakshman-prasad-wife"
     },
@@ -1008,7 +1014,7 @@
       "id": "aradhana-mishra",
       "name": "आराधना मिश्रा (शुक्ला)",
       "gender": "female",
-      "born": "१४/14 January",
+      "born": "14 January",
       "died": null,
       "alive": true,
       "parentId": "keshari-prasad",
@@ -1017,16 +1023,14 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": "इनका जन्म १४/14 जनवरी को हुआ। और उनका विवाह 'श्री रजनीश शुक्ला' से हुआ जो कि रतंगवाँ धनिराम टोला के स्थानीय निवासी है।",
-      "tags": [
-        ""
-      ],
+      "tags": [],
       "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=priya&top=longButNotTooLong,bun,straight02&hairColor=2c1b18,4a312c&skinColor=ae5d29,d08b5b,edb98a&facialHairProbability=0&backgroundColor=ffffff"
     },
     {
       "id": "archana-mishra",
       "name": "अर्चना मिश्रा (शुक्ला)",
       "gender": "female",
-      "born": "१४/14 जनवरी",
+      "born": "14 जनवरी",
       "died": null,
       "alive": true,
       "parentId": "keshari-prasad",
@@ -1044,7 +1048,7 @@
       "id": "aarti-mishra-kp",
       "name": "आरती मिश्रा (शुक्ला)",
       "gender": "female",
-      "born": "१९/19 अप्रैल",
+      "born": "19 अप्रैल 1990",
       "died": null,
       "alive": true,
       "parentId": "keshari-prasad",
@@ -1054,7 +1058,7 @@
       "location": "अमरपाटन, सतना, मध्य प्रदेश",
       "bio": "इनका जन्म १९/19 अप्रैल को हुआ। और उनका विवाह 'श्री अम्युन्त शुक्ला' से हुआ जो कि अमरपाटन सतना के स्थानीय निवासी है।",
       "tags": [
-        ""
+        "Teacher"
       ],
       "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=priya&top=longButNotTooLong,bun,straight02&hairColor=2c1b18,4a312c&skinColor=ae5d29,d08b5b,edb98a&facialHairProbability=0&backgroundColor=ffffff"
     },
@@ -1063,7 +1067,7 @@
       "name": "श्री नित्य नारायण (आशुतोष)",
       "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=lakshman-prasad&backgroundColor=d1d4f9",
       "gender": "male",
-      "born": "११/11 जुलाई 1992",
+      "born": "11 July 1992",
       "dom": "WED 07 Dec 2022 (मार्गशीर्ष शुक्ल पक्ष चतुर्दशी)",
       "died": null,
       "alive": true,
@@ -1072,13 +1076,11 @@
       "spouseIds": [
         "ruchi-tiwari-gautam"
       ],
-      "occupation": "Researcher / Seeker / Farmer",
+      "occupation": "Sr Software Engineer / Farmer",
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": "Self-described as 'a seeker'.",
+      "bio": "Self-described as 'a seeker'.\nStudied at BIT Mesra, Ranchi for MCA from 2013-2016\nSecured AIR 1523 in IIT Roorkee for MCA Entrance Exam\nSecured seat in NIT, VIT Vellor, BIT Mesra for MCA Entrance Exam\n\\n Has eager interest in Agriculture, Science, Tech, Phylosophy, History and Music",
       "tags": [
-        "author",
-        "farmer",
-        "engineer"
+        "Author"
       ]
     },
     {
@@ -1095,7 +1097,7 @@
       "spouseIds": [
         "nitya-narayan"
       ],
-      "occupation": "Engineer",
+      "occupation": "Sr Software Engineer",
       "location": "Mumbai, MH",
       "bio": null,
       "tags": [
@@ -1133,7 +1135,7 @@
       "spouseIds": [
         "shreya-pandey-gautam"
       ],
-      "occupation": "Indian Army, Education Core, MasterJi (मास्टरजी)",
+      "occupation": "Indian Army, AEC",
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": "उन्होंने Government Science College से स्नातक की शिक्षा प्राप्त की, जो Awadhesh Pratap Singh University से संबद्ध है। वर्ष 2017 में उन्होंने दूसरी बार में AEC परीक्षा उत्तीर्ण कर Indian Army में प्रवेश प्राप्त किया। चयन प्रक्रिया के पश्चात वे Madhya Pradesh से AEC हेतु चयनित होने वाले पाँच अभ्यर्थियों में से एक रहे।\n\nवर्तमान में वे Indian Army के Army Education Corps में सेवाएं प्रदान कर रहे हैं। शिक्षा एवं मार्गदर्शन के प्रति अपने समर्पण के कारण वे ‘मास्टरजी’ (मास्टरजी) के नाम से प्रसिद्ध हैं। उन्होंने 10वीं, 12वीं एवं स्नातक स्तर के अनेक विद्यार्थियों को प्रेरित किया तथा उनका मार्गदर्शन किया है। बचपन से ही खेलकूद में अत्यंत सक्रिय रहे हैं, विशेष रूप से क्रिकेट के प्रति उनका विशेष लगाव रहा है।",
       "tags": [
@@ -1250,12 +1252,12 @@
       ],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": "इनका विवाह ग्राम-बघऊ,तहसील-चुरहट,सीधी में पांडेय (गोत्र-) ब्राह्मण के घर में हुआ था।\n\n",
+      "bio": "इनका विवाह ग्राम-बघऊ,तहसील-चुरहट,सीधी में पांडेय (गोत्र-) ब्राह्मण के घर में हुआ था।",
       "tags": [
         "verified-source"
       ],
       "motherId": "ph-spouse-ram-jivan",
-      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=lakshman-prasad&backgroundColor=d1d4f9"
+      "photo": "https://oeqqivemrkuffs5i.public.blob.vercel-storage.com/photos/1784446205450-shri-nivas-chacha-tPPeNmmjYuXKEOzYqkHVzKLfjVVA4R.jpeg"
     },
     {
       "id": "ph-spouse-shriniwas",
@@ -1316,7 +1318,7 @@
     },
     {
       "id": "tryambak-rj",
-      "name": "त्रयंबक",
+      "name": "श्री त्रयंबक मिश्र",
       "gender": "male",
       "born": null,
       "died": null,
@@ -1330,7 +1332,7 @@
         "verified-source"
       ],
       "motherId": "ph-spouse-shriniwas",
-      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=lakshman-prasad&backgroundColor=d1d4f9"
+      "photo": "https://oeqqivemrkuffs5i.public.blob.vercel-storage.com/photos/1784446067039-manjeet-tryaambak-family-eUjuJJTK7yqg3vi7500DuxYR6XSJr4.jpeg"
     },
     {
       "id": "palak-rj",
@@ -1384,7 +1386,8 @@
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश (Ghurehata, Mauganj, Rewa, M.P.)",
       "bio": "“श्री यज्ञनारायण मिश्र” जी मध्य प्रदेश शासन के वन विभाग में उप वन क्षेत्रपाल (Deputy Ranger) के पद से सेवानिवृत्त अधिकारी हैं। इनका विवाह ग्राम-मिसिरगाँवा,पोस्ट-नाऊन,तहसील-हनुमना में हथिया परास तिवारी शांडिल्य गोत्र ब्राह्मण के घर में हुआ था।\n\nउन्होंने अपने सेवाकाल में अनुशासन, कर्तव्यनिष्ठा एवं प्रकृति संरक्षण के मूल्यों का निष्ठापूर्वक पालन किया। पारिवारिक वंशावली, पूर्वजों की स्मृतियों एवं ऐतिहासिक विवरणों के संरक्षण एवं संवर्धन में उनका विशेष योगदान रहा है। उन्होंने परिवार से संबंधित अनेक महत्वपूर्ण जानकारियों को संकलित एवं सुरक्षित कर आने वाली पीढ़ियों तक पहुँचाने का महत्वपूर्ण कार्य किया। उन्हें परिवार में ज्ञान, परंपरा एवं सांस्कृतिक विरासत के आदरणीय संरक्षक के रूप में स्मरण किया जाता है।",
       "tags": [
-        "elder"
+        "elder",
+        "record-keeper"
       ],
       "motherId": "ph-spouse-narvada-ram"
     },
@@ -1420,12 +1423,13 @@
         "ph-spouse-ambika-prasad"
       ],
       "location": "Ghurehata, Mauganj, Rewa, M.P.",
-      "bio": "इनका विवाह ग्राम-मिसिरगाँवा,तहसील-हनुमना में हथिया परास तिवारी शांडिल्य गोत्र ब्राह्मण के घर में हुआ था।\n\n",
+      "bio": "इनका विवाह ग्राम-मिसिरगाँवा,तहसील-हनुमना में हथिया परास तिवारी शांडिल्य गोत्र ब्राह्मण के घर में हुआ था।",
       "tags": [
         "verified-source"
       ],
       "motherId": "ph-spouse-vishwanath-nk",
-      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=lakshman-prasad&backgroundColor=d1d4f9"
+      "photo": "https://oeqqivemrkuffs5i.public.blob.vercel-storage.com/photos/1784445826959-shri-ambika-balmiki-baba-TzFe5ivk4jGwT2SMugocHJPU8RFpkT.jpeg",
+      "occupation": null
     },
     {
       "id": "ph-spouse-ambika-prasad",
@@ -1767,7 +1771,7 @@
       "gender": "male",
       "born": null,
       "died": null,
-      "alive": false,
+      "alive": true,
       "parentId": "dinesh-sp",
       "spouseIds": [
         "wife-of-niraj-d"
@@ -2241,7 +2245,8 @@
       "bio": null,
       "tags": [
         "elder"
-      ]
+      ],
+      "photo": null
     },
     {
       "id": "pawan-yn",
@@ -3721,7 +3726,8 @@
       "tags": [
         "elder"
       ],
-      "motherId": "ph-spouse-ramdev"
+      "motherId": "ph-spouse-ramdev",
+      "photo": null
     },
     {
       "id": "madhusudan",
@@ -3854,7 +3860,7 @@
         "verified-source"
       ],
       "motherId": "ph-spouse-chandramani",
-      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=lakshman-prasad&backgroundColor=d1d4f9"
+      "photo": "https://oeqqivemrkuffs5i.public.blob.vercel-storage.com/photos/1784446763310-shri-ramlal-baba-soMLOqs2aNUTuYK3pV8m5lqTmqbpFf.jpeg"
     },
     {
       "id": "ph-spouse-ramlal",
@@ -3939,24 +3945,6 @@
       "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=lakshman-prasad&backgroundColor=d1d4f9"
     },
     {
-      "id": "member-mrrfsr2s",
-      "name": "सपना मिश्रा",
-      "gender": "female",
-      "born": null,
-      "died": null,
-      "alive": true,
-      "parentId": null,
-      "spouseIds": [
-        "sanjay-js"
-      ],
-      "occupation": null,
-      "location": null,
-      "bio": null,
-      "tags": [],
-      "motherId": null,
-      "photo": "https://oeqqivemrkuffs5i.public.blob.vercel-storage.com/photos/1784443852219-1000238491-XtEJfS0TOc3XtuBDJkr92usyTtRsL6.jpg"
-    },
-    {
       "id": "ajit-js",
       "name": "अजीत",
       "gender": "male",
@@ -3973,22 +3961,6 @@
       ],
       "motherId": "ph-spouse-jay-shankar",
       "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=lakshman-prasad&backgroundColor=d1d4f9"
-    },
-    {
-      "id": "member-mrrfowku",
-      "name": "नीलम",
-      "gender": "female",
-      "born": null,
-      "died": null,
-      "alive": true,
-      "parentId": "jay-shankar",
-      "spouseIds": [],
-      "occupation": null,
-      "location": null,
-      "bio": null,
-      "tags": [],
-      "motherId": "ph-spouse-jay-shankar",
-      "photo": "https://oeqqivemrkuffs5i.public.blob.vercel-storage.com/photos/1784443669075-1000238491-GzwoW2gFLkuCaZssNYbNAm3wLdNUiK.jpg"
     },
     {
       "id": "hira-lal",
@@ -4009,6 +3981,22 @@
       ],
       "motherId": "ph-spouse-ramlal",
       "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=lakshman-prasad&backgroundColor=d1d4f9"
+    },
+    {
+      "id": "member-mrrfowku",
+      "name": "नीलम",
+      "gender": "female",
+      "born": null,
+      "died": null,
+      "alive": true,
+      "parentId": "jay-shankar",
+      "spouseIds": [],
+      "occupation": null,
+      "location": null,
+      "bio": null,
+      "tags": [],
+      "motherId": "ph-spouse-jay-shankar",
+      "photo": "https://oeqqivemrkuffs5i.public.blob.vercel-storage.com/photos/1784443669075-1000238491-GzwoW2gFLkuCaZssNYbNAm3wLdNUiK.jpg"
     },
     {
       "id": "ph-spouse-hira-lal",
@@ -4069,7 +4057,7 @@
     },
     {
       "id": "harihar-rl",
-      "name": "हरिहर",
+      "name": "श्री हरिहर",
       "gender": "male",
       "born": null,
       "died": null,
@@ -4089,9 +4077,9 @@
     },
     {
       "id": "ph-spouse-harihar-rl",
-      "name": "श्रीमती (अज्ञात)",
+      "name": "श्रीमती पार्वती मिश्रा",
       "gender": "female",
-      "alive": null,
+      "alive": true,
       "born": null,
       "died": null,
       "dom": null,
@@ -4103,10 +4091,8 @@
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": [
-        "placeholder"
-      ],
-      "photo": null
+      "tags": [],
+      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=priya&top=longButNotTooLong,bun,straight02&hairColor=2c1b18,4a312c&skinColor=ae5d29,d08b5b,edb98a&facialHairProbability=0&backgroundColor=ffffff"
     },
     {
       "id": "rahul-hh",
@@ -4119,60 +4105,6 @@
       "spouseIds": [
         "nidhi-mrreq5qx"
       ],
-      "occupation": null,
-      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": null,
-      "tags": [
-        "verified-source"
-      ],
-      "motherId": "ph-spouse-harihar-rl",
-      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=lakshman-prasad&backgroundColor=d1d4f9"
-    },
-    {
-      "id": "nidhi-mrreq5qx",
-      "name": "निधि मिश्रा",
-      "gender": "female",
-      "born": null,
-      "died": null,
-      "alive": true,
-      "parentId": null,
-      "spouseIds": [
-        "rahul-hh"
-      ],
-      "occupation": null,
-      "location": null,
-      "bio": null,
-      "tags": [],
-      "motherId": null,
-      "photo": null
-    },
-    {
-      "id": "aarya-mrret30g",
-      "name": "आर्या मिश्रा",
-      "gender": "female",
-      "born": null,
-      "died": null,
-      "alive": true,
-      "parentId": "rahul-hh",
-      "spouseIds": [],
-      "occupation": null,
-      "location": "मौगंज",
-      "bio": null,
-      "tags": [
-        "cute"
-      ],
-      "motherId": "nidhi-mrreq5qx",
-      "photo": "https://oeqqivemrkuffs5i.public.blob.vercel-storage.com/photos/1784442176990-1000185467-NcrDEcwI45GLcpSH1qH7ROpJG2sSKe.jpg"
-    },
-    {
-      "id": "amit-kumar-hh",
-      "name": "अमित कुमार",
-      "gender": "male",
-      "born": null,
-      "died": null,
-      "alive": true,
-      "parentId": "harihar-rl",
-      "spouseIds": [],
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": null,
@@ -4197,6 +4129,24 @@
       "tags": [],
       "motherId": "ph-spouse-harihar-rl",
       "photo": "https://oeqqivemrkuffs5i.public.blob.vercel-storage.com/photos/1784442544105-1000238491-JsN4nTCHWiaImLsJNg6aOdYTBefvbu.jpg"
+    },
+    {
+      "id": "amit-kumar-hh",
+      "name": "अमित कुमार",
+      "gender": "male",
+      "born": null,
+      "died": null,
+      "alive": true,
+      "parentId": "harihar-rl",
+      "spouseIds": [],
+      "occupation": null,
+      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
+      "bio": null,
+      "tags": [
+        "verified-source"
+      ],
+      "motherId": "ph-spouse-harihar-rl",
+      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=lakshman-prasad&backgroundColor=d1d4f9"
     },
     {
       "id": "ram-nihor",
@@ -4320,13 +4270,13 @@
     },
     {
       "id": "ph-spouse-santosh-rg",
-      "name": "श्रीमती (अज्ञात)",
+      "name": "श्रीमती अर्चना",
       "gender": "female",
-      "alive": null,
+      "alive": true,
       "born": null,
       "died": null,
       "dom": null,
-      "parentId": null,
+      "parentId": "santosh-rg",
       "motherId": null,
       "spouseIds": [
         "santosh-rg"
@@ -4334,9 +4284,7 @@
       "occupation": null,
       "location": null,
       "bio": null,
-      "tags": [
-        "placeholder"
-      ],
+      "tags": [],
       "photo": null
     },
     {
@@ -4355,7 +4303,7 @@
         "verified-source"
       ],
       "motherId": "ph-spouse-santosh-rg",
-      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=lakshman-prasad&backgroundColor=d1d4f9"
+      "photo": "https://oeqqivemrkuffs5i.public.blob.vercel-storage.com/photos/1784441387776-1000141883-2LcPF0CweQAHWeQHFESvgVc5oYTurC.jpg"
     },
     {
       "id": "ayushi-s",
@@ -4742,7 +4690,7 @@
         "verified-source"
       ],
       "motherId": "ph-spouse-vishwanath-nk",
-      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=lakshman-prasad&backgroundColor=d1d4f9"
+      "photo": "https://oeqqivemrkuffs5i.public.blob.vercel-storage.com/photos/1784445768858-shri-balmiki-baba-V3dNLNxCtQfOQESyXttqB5rnGB29EO.jpeg"
     },
     {
       "id": "ph-spouse-valmiki",
@@ -4916,7 +4864,8 @@
       "tags": [
         "elder"
       ],
-      "motherId": "ph-spouse-sandeep-bv"
+      "motherId": "ph-spouse-sandeep-bv",
+      "photo": null
     },
     {
       "id": "child2-sb",
@@ -4933,7 +4882,8 @@
       "tags": [
         "elder"
       ],
-      "motherId": "ph-spouse-sandeep-bv"
+      "motherId": "ph-spouse-sandeep-bv",
+      "photo": null
     },
     {
       "id": "ashish-bv",
@@ -4991,7 +4941,8 @@
       "tags": [
         "elder"
       ],
-      "motherId": "ph-spouse-ashish-bv"
+      "motherId": "ph-spouse-ashish-bv",
+      "photo": null
     },
     {
       "id": "baijnath-nk",
@@ -5762,7 +5713,7 @@
     },
     {
       "id": "shivshankar-kk",
-      "name": "शिवशंकर",
+      "name": "श्री शिवशंकर (नन्हू)",
       "gender": "male",
       "born": null,
       "died": null,
@@ -5774,9 +5725,7 @@
       "occupation": null,
       "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
       "bio": "Also known as नन्हू.",
-      "tags": [
-        "verified-source"
-      ],
+      "tags": [],
       "motherId": "ph-spouse-krishna-kant",
       "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=lakshman-prasad&backgroundColor=d1d4f9"
     },
@@ -5903,7 +5852,7 @@
     },
     {
       "id": "aditya-km",
-      "name": "आदित्य",
+      "name": "श्री आदित्य कुमार मिश्र",
       "gender": "male",
       "born": null,
       "died": null,
@@ -5912,20 +5861,20 @@
       "spouseIds": [
         "ph-spouse-aditya-km"
       ],
-      "occupation": null,
-      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
+      "occupation": "शिक्षक/Teacher",
+      "location": "भुआ बिछिया, मण्डला, मध्य प्रदेश",
       "bio": null,
       "tags": [
-        "verified-source"
+        "Teacher"
       ],
       "motherId": "ph-spouse-kamari-kk",
-      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=lakshman-prasad&backgroundColor=d1d4f9"
+      "photo": "https://oeqqivemrkuffs5i.public.blob.vercel-storage.com/photos/1784461472232-1000675850-PQC2BoJZlVGcGiEXE7Uxnl2DseHrjJ.jpg"
     },
     {
       "id": "ph-spouse-aditya-km",
-      "name": "श्रीमती (अज्ञात)",
+      "name": "श्रीमती ललिता मिश्रा",
       "gender": "female",
-      "alive": null,
+      "alive": true,
       "born": null,
       "died": null,
       "dom": null,
@@ -5935,16 +5884,14 @@
         "aditya-km"
       ],
       "occupation": null,
-      "location": null,
+      "location": "Mauganj",
       "bio": null,
-      "tags": [
-        "placeholder"
-      ],
-      "photo": null
+      "tags": [],
+      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=priya&top=longButNotTooLong,bun,straight02&hairColor=2c1b18,4a312c&skinColor=ae5d29,d08b5b,edb98a&facialHairProbability=0&backgroundColor=ffffff"
     },
     {
       "id": "arya-ad",
-      "name": "आर्या",
+      "name": "आर्यमा मिश्रा",
       "gender": "female",
       "born": null,
       "died": null,
@@ -5952,13 +5899,13 @@
       "parentId": "aditya-km",
       "spouseIds": [],
       "occupation": null,
-      "location": "घुरेहटा, मऊगंज, रीवा, मध्य प्रदेश",
-      "bio": null,
+      "location": "भुआ बिछिया, मण्डला, मध्य प्रदेश",
+      "bio": "मंडला के नगर भुआ बिछिया के सरस्वती शिशु मंदिर की मेधावी छात्रा कुमारी आर्यमा मिश्रा ने कक्षा 10वीं की परीक्षा (2026) में उत्कृष्ट प्रदर्शन कर विद्यालय और परिवार का गौरव बढ़ाया है। आर्यमा ने कुल 500 अंकों में से 435 अंक प्राप्त करते हुए 87 प्रतिशत का शानदार स्कोर हासिल किया है।\n\nश्रीमती ललिता मिश्रा एवं श्री आदित्य मिश्रा की सुपुत्री आर्यमा की इस सफलता की विशेष बात यह रही कि उन्होंने इसके लिए किसी भी बाहरी ट्यूशन या कोचिंग का सहारा नहीं लिया। आर्यमा ने अपनी इस उपलब्धि का श्रेय नियमित स्वाध्याय और अपने शिक्षकों के कुशल मार्गदर्शन को दिया है\n\nआशा है कि आप ये आत्मविश्वास और गौरव ऐसे ही बनाये रखिए और आपसे परिवार एवं बाहर के अन्य विद्यार्थी भी प्रेरित हो",
       "tags": [
-        "verified-source"
+        "STUDENT"
       ],
       "motherId": "ph-spouse-aditya-km",
-      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=priya&top=longButNotTooLong,bun,straight02&hairColor=2c1b18,4a312c&skinColor=ae5d29,d08b5b,edb98a&facialHairProbability=0&backgroundColor=ffffff"
+      "photo": "https://oeqqivemrkuffs5i.public.blob.vercel-storage.com/photos/1784447260141-smt-aaryama-aditya-mishra-hURpouRCBdQT7WQK2LwbJZsX8UWf2B.jpeg"
     },
     {
       "id": "member-mrrfxkbl",
@@ -6039,7 +5986,7 @@
     },
     {
       "id": "abhishek-km",
-      "name": "अभिषेक",
+      "name": "अभिषेक मिश्र",
       "gender": "male",
       "born": null,
       "died": null,
@@ -6055,7 +6002,7 @@
         "verified-source"
       ],
       "motherId": "ph-spouse-kamari-kk",
-      "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=lakshman-prasad&backgroundColor=d1d4f9"
+      "photo": "https://oeqqivemrkuffs5i.public.blob.vercel-storage.com/photos/1784461590754-1000675852-c5hD1dBD7xsjGd8mIgAtEHJ3eIDxxd.jpg"
     },
     {
       "id": "ph-spouse-abhishek-km",
@@ -6677,6 +6624,42 @@
       "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=priya&top=longButNotTooLong,bun,straight02&hairColor=2c1b18,4a312c&skinColor=ae5d29,d08b5b,edb98a&facialHairProbability=0&backgroundColor=ffffff"
     },
     {
+      "id": "nidhi-mrreq5qx",
+      "name": "निधि मिश्रा",
+      "gender": "female",
+      "born": null,
+      "died": null,
+      "alive": true,
+      "parentId": null,
+      "spouseIds": [
+        "rahul-hh"
+      ],
+      "occupation": null,
+      "location": null,
+      "bio": null,
+      "tags": [],
+      "motherId": null,
+      "photo": null
+    },
+    {
+      "id": "member-mrrfsr2s",
+      "name": "सपना मिश्रा",
+      "gender": "female",
+      "born": null,
+      "died": null,
+      "alive": true,
+      "parentId": null,
+      "spouseIds": [
+        "sanjay-js"
+      ],
+      "occupation": null,
+      "location": null,
+      "bio": null,
+      "tags": [],
+      "motherId": null,
+      "photo": "https://oeqqivemrkuffs5i.public.blob.vercel-storage.com/photos/1784443852219-1000238491-XtEJfS0TOc3XtuBDJkr92usyTtRsL6.jpg"
+    },
+    {
       "id": "narayan-myn",
       "name": "नारायण",
       "gender": "male",
@@ -6693,6 +6676,40 @@
       ],
       "motherId": "ph-spouse-mayank-rj",
       "photo": "https://api.dicebear.com/9.x/avataaars/svg?seed=lakshman-prasad&backgroundColor=d1d4f9"
+    },
+    {
+      "id": "aarya-mrret30g",
+      "name": "आर्या मिश्रा",
+      "gender": "female",
+      "born": null,
+      "died": null,
+      "alive": true,
+      "parentId": "rahul-hh",
+      "spouseIds": [],
+      "occupation": null,
+      "location": "मौगंज",
+      "bio": null,
+      "tags": [
+        "cute"
+      ],
+      "motherId": "nidhi-mrreq5qx",
+      "photo": "https://oeqqivemrkuffs5i.public.blob.vercel-storage.com/photos/1784442176990-1000185467-NcrDEcwI45GLcpSH1qH7ROpJG2sSKe.jpg"
+    },
+    {
+      "id": "ram-mrs0kxme",
+      "name": "राम मिश्र",
+      "gender": "male",
+      "born": null,
+      "died": null,
+      "alive": true,
+      "parentId": "sanjay-js",
+      "motherId": "member-mrrfsr2s",
+      "spouseIds": [],
+      "occupation": null,
+      "location": null,
+      "bio": null,
+      "photo": "https://oeqqivemrkuffs5i.public.blob.vercel-storage.com/photos/1784478754833-1000238492-p3AF4OycJLS4wG38li7XWhuWyLNrqP.jpg",
+      "tags": []
     }
   ]
 }

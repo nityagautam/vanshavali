@@ -1,6 +1,6 @@
 import { useState, lazy, Suspense } from 'react';
 import { createPortal } from 'react-dom';
-import { Lock, Unlock, Plus, Link2, Download, Printer, LayoutGrid } from 'lucide-react';
+import { Lock, Unlock, Plus, Link2, Download, Printer, LayoutGrid, Smartphone, Share, SquarePlus } from 'lucide-react';
 import Modal from './Modal';
 const AddMemberForm = lazy(() => import('./AddMemberForm'));
 import InviteManager from './InviteManager';
@@ -8,6 +8,7 @@ import MobileBar from './MobileBar';
 import DesktopActions from './DesktopActions';
 import { usePhone } from '../hooks/useMediaQuery';
 import { useToast } from './Toaster';
+import { useInstall, promptInstall } from '../utils/install';
 import { exportJSON } from '../utils/exportJSON';
 import { printTree, resetScrollForPrint } from '../utils/printTree';
 import { clearAuth }  from '../utils/auth';
@@ -23,6 +24,8 @@ export default function FloatingActions({
   const [showAddMember, setShowAddMember] = useState(false);
   const [showInvite, setShowInvite]   = useState(false);
   const { notify: showToast } = useToast();
+  const install = useInstall();
+  const [showInstallHelp, setShowInstallHelp] = useState(false);
 
   const guard = (fn) => () => {
     if (!isLoggedIn) { onAuthRequired(fn); return; }
@@ -64,6 +67,16 @@ export default function FloatingActions({
       id: 'print-tree', icon: LayoutGrid, label: 'Print Tree',
       onClick: guard(() => printTree({ people, meta, about, lang, showToast })),
     },
+    // Open to everyone (no login): add the app to the phone's home screen.
+    ...(install.available ? [{
+      id: 'install', icon: Smartphone, label: 'Install app', immediate: true,
+      onClick: async () => {
+        if (!install.canPrompt) { setShowInstallHelp(true); return; }
+        const outcome = await promptInstall();
+        if (outcome === 'accepted') showToast('ok', 'Installing — look for the वंशावली icon on your home screen.');
+        else if (outcome === 'unavailable') setShowInstallHelp(true);
+      },
+    }] : []),
   ];
 
   const addAction  = isAdmin ? actions.find(a => a.id === 'add') : null;
@@ -115,6 +128,20 @@ export default function FloatingActions({
           onCancel={() => setShowAddMember(false)}
         />
         </Suspense>
+      </Modal>
+
+      {/* Add to Home Screen instructions (iOS Safari has no install prompt) */}
+      <Modal open={showInstallHelp} onOpenChange={setShowInstallHelp} title="Add to Home Screen">
+        <div className="install-help">
+          <p>Keep the Vanshavali one tap away, like an app — it opens full-screen and works offline.</p>
+          <ol>
+            <li><Share size={18} aria-hidden="true" /> <span>Tap the <b>Share</b> button in Safari’s toolbar.</span></li>
+            <li><SquarePlus size={18} aria-hidden="true" /> <span>Scroll down and choose <b>Add to Home Screen</b>.</span></li>
+            <li><Smartphone size={18} aria-hidden="true" /> <span>Tap <b>Add</b> — the <b>वंशावली</b> icon appears on your home screen.</span></li>
+          </ol>
+          <p className="install-note">On iPhone and iPad this works from <b>Safari</b> (not from inside other apps’ browsers).</p>
+          <button type="button" className="btn-primary" onClick={() => setShowInstallHelp(false)}>Got it</button>
+        </div>
       </Modal>
 
       {/* Invite link modal */}

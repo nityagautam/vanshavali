@@ -14,7 +14,13 @@ export default function MobileBar({
   const ViewIcon = isTree ? Network : List;
 
   // Let the sheet finish closing before the action opens a dialog / prints.
-  const runAfterClose = fn => () => { setMoreOpen(false); setTimeout(fn, 220); };
+  // The install prompt is the exception: browsers only allow it inside the
+  // tap itself, so it runs immediately.
+  const runAfterClose = a => () => {
+    setMoreOpen(false);
+    if (a.immediate) a.onClick();
+    else setTimeout(a.onClick, 220);
+  };
 
   return (
     <>
@@ -45,7 +51,7 @@ export default function MobileBar({
         <ul className="more-list">
           {moreActions.map(a => (
             <li key={a.id}>
-              <button className="more-row" onClick={runAfterClose(a.onClick)}>
+              <button className="more-row" onClick={runAfterClose(a)}>
                 <a.icon size={20} /><span>{a.label}</span>
               </button>
             </li>

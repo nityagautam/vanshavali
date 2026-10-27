@@ -5,6 +5,15 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content" />
     <meta name="theme-color" content="#F1E6CC" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="वंशावली" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="application-name" content="वंशावली" />
+    <meta name="description" content="The Gautam family's Vanshavali — a living record of the lineage, generation by generation." />
     <script>
       // Resolve light/dark before first paint so there is no flash.
       (function () {
@@ -12,6 +21,7 @@
           var t = localStorage.getItem('vv-theme');
           var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
           document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+          document.querySelector('meta[name=theme-color]').setAttribute('content', dark ? '#1B150D' : '#F1E6CC');
         } catch (e) {}
       })();
     </script>

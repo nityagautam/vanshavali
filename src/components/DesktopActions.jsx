@@ -36,7 +36,7 @@ export default function DesktopActions({
               {moreActions.map(a => (
                 <li key={a.id}>
                   <Popover.Close asChild>
-                    <button className="more-row" onClick={() => setTimeout(a.onClick, 120)}>
+                    <button className="more-row" onClick={() => (a.immediate ? a.onClick() : setTimeout(a.onClick, 120))}>
                       <a.icon size={18} /><span>{a.label}</span>
                     </button>
                   </Popover.Close>

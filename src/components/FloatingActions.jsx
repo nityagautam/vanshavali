@@ -3,6 +3,7 @@ import { Lock, Unlock, Plus, Link2, Download, Printer, LayoutGrid, X, Settings, 
 import Modal from './Modal';
 import AddMemberForm from './AddMemberForm';
 import InviteManager from './InviteManager';
+import MobileBar from './MobileBar';
 import { exportJSON } from '../utils/exportJSON';
 import { printTree, resetScrollForPrint } from '../utils/printTree';
 import { clearAuth }  from '../utils/auth';
@@ -11,6 +12,7 @@ import { addFamilyMember } from '../utils/familyApi';
 export default function FloatingActions({
   people, familyData, meta, about, lang, onAddMember,
   isLoggedIn, isAdmin, onAuthRequired, onLogout,
+  viewMode, onToggleView, filtersContent, activeFilterCount, filtersOpen, setFiltersOpen,
 }) {
   const [open, setOpen]               = useState(false);
   const [showAddMember, setShowAddMember] = useState(false);
@@ -107,6 +109,18 @@ export default function FloatingActions({
           {!isLoggedIn && <span className="fab-lock-badge"><Lock size={11} /></span>}
         </button>
       </div>
+
+      {/* Phone bottom bar (hidden ≥769px by CSS). Add is admin-only. */}
+      <MobileBar
+        viewMode={viewMode}
+        onToggleView={onToggleView}
+        addAction={isAdmin ? actions.find(a => a.id === 'add') : null}
+        moreActions={actions.filter(a => a.id !== 'add')}
+        filtersContent={filtersContent}
+        activeFilterCount={activeFilterCount}
+        filtersOpen={filtersOpen}
+        setFiltersOpen={setFiltersOpen}
+      />
 
       {/* Click-away backdrop */}
       {open && <div className="fab-backdrop" onClick={() => setOpen(false)} />}

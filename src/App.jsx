@@ -18,6 +18,7 @@ import UserBadge    from './components/UserBadge';
 import AddMemberForm from './components/AddMemberForm';
 import Modal from './components/Modal';
 import CommandPalette from './components/CommandPalette';
+import FiltersPanel, { filterGroups, stepDepth } from './components/FiltersPanel';
 import { isAuthenticated, setAuthenticated, checkSession } from './utils/auth';
 import { usePanZoom } from './hooks/usePanZoom';
 import { fetchFamilyData, editFamilyMember, moveSibling } from './utils/familyApi';
@@ -60,6 +61,7 @@ export default function App() {
   // screen size. Persisted like the theme choice.
   const [viewMode,       setViewMode]       = useState(() => localStorage.getItem('vv-view-mode') || 'tree');
   const canvasRef = useRef(null);
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const { zoom, zoomTo, zoomBy, fit, innerRef, boxRef, nat } = usePanZoom({
     canvasRef, initialZoom: initialZoom(), enabled: viewMode === 'tree',
   });
@@ -317,6 +319,11 @@ export default function App() {
     return Math.max(...people.map(p => getDepth(p.id)), 0);
   }, [people, personMap]);
 
+  const filterValues = { gender: filterGender, status: filterStatus, marriage: filterMarriage };
+  const setFilter = (key, v) => ({ gender: setFilterGender, status: setFilterStatus, marriage: setFilterMarriage })[key](v);
+  const resetFilters = () => { setFilterGender('all'); setFilterStatus('all'); setFilterMarriage('all'); };
+  const activeFilterCount = Object.values(filterValues).filter(v => v !== 'all').length + (maxGen !== null ? 1 : 0);
+  const clearSearch = () => setSearch('');
   const onTreeRoute = !!useMatch('/');
   const headerControls = (
     <>
@@ -463,36 +470,17 @@ export default function App() {
 
                   {/* Filter pills */}
                   <div className="filter-pills">
-                    <div className="filter-pill-group">
-                      {(lang === 'en'
-                        ? [['all','All'],['male','Male'],['female','Female']]
-                        : [['all','सभी'],['male','पु'],['female','स्त्री']]
-                      ).map(([v,l]) => (
-                        <button key={v} className={`filter-pill-btn${filterGender === v ? ' active' : ''}`}
-                          onClick={() => setFilterGender(v)}>{l}</button>
-                      ))}
-                    </div>
-                    <div className="filter-pill-group">
-                      {(lang === 'en'
-                        ? [['all','All'],['living','Living'],['deceased','Deceased']]
-                        : [['all','सभी'],['living','जी'],['deceased','मृ']]
-                      ).map(([v,l]) => (
-                        <button key={v} className={`filter-pill-btn${filterStatus === v ? ' active' : ''}`}
-                          onClick={() => setFilterStatus(v)}>{l}</button>
-                      ))}
-                    </div>
-                    <div className="filter-pill-group">
-                      {(lang === 'en'
-                        ? [['all','All'],['married','Married'],['unmarried','Unmarried']]
-                        : [['all','सभी'],['married','वि'],['unmarried','अवि']]
-                      ).map(([v,l]) => (
-                        <button key={v} className={`filter-pill-btn${filterMarriage === v ? ' active' : ''}`}
-                          onClick={() => setFilterMarriage(v)}>{l}</button>
-                      ))}
-                    </div>
+                    {filterGroups(lang).map(g => (
+                      <div className="filter-pill-group" key={g.key} role="group" aria-label={g.title}>
+                        {g.options.map(([v, short]) => (
+                          <button key={v} className={`filter-pill-btn${filterValues[g.key] === v ? ' active' : ''}`}
+                            onClick={() => setFilter(g.key, v)}>{short}</button>
+                        ))}
+                      </div>
+                    ))}
                     {filtersActive && (
                       <button className="filter-reset"
-                        onClick={() => { setFilterGender('all'); setFilterStatus('all'); setFilterMarriage('all'); }}
+                        onClick={resetFilters}
                         title="Reset all filters"><RotateCcw size={13} /></button>
                     )}
                   </div>
@@ -513,11 +501,11 @@ export default function App() {
                   <div className="gen-controls">
                     <span className="gen-label">Depth</span>
                     <button className="gen-btn"
-                      onClick={() => setMaxGen(g => { const cur = g ?? totalGen; return cur > 1 ? cur - 1 : cur; })}
+                      onClick={() => setMaxGen(g => stepDepth(g, totalGen, -1))}
                       disabled={maxGen === 1} title="Show one fewer generation"><Minus size={13} /></button>
                     <span className="gen-value">{maxGen ?? 'All'}</span>
                     <button className="gen-btn"
-                      onClick={() => setMaxGen(g => { if (g === null) return null; const n = g + 1; return n >= totalGen ? null : n; })}
+                      onClick={() => setMaxGen(g => stepDepth(g, totalGen, +1))}
                       disabled={maxGen === null} title="Show one more generation"><Plus size={13} /></button>
                     {maxGen !== null && (
                       <button className="gen-reset" onClick={() => setMaxGen(null)} title="Show all generations"><RotateCcw size={13} /></button>
@@ -578,7 +566,19 @@ export default function App() {
                     </div>
 
                     <MiniMap canvasRef={canvasRef} zoom={zoom} />
+
+                    <div className="canvas-controls" role="group" aria-label="Zoom">
+                      <button className="icon-btn" onClick={fit} aria-label="Fit whole tree"><Maximize size={20} /></button>
+                      <button className="icon-btn" onClick={() => adjustZoom(+0.15)} aria-label="Zoom in"><Plus size={20} /></button>
+                      <button className="icon-btn" onClick={() => adjustZoom(-0.15)} aria-label="Zoom out"><Minus size={20} /></button>
+                    </div>
                   </>
+                )}
+                {highlightIds && (
+                  <div className="match-chip" role="status">
+                    {highlightIds.size} match{highlightIds.size !== 1 ? 'es' : ''}
+                    {search && <button onClick={clearSearch}>Clear</button>}
+                  </div>
                 )}
                 <OnboardingLegend />
 
@@ -616,6 +616,25 @@ export default function App() {
                 isAdmin={isAdmin}
                 onAuthRequired={handleAuthRequired}
                 onLogout={() => { setIsLoggedIn(false); setGoogleUser(null); setIsAdmin(false); }}
+                viewMode={viewMode}
+                onToggleView={() => setViewMode(m => m === 'tree' ? 'list' : 'tree')}
+                activeFilterCount={activeFilterCount}
+                filtersOpen={filtersOpen}
+                setFiltersOpen={setFiltersOpen}
+                filtersContent={
+                  <FiltersPanel
+                    lang={lang}
+                    values={filterValues}
+                    onChange={setFilter}
+                    maxGen={maxGen}
+                    setMaxGen={setMaxGen}
+                    totalGen={totalGen}
+                    resultCount={highlightIds ? highlightIds.size : people.length}
+                    active={activeFilterCount > 0}
+                    onReset={() => { resetFilters(); setMaxGen(null); }}
+                    onDone={() => setFiltersOpen(false)}
+                  />
+                }
               />
             </div>
           } />

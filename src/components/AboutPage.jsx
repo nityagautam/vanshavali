@@ -1,10 +1,20 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { parsePersonLinks } from '../utils/personLinks';
 import { ArrowLeft, MapPin, ExternalLink, AlertTriangle } from 'lucide-react';
 
 function pickLang(hindi, english, lang) {
   if (lang === 'hi') return { primary: hindi,   secondary: null };
   if (lang === 'en') return { primary: english,  secondary: null };
   return              { primary: hindi,   secondary: english };
+}
+
+// About text with [label](person:<id>) links → router links into the tree.
+function LinkedText({ text }) {
+  return parsePersonLinks(text).map((part, i) => (
+    part.personId
+      ? <Link key={i} className="person-link" to={`/?person=${encodeURIComponent(part.personId)}`}>{part.text}</Link>
+      : <span key={i}>{part.text}</span>
+  ));
 }
 
 function toLabel(key) {
@@ -100,11 +110,9 @@ export default function AboutPage({ people, meta, about, lang, totalGen }) {
         <div className="about-section">
           <div className="about-section-title">How to Read the Tree</div>
           <div className="legend about-legend">
-            <div className="legend-item"><div className="legend-dot male" /> Male</div>
-            <div className="legend-item"><div className="legend-dot female" /> Female</div>
             <div className="legend-item"><div className="legend-line" /> Parent–Child</div>
             <div className="legend-item">
-              <span style={{ color: 'var(--gold)', fontSize: '0.9rem' }}>⚭</span>&nbsp;Married
+              <span style={{ color: 'var(--ink-2)', fontSize: '0.9rem' }}>⚭</span>&nbsp;Married
             </div>
           </div>
         </div>
@@ -113,8 +121,8 @@ export default function AboutPage({ people, meta, about, lang, totalGen }) {
         {(descPrimary || descSecondary) && (
           <div className="about-section">
             <div className="about-section-title">About</div>
-            {descPrimary   && <p className="about-description">{descPrimary}</p>}
-            {descSecondary && <p className="about-description about-description-en">{descSecondary}</p>}
+            {descPrimary   && <p className="about-description"><LinkedText text={descPrimary} /></p>}
+            {descSecondary && <p className="about-description about-description-en"><LinkedText text={descSecondary} /></p>}
           </div>
         )}
 

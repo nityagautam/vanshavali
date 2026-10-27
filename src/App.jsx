@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
-import { Routes, Route, NavLink, useMatch } from 'react-router-dom';
+import { Routes, Route, NavLink, useMatch, useLocation, useNavigate } from 'react-router-dom';
 import * as Popover from '@radix-ui/react-popover';
-import { CheckCircle2, AlertTriangle, Search, Minus, Plus, Sun, Moon, Network, List, Maximize, MoreVertical, Compass } from 'lucide-react';
+import { Search, Minus, Plus, Sun, Moon, Network, List, Maximize, MoreVertical, Compass, WifiOff, X } from 'lucide-react';
 import initialData from './data/family.json';
 import aboutData   from './data/about.json';
 import FamilyTree  from './components/FamilyTree';
@@ -23,6 +23,8 @@ import { isAuthenticated, setAuthenticated, checkSession } from './utils/auth';
 import { usePanZoom } from './hooks/usePanZoom';
 import { fetchFamilyData, editFamilyMember, moveSibling } from './utils/familyApi';
 import { consumeInvite } from './utils/inviteApi';
+import { useToast } from './components/Toaster';
+import { isRecordKeeper } from './utils/recordKeeper';
 
 // A 343-person tree is thousands of px wide, so "fit to width" is unreadable.
 // Start at a readable scale instead (phones a bit larger), and remember the
@@ -45,12 +47,14 @@ export default function App() {
   const [filterGender,   setFilterGender]   = useState('all');
   const [filterStatus,   setFilterStatus]   = useState('all');
   const [filterMarriage, setFilterMarriage] = useState('all');
+  const [filterKeepers,  setFilterKeepers]  = useState(false);
   const [isLoggedIn,     setIsLoggedIn]     = useState(() => isAuthenticated());
   const [loginOpen,      setLoginOpen]      = useState(false);
   const [pendingAction,  setPendingAction]  = useState(null);
   const [googleUser,     setGoogleUser]     = useState(null);
   const [isAdmin,        setIsAdmin]        = useState(false);
-  const [authMessage,    setAuthMessage]    = useState(null);
+  const { notify } = useToast();
+  const setAuthMessage = useCallback(m => m && notify(m.type, m.text), [notify]);
   const [editingPerson,  setEditingPerson]  = useState(null);
   const [paletteOpen,    setPaletteOpen]    = useState(false);
   // null = follow OS preference; 'light'/'dark' = explicit user override, persisted.
@@ -149,13 +153,23 @@ export default function App() {
   // The bundled family.json renders instantly; once the live datastore
   // responds, swap in whatever's actually been persisted since the last
   // build (e.g. members added through the app).
-  useEffect(() => {
-    fetchFamilyData()
-      .then(data => { if (data?.people) setPeople(data.people); })
-      .catch(() => {
-        setAuthMessage({ type: 'err', text: "Couldn't reach the server — showing the last saved version." });
-      });
+  // 'loading' → hairline progress; 'stale' → persistent offline banner with Retry.
+  const [sync, setSync] = useState('loading');
+  const [staleDismissed, setStaleDismissed] = useState(false);
+  const loadLive = useCallback(() => {
+    setSync('loading');
+    setStaleDismissed(false);
+    return fetchFamilyData()
+      .then(data => { if (data?.people) setPeople(data.people); setSync('live'); })
+      .catch(() => setSync('stale'));
   }, []);
+  useEffect(() => { loadLive(); }, [loadLive]);
+  useEffect(() => {
+    const off = () => { setSync('stale'); setStaleDismissed(false); };
+    window.addEventListener('offline', off);
+    window.addEventListener('online', loadLive);
+    return () => { window.removeEventListener('offline', off); window.removeEventListener('online', loadLive); };
+  }, [loadLive]);
 
   // Sync client auth state with the server-side Google OAuth session, if any
   // (covers both a fresh redirect back from Google and a page reload while
@@ -208,12 +222,6 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (!authMessage) return;
-    const t = setTimeout(() => setAuthMessage(null), 5000);
-    return () => clearTimeout(t);
-  }, [authMessage]);
-
-  useEffect(() => {
     const onKey = (e) => {
       if (!e.ctrlKey && !e.metaKey) return;
       if (e.key === '=' || e.key === '+') { e.preventDefault(); adjustZoom(+0.15); }
@@ -230,7 +238,7 @@ export default function App() {
     [people]
   );
 
-  const filtersActive = filterGender !== 'all' || filterStatus !== 'all' || filterMarriage !== 'all';
+  const filtersActive = filterGender !== 'all' || filterStatus !== 'all' || filterMarriage !== 'all' || filterKeepers;
 
   const highlightIds = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -244,6 +252,13 @@ export default function App() {
         .filter(p => {
           const isPlaceholder = p.tags?.includes('placeholder');
           if (isPlaceholder) {
+            if (filterKeepers) return false;
+            // An unknown spouse only matches a text search when their partner does.
+            if (hasSearch) {
+              const partner = personMap[(p.spouseIds || [])[0]];
+              const hit = partner && (partner.name.toLowerCase().includes(q) || partner.occupation?.toLowerCase().includes(q));
+              if (!hit) return false;
+            }
             if (filterGender !== 'all' && p.gender !== filterGender) return false;
             if (filterStatus !== 'all' || filterMarriage !== 'all') {
               const partnerId = (p.spouseIds || [])[0];
@@ -265,6 +280,7 @@ export default function App() {
 
           if (hasSearch && !p.name.toLowerCase().includes(q) && !p.occupation?.toLowerCase().includes(q))
             return false;
+          if (filterKeepers && !isRecordKeeper(p)) return false;
           if (filterGender !== 'all' && p.gender !== filterGender) return false;
           if (filterStatus === 'living'   && p.alive !== true)  return false;
           if (filterStatus === 'deceased' && p.alive === true)   return false;
@@ -279,7 +295,7 @@ export default function App() {
         })
         .map(p => p.id)
     );
-  }, [search, people, filterGender, filterStatus, filterMarriage, filtersActive, personMap]);
+  }, [search, people, filterGender, filterStatus, filterMarriage, filterKeepers, filtersActive, personMap]);
 
   const scrollToPerson = useCallback((id) => {
     const el = canvasRef.current?.querySelector(`[data-person-id="${CSS.escape(id)}"]`);
@@ -297,23 +313,40 @@ export default function App() {
     return () => clearTimeout(t);
   }, [search, highlightIds, scrollToPerson]);
 
+  // Bring a person into view. On phones the detail sheet covers the lower
+  // ~60%, so park the card in the upper part of the canvas instead of centring.
+  const revealPerson = (id) => {
+    if (!window.matchMedia('(max-width: 768px)').matches) { scrollToPerson(id); return; }
+    requestAnimationFrame(() => {
+      const canvas = canvasRef.current;
+      const el = canvas?.querySelector(`[data-person-id="${CSS.escape(id)}"]`);
+      if (!canvas || !el) return;
+      const c = canvas.getBoundingClientRect(), r = el.getBoundingClientRect();
+      canvas.scrollTo({
+        top: canvas.scrollTop + (r.top - c.top) - c.height * 0.12,
+        left: canvas.scrollLeft + (r.left + r.width / 2) - (c.left + c.width / 2),
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+      });
+    });
+  };
+
   const handleSelect = (person) => {
     setSelected(prev => prev?.id === person.id ? null : person);
-    // On phones the detail sheet covers the lower ~60% — park the card above it.
-    if (window.matchMedia('(max-width: 768px)').matches) {
-      requestAnimationFrame(() => {
-        const canvas = canvasRef.current;
-        const el = canvas?.querySelector(`[data-person-id="${CSS.escape(person.id)}"]`);
-        if (!canvas || !el) return;
-        const c = canvas.getBoundingClientRect(), r = el.getBoundingClientRect();
-        canvas.scrollTo({
-          top: canvas.scrollTop + (r.top - c.top) - c.height * 0.12,
-          left: canvas.scrollLeft + (r.left + r.width / 2) - (c.left + c.width / 2),
-          behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
-        });
-      });
-    }
+    if (window.matchMedia('(max-width: 768px)').matches) revealPerson(person.id);
   };
+
+  // Deep link: /?person=<id> (used by links in the About text) selects that
+  // member and scrolls the tree to them once it has mounted.
+  const location = useLocation();
+  const navigate = useNavigate();
+  useEffect(() => {
+    const id = new URLSearchParams(location.search).get('person');
+    if (!id || !personMap[id]) return;
+    setSelected(personMap[id]);
+    navigate('/', { replace: true });
+    setTimeout(() => revealPerson(id), 500);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.search, personMap]);
 
   // Command-palette jump: the target may be off-screen, so select *and* scroll.
   const handlePaletteSelect = (person) => {
@@ -334,10 +367,10 @@ export default function App() {
     return Math.max(...people.map(p => getDepth(p.id)), 0);
   }, [people, personMap]);
 
-  const filterValues = { gender: filterGender, status: filterStatus, marriage: filterMarriage };
-  const setFilter = (key, v) => ({ gender: setFilterGender, status: setFilterStatus, marriage: setFilterMarriage })[key](v);
-  const resetFilters = () => { setFilterGender('all'); setFilterStatus('all'); setFilterMarriage('all'); };
-  const activeFilterCount = Object.values(filterValues).filter(v => v !== 'all').length + (maxGen !== null ? 1 : 0);
+  const filterValues = { gender: filterGender, status: filterStatus, marriage: filterMarriage, keepers: filterKeepers };
+  const setFilter = (key, v) => ({ gender: setFilterGender, status: setFilterStatus, marriage: setFilterMarriage, keepers: setFilterKeepers })[key](v);
+  const resetFilters = () => { setFilterGender('all'); setFilterStatus('all'); setFilterMarriage('all'); setFilterKeepers(false); };
+  const activeFilterCount = [filterGender !== 'all', filterStatus !== 'all', filterMarriage !== 'all', filterKeepers, maxGen !== null].filter(Boolean).length;
   const clearSearch = () => setSearch('');
   const onTreeRoute = !!useMatch('/');
   const headerControls = (
@@ -381,13 +414,6 @@ export default function App() {
         onSuccess={handleLoginSuccess}
         onClose={() => { setLoginOpen(false); setPendingAction(null); }}
       />
-
-      {/* Invite redemption result */}
-      {authMessage && (
-        <div className={`sidebar-toast toast-${authMessage.type}`}>
-          {authMessage.type === 'ok' ? <CheckCircle2 size={15} /> : <AlertTriangle size={15} />} {authMessage.text}
-        </div>
-      )}
 
       {/* Edit member modal — admin only */}
       <Modal
@@ -470,7 +496,17 @@ export default function App() {
             {googleUser && <UserBadge user={googleUser} />}
           </div>
         </div>
+        {sync === 'loading' && <div className="sync-bar" role="progressbar" aria-label="Loading the latest data" />}
       </header>
+
+      {sync === 'stale' && !staleDismissed && (
+        <div className="stale-banner" role="status">
+          <WifiOff size={16} aria-hidden="true" />
+          <span>Showing the saved copy — couldn't reach the server.</span>
+          <button className="stale-retry" onClick={loadLive}>Retry</button>
+          <button className="stale-close" onClick={() => setStaleDismissed(true)} aria-label="Dismiss"><X size={16} /></button>
+        </div>
+      )}
 
       {/* Main content (routes) */}
       <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
@@ -531,7 +567,19 @@ export default function App() {
                     {viewMode === 'tree' ? <List size={20} /> : <Network size={20} />}
                   </button>
                 </div>
-                {highlightIds && (
+                {highlightIds && highlightIds.size === 0 && (
+                  <div className="empty-state" role="status">
+                    <h3>No one matches</h3>
+                    <p>{search.trim() ? `Nothing found for “${search.trim()}”.` : 'No members match these filters.'}</p>
+                    <div className="empty-actions">
+                      {search.trim() && <button className="btn-ghost" onClick={clearSearch}>Clear search</button>}
+                      {(filtersActive || maxGen !== null) && (
+                        <button className="btn-ghost" onClick={() => { resetFilters(); setMaxGen(null); }}>Reset filters</button>
+                      )}
+                    </div>
+                  </div>
+                )}
+                {highlightIds && highlightIds.size > 0 && (
                   <div className="match-chip" role="status">
                     {highlightIds.size} match{highlightIds.size !== 1 ? 'es' : ''}
                     {search && <button onClick={clearSearch}>Clear</button>}

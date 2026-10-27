@@ -11,7 +11,7 @@ const SNAP_DISTANCE = 50;     // px dragged before release changes snap point
  * dragging down from full returns to half before a further drag dismisses.
  * Used on phones for filters, "more" actions, and (later) member details.
  */
-export default function Sheet({ open, onOpenChange, title, hideTitle = false, snap, onSnapChange, children }) {
+export default function Sheet({ open, onOpenChange, title, hideTitle = false, snap, onSnapChange, flush = false, children }) {
   const contentRef = useRef(null);
   const drag = useRef(null);
 
@@ -66,7 +66,18 @@ export default function Sheet({ open, onOpenChange, title, hideTitle = false, sn
             <span className="sheet-handle" aria-hidden="true" />
             <Dialog.Title className={hideTitle ? 'sr-only' : 'sheet-title'}>{title}</Dialog.Title>
           </div>
-          <div className="sheet-body">{children}</div>
+          <div
+            className={`sheet-body${flush ? ' flush' : ''}`}
+            // Keep the focused field visible above the on-screen keyboard.
+            onFocusCapture={e => {
+              const el = e.target;
+              if (/^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName)) {
+                setTimeout(() => el.scrollIntoView({ block: 'center', behavior: 'smooth' }), 300);
+              }
+            }}
+          >
+            {children}
+          </div>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>

@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
-import { X, Pencil, ArrowUp, ArrowDown } from 'lucide-react';
+import { X, Pencil, ArrowUp, ArrowDown, ScrollText } from 'lucide-react';
 import Avatar from './Avatar';
 import Sheet from './Sheet';
 import { usePhone } from '../hooks/useMediaQuery';
+import { isRecordKeeper, HIDDEN_TAGS } from '../utils/recordKeeper';
 
 // Fields already rendered explicitly — excluded from the dynamic "extra" section
 const KNOWN_FIELDS = new Set([
@@ -29,6 +30,7 @@ const LABELS = {
     father: 'पिता', mother: 'माता', spouse: 'जीवनसाथी',
     child: 'संतान', sibling: 'भाई/बहन',
     present: 'वर्तमान', children: 'संतान', siblings: 'भाई/बहन',
+    keeper: 'अभिलेख संरक्षक', keeperSub: 'इस वंशावली को सहेजने और आगे बढ़ाने वाले',
     moveUp: 'ऊपर', moveDown: 'नीचे', edit: 'संपादित करें',
     moreSiblings: (n) => `+${n} और भाई/बहन`,
     noDetails: 'अभी कोई विवरण नहीं।',
@@ -41,6 +43,7 @@ const LABELS = {
     father: 'Father', mother: 'Mother', spouse: 'Spouse',
     child: 'Child', sibling: 'Sibling',
     present: 'present', children: 'Children', siblings: 'Siblings',
+    keeper: 'Record keeper', keeperSub: 'Preserved and carried this Vanshavali forward',
     moveUp: 'Move up', moveDown: 'Move down', edit: 'Edit',
     moreSiblings: (n) => `+${n} more siblings`,
     noDetails: 'No details yet. Update family.json to add information.',
@@ -188,6 +191,13 @@ function DetailContent({ person, personMap, people, onClose, onSelect, onEdit, o
         </div>
       </div>
 
+      {isRecordKeeper(person) && (
+        <div className="keeper-banner">
+          <ScrollText size={20} aria-hidden="true" />
+          <div><b>{t.keeper}</b><span>{t.keeperSub}</span></div>
+        </div>
+      )}
+
       {isAdmin && (
         <div className="detail-actions">
           <button className="btn-ghost" onClick={() => onEdit(person)}><Pencil size={16} /> {t.edit}</button>
@@ -217,9 +227,9 @@ function DetailContent({ person, personMap, people, onClose, onSelect, onEdit, o
         </>
       )}
 
-      {(person.tags || []).filter(x => x !== 'root' && x !== 'placeholder').length > 0 && (
+      {(person.tags || []).filter(x => x && !HIDDEN_TAGS.has(x)).length > 0 && (
         <div className="detail-tags">
-          {(person.tags || []).filter(x => x !== 'root' && x !== 'placeholder').map(tag => (
+          {(person.tags || []).filter(x => x && !HIDDEN_TAGS.has(x)).map(tag => (
             <span key={tag} className="tag">{tag}</span>
           ))}
         </div>

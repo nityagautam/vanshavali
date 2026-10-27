@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Lock, Unlock, Plus, Link2, Download, Printer, LayoutGrid, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { Lock, Unlock, Plus, Link2, Download, Printer, LayoutGrid } from 'lucide-react';
 import Modal from './Modal';
 import AddMemberForm from './AddMemberForm';
 import InviteManager from './InviteManager';
 import MobileBar from './MobileBar';
 import DesktopActions from './DesktopActions';
 import { usePhone } from '../hooks/useMediaQuery';
+import { useToast } from './Toaster';
 import { exportJSON } from '../utils/exportJSON';
 import { printTree, resetScrollForPrint } from '../utils/printTree';
 import { clearAuth }  from '../utils/auth';
@@ -21,12 +22,7 @@ export default function FloatingActions({
   const isPhone = usePhone();
   const [showAddMember, setShowAddMember] = useState(false);
   const [showInvite, setShowInvite]   = useState(false);
-  const [toast, setToast]             = useState(null);
-
-  const showToast = (type, msg) => {
-    setToast({ type, msg });
-    setTimeout(() => setToast(null), 3500);
-  };
+  const { notify: showToast } = useToast();
 
   const guard = (fn) => () => {
     if (!isLoggedIn) { onAuthRequired(fn); return; }
@@ -122,12 +118,6 @@ export default function FloatingActions({
       {/* Invite link modal */}
       <InviteManager open={showInvite} onOpenChange={setShowInvite} showToast={showToast} />
 
-      {/* Toast */}
-      {toast && (
-        <div className={`sidebar-toast toast-${toast.type}`}>
-          {toast.type === 'ok' ? <CheckCircle2 size={15} /> : <AlertTriangle size={15} />} {toast.msg}
-        </div>
-      )}
     </>
   );
 }

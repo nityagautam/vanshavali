@@ -3,6 +3,8 @@
  * Renders a generation-by-generation genealogy report.
  */
 
+import { stripPersonLinks } from '../utils/personLinks';
+
 function toLabel(key) {
   return key
     .replace(/([a-z])([A-Z])/g, '$1 $2')
@@ -189,7 +191,7 @@ export default function PrintView({ people, meta, about = {}, lang = 'both' }) {
         </div>
         {locationStr && <div className="pv-cover-location">{locationStr}</div>}
         {(about.descriptionHindi || about.description) && (() => {
-          const { primary: dp, secondary: ds } = pickLang(about.descriptionHindi, about.description, lang);
+          const { primary: dp, secondary: ds } = pickLang(stripPersonLinks(about.descriptionHindi), stripPersonLinks(about.description), lang);
           return (dp || ds) ? (
             <div className="pv-cover-desc">
               {dp && <p className="pv-cover-desc-hindi">{dp}</p>}

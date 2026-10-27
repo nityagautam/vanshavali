@@ -1,3 +1,5 @@
+import { stripPersonLinks } from './personLinks';
+
 function pickLang(hindi, english, lang) {
   if (lang === 'hi') return { primary: hindi,   secondary: null };
   if (lang === 'en') return { primary: english,  secondary: null };
@@ -103,7 +105,7 @@ export function printTree({ people, meta, about, lang, showToast }) {
     </div>` : '';
 
   const { primary: descPrimary, secondary: descSecondary } =
-    pickLang(about?.descriptionHindi, about?.description, lang);
+    pickLang(stripPersonLinks(about?.descriptionHindi), stripPersonLinks(about?.description), lang);
   const descriptionBlock = (descPrimary || descSecondary) ? `
     <div style="font-family:Arial,sans-serif;border:1px solid #c8a45a;border-radius:3px;padding:9px 11px;margin-bottom:10px;background:#fffbf4">
       ${descPrimary   ? `<div style="font-size:8pt;color:#3b2a10;line-height:1.65;margin-bottom:${descSecondary ? '6px' : '0'}">${nl(descPrimary)}</div>`   : ''}

@@ -53,6 +53,15 @@ export default function FiltersPanel({
         </section>
       ))}
       <section>
+        <h4 className="group-title">{lang === 'en' ? 'Special' : 'विशेष'}</h4>
+        <div className="chips">
+          <button type="button" className={`chip${values.keepers ? ' on' : ''}`} aria-pressed={!!values.keepers}
+            onClick={() => onChange('keepers', !values.keepers)}>
+            {lang === 'en' ? 'Record keepers only' : 'अभिलेख संरक्षक'}
+          </button>
+        </div>
+      </section>
+      <section>
         <h4 className="group-title">{lang === 'en' ? 'Generations shown' : 'पीढ़ियाँ'}</h4>
         <div className="stepper">
           <button type="button" className="stepper-btn" aria-label="Show one fewer generation"

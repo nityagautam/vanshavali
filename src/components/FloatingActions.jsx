@@ -40,10 +40,11 @@ export default function FloatingActions({
     isLoggedIn
       ? { id: 'logout',     icon: Unlock, label: 'Logout',      onClick: handleLogout }
       : { id: 'login',      icon: Lock,   label: 'Login',       onClick: () => { setOpen(false); onAuthRequired(null); } },
-    {
+    // Adding members is admin-only; hide it once a non-admin session is confirmed.
+    ...(!isLoggedIn || isAdmin ? [{
       id: 'add', icon: Plus, label: 'Add Member',
       onClick: guard(() => setShowAddMember(true)),
-    },
+    }] : []),
     // Invite-redeemed (non-admin) sessions can't manage invite links —
     // hide once we actually know that, but keep it visible pre-login so
     // an admin who hasn't logged in yet still sees it (guard() handles that).

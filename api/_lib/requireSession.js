@@ -4,9 +4,9 @@ export function requireSession(req) {
   return verifySessionToken(req.cookies?.[SESSION_COOKIE]);
 }
 
-// Invite-redeemed sessions can edit family data but must not be able to
-// manage (view/generate/reset) invite links themselves — only password or
-// Google logins count as admin here.
+// Every write to family data (add, edit, reorder, photo upload) and invite
+// management requires an admin session. Invite-redeemed sessions are
+// login-only (view access) — only password or Google logins count as admin.
 export function requireAdminSession(req) {
   const session = requireSession(req);
   if (!session || session.method === 'invite') return null;

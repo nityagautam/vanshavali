@@ -1,5 +1,5 @@
 import { getFamilyData, upsertPeople, computeInsertSortOrder } from './_lib/db.js';
-import { requireSession } from './_lib/requireSession.js';
+import { requireSession, requireAdminSession } from './_lib/requireSession.js';
 import { personSchema } from './_lib/familySchema.js';
 import { rateLimit } from './_lib/rateLimit.js';
 
@@ -15,8 +15,13 @@ export default async function handler(req, res) {
     return;
   }
 
-  if (!requireSession(req)) {
-    res.status(401).json({ error: 'Login required.' });
+  // Writes are admin-only: family data must not accept unverified additions.
+  if (!requireAdminSession(req)) {
+    if (requireSession(req)) {
+      res.status(403).json({ error: 'Only an admin can add members.' });
+    } else {
+      res.status(401).json({ error: 'Login required.' });
+    }
     return;
   }
 

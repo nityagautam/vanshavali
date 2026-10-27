@@ -9,6 +9,7 @@ Every feature or larger change starts as a PRD in this folder, is reviewed and a
 | 003 | [Floating Action Button](./003-floating-action-button.md) | Implemented |
 | 004 | [Login / Access Control](./004-login-access-control.md) | Superseded (server-side auth) |
 | 005 | [Image Hover Preview](./005-image-hover-preview.md) | Implemented |
+| 006 | [Admin-only writes](./006-admin-only-writes.md) | Implemented (invite-link role open) |
 
 002–005 were migrated from the former `specs/` folder; their bodies are unchanged apart from the title and status line.
 

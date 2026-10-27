@@ -3556,3 +3556,26 @@ button, a, [role="button"], .person-card, .mobile-child-row { touch-action: mani
     scroll-behavior: auto !important;
   }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   TREE PAN / ZOOM (PRD 001, Phase 2)
+   Zoom is a transform on .tree-zoom-inner; .tree-zoom-box is sized to the
+   scaled content so the canvas keeps native scroll extents. Gestures
+   (drag, pinch) are handled in src/hooks/usePanZoom.js.
+   ══════════════════════════════════════════════════════════════ */
+.tree-canvas, .tree-canvas * { touch-action: none; }
+.tree-canvas { cursor: grab; user-select: none; -webkit-user-select: none; }
+.tree-canvas.is-panning, .tree-canvas.is-panning * { cursor: grabbing !important; }
+.tree-zoom-box { position: relative; }
+.tree-zoom-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: max-content;
+  transform-origin: 0 0;
+}
+
+/* Touch devices pan/pinch directly; the minimap is a desktop affordance. */
+@media (pointer: coarse) {
+  .mini-map { display: none; }
+}

@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { Routes, Route, NavLink } from 'react-router-dom';
-import { CheckCircle2, AlertTriangle, Search, RotateCcw, Minus, Plus, Sun, Moon, Network, List } from 'lucide-react';
+import { CheckCircle2, AlertTriangle, Search, RotateCcw, Minus, Plus, Sun, Moon, Network, List, Maximize } from 'lucide-react';
 import initialData from './data/family.json';
 import aboutData   from './data/about.json';
 import FamilyTree  from './components/FamilyTree';
@@ -18,6 +18,7 @@ import AddMemberForm from './components/AddMemberForm';
 import Modal from './components/Modal';
 import CommandPalette from './components/CommandPalette';
 import { isAuthenticated, setAuthenticated, checkSession } from './utils/auth';
+import { usePanZoom } from './hooks/usePanZoom';
 import { fetchFamilyData, editFamilyMember, moveSibling } from './utils/familyApi';
 import { consumeInvite } from './utils/inviteApi';
 
@@ -37,7 +38,6 @@ export default function App() {
   const [people, setPeople]           = useState(initialData.people);
   const [selectedPerson, setSelected] = useState(null);
   const [search, setSearch]           = useState('');
-  const [zoom, setZoom]               = useState(initialZoom);
   const [maxGen, setMaxGen]           = useState(null);
   const [lang, setLang]               = useState('hi');
   const [filterGender,   setFilterGender]   = useState('all');
@@ -59,6 +59,9 @@ export default function App() {
   // screen size. Persisted like the theme choice.
   const [viewMode,       setViewMode]       = useState(() => localStorage.getItem('vv-view-mode') || 'tree');
   const canvasRef = useRef(null);
+  const { zoom, zoomTo, zoomBy, fit, innerRef, boxRef, nat } = usePanZoom({
+    canvasRef, initialZoom: initialZoom(), enabled: viewMode === 'tree',
+  });
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-color-scheme: dark)');
@@ -122,8 +125,7 @@ export default function App() {
 
   const handleLang = (l) => { setLang(l); };
 
-  const clampZoom  = useCallback(z => Math.min(2, Math.max(0.25, +z.toFixed(2))), []);
-  const adjustZoom = useCallback(delta => setZoom(z => clampZoom(z + delta)), [clampZoom]);
+  const adjustZoom = zoomBy;
 
   useEffect(() => {
     try { localStorage.setItem(ZOOM_KEY, String(zoom)); } catch { /* ignore */ }
@@ -137,12 +139,6 @@ export default function App() {
   useEffect(() => {
     document.title = meta.pageTitle || `Vanshavali — ${meta.dynasty} Dynasty`;
   }, [meta.pageTitle, meta.dynasty]);
-
-  useEffect(() => {
-    const el = canvasRef.current;
-    if (!el) return;
-    el.scrollLeft = (el.scrollWidth - el.clientWidth) / 2;
-  }, []);
 
   // The bundled family.json renders instantly; once the live datastore
   // responds, swap in whatever's actually been persisted since the last
@@ -212,21 +208,11 @@ export default function App() {
   }, [authMessage]);
 
   useEffect(() => {
-    const el = canvasRef.current;
-    if (!el) return;
-    const onWheel = (e) => {
-      if (e.ctrlKey || e.metaKey) { e.preventDefault(); adjustZoom(-e.deltaY * 0.001); }
-    };
-    el.addEventListener('wheel', onWheel, { passive: false });
-    return () => el.removeEventListener('wheel', onWheel);
-  }, [adjustZoom]);
-
-  useEffect(() => {
     const onKey = (e) => {
       if (!e.ctrlKey && !e.metaKey) return;
       if (e.key === '=' || e.key === '+') { e.preventDefault(); adjustZoom(+0.15); }
       if (e.key === '-')                  { e.preventDefault(); adjustZoom(-0.15); }
-      if (e.key === '0')                  { e.preventDefault(); setZoom(1); }
+      if (e.key === '0')                  { e.preventDefault(); zoomTo(1); }
       if (e.key === 'k' || e.key === 'K') { e.preventDefault(); setPaletteOpen(o => !o); }
     };
     window.addEventListener('keydown', onKey);
@@ -512,10 +498,11 @@ export default function App() {
                   {viewMode === 'tree' && (
                     <div className="zoom-controls">
                       <button className="zoom-btn" onClick={() => adjustZoom(-0.15)} title="Zoom out (Ctrl+−)"><Minus size={15} /></button>
-                      <button className="zoom-level" onClick={() => setZoom(1)} title="Reset zoom (Ctrl+0)">
+                      <button className="zoom-level" onClick={() => zoomTo(1)} title="Reset zoom (Ctrl+0)">
                         {Math.round(zoom * 100)}%
                       </button>
                       <button className="zoom-btn" onClick={() => adjustZoom(+0.15)} title="Zoom in (Ctrl+=)"><Plus size={15} /></button>
+                      <button className="zoom-btn" onClick={fit} title="Fit whole tree" aria-label="Fit whole tree"><Maximize size={15} /></button>
                     </div>
                   )}
 
@@ -542,15 +529,21 @@ export default function App() {
                   <>
                     {/* Tree canvas */}
                     <div className="tree-canvas" ref={canvasRef}>
-                      <div style={{ zoom }}>
-                        <FamilyTree
-                          people={people}
-                          personMap={personMap}
-                          selectedId={selectedPerson?.id}
-                          onSelect={handleSelect}
-                          highlightIds={highlightIds}
-                          maxGen={maxGen}
-                        />
+                      <div
+                        className="tree-zoom-box"
+                        ref={boxRef}
+                        style={nat.w ? { width: nat.w * zoom, height: nat.h * zoom } : undefined}
+                      >
+                        <div className="tree-zoom-inner" ref={innerRef} style={{ transform: `scale(${zoom})` }}>
+                          <FamilyTree
+                            people={people}
+                            personMap={personMap}
+                            selectedId={selectedPerson?.id}
+                            onSelect={handleSelect}
+                            highlightIds={highlightIds}
+                            maxGen={maxGen}
+                          />
+                        </div>
                       </div>
                     </div>
 

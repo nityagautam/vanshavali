@@ -4,7 +4,7 @@ Every feature or larger change starts as a PRD in this folder, is reviewed and a
 
 | # | PRD | Status |
 |---|---|---|
-| 001 | [UI Modernization & Mobile-First Experience](./001-ui-modernization-mobile.md) | Draft |
+| 001 | [UI Modernization & Mobile-First Experience](./001-ui-modernization-mobile.md) | Draft (questions resolved) |
 | 002 | [About Page + Navigation](./002-about-page-navigation.md) | Implemented |
 | 003 | [Floating Action Button](./003-floating-action-button.md) | Implemented |
 | 004 | [Login / Access Control](./004-login-access-control.md) | Superseded (server-side auth) |

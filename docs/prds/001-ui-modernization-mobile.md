@@ -1,6 +1,6 @@
 # PRD 001 — UI Modernization & Mobile-First Experience
 
-- **Status:** Draft — awaiting review
+- **Status:** Draft — open questions resolved 2026-10-27, scope updated; awaiting final approval
 - **Owner:** Ashutosh Mishra
 - **Date:** 2026-10-27
 - **PRD convention:** one file per initiative in `docs/prds/`, named `NNN-short-slug.md`. Each PRD is approved before implementation; work is shipped in the phases listed in it.
@@ -59,14 +59,19 @@ Vanshavali is used mostly by family members on phones, but the UI was built desk
 
 ## 4. Proposed solution
 
+### Phase 0 — Design direction (new, from decision Q2: full redesign)
+- Produce a new visual language before any Phase 3/4 layout work: palette (light + dark), type system (incl. Devanagari pairing), elevation, radii, iconography, tree-card and generation-colour treatment, motion principles.
+- Deliverable: a design-token spec and mocks for tree, detail sheet, search, forms, About, and print-safe colours, reviewed and approved as an addendum to this PRD.
+- Phase 1 changes are token-agnostic (layout/touch/viewport), so they can ship in parallel with Phase 0.
+
 ### Phase 1 — Mobile foundations (low risk, highest impact)
 - Viewport: add `viewport-fit=cover`; replace `100vh` with `100dvh` (`.app-shell`); apply `env(safe-area-inset-*)` to header, FAB, bottom sheets. (M4)
 - Default zoom: fit-to-width / readable (~60–100%) on load instead of 25%; remember per device. (M3)
 - Touch targets: raise all interactive controls to ≥44×44 CSS px hit area (visual size may stay smaller via padding). (M5)
-- Mobile defaults: on first visit at ≤768px default to the drill-down list view; tree remains one tap away. (M8)
+- Tree stays the default view on all devices (decision Q1); list view remains an optional toggle. (M8)
 - Add `prefers-reduced-motion` and `touch-action`/`overscroll-behavior` rules. (V3)
 
-### Phase 2 — Tree interaction
+### Phase 2 — Tree interaction (critical path: tree is the default on phones)
 - Replace CSS `zoom` with `transform: scale()` on a pan/zoom surface; implement pointer-event drag-to-pan and two-finger pinch-zoom with inertia; keep Ctrl+wheel and buttons. (M1, M2)
 - "Fit to screen", "center on me/selected" actions; MiniMap becomes desktop-only. (M10)
 - Measure render time and scroll/zoom FPS on a mid-range Android profile; virtualize or collapse-by-default only if budgets are missed. (A3)
@@ -94,13 +99,14 @@ Vanshavali is used mostly by family members on phones, but the UI was built desk
 ## 6. Risks
 - Pinch/pan on a custom surface can conflict with browser gestures and with the existing scroll-based MiniMap and `scrollIntoView` search-centering — both must be re-implemented against the new transform model.
 - Print relies on current DOM structure/classes (`#print-view`, `.app-shell`) — Phase 4 CSS split must keep `@media print` intact.
+- A full redesign on top of the existing 3.5k-line CSS risks half-migrated styles; do the CSS split and token migration as part of Phase 3/4, not after.
 - Restyling in-place with a 3.5k-line CSS file risks dark-mode drift (the two theme blocks); mitigate by doing A4 first within Phase 4 scope or earlier if Phase 3 adds many themed colours.
 
-## 7. Open questions
-1. Is a dedicated phone default (list view) acceptable, or should the tree always be the default?
-2. Do we want a visual refresh (palette/typography) or keep the saffron/gold identity and only refine layout and motion?
-3. Which devices/browsers must be supported (oldest iOS/Android)? This sets the bar for `dvh`, `touch-action`, and pointer events.
-4. Is there a rough size of the production dataset (member count) to benchmark Phase 2 against?
+## 7. Decisions (resolved open questions)
+1. **Default view on phones: tree everywhere.** The list view stays as an optional toggle only. Consequence: Phase 2 (pinch/pan/fit-to-screen, readable first paint) is the make-or-break item and must ship before the redesign is considered mobile-complete.
+2. **Visual direction: full redesign.** The saffron/gold identity is not binding. Consequence: new Phase 0 (design direction), token migration becomes mandatory rather than opportunistic, and dark-mode tokens, generation colours and print colours must be re-derived from the new system.
+3. **Support floor: last ~2 years** (iOS 16+, Android Chrome 110+). `dvh`, pointer events, `env(safe-area-inset-*)`, `:has()` and `overscroll-behavior` may be used without fallbacks.
+4. **Dataset size:** 343 people, 9 generations in the bundled snapshot. Small enough that virtualization is not expected to be needed; Phase 2 still measures pan/zoom frame rate before ruling it out.
 
 ## 8. Rollout
-Each phase ships independently via `vercel --prod` after a preview check on a real phone; Phase 1 can ship first on its own.
+Each phase ships independently via `vercel --prod` after a preview check on a real phone. Order: Phase 1 and Phase 0 in parallel, then Phase 2, then Phase 3 and 4 on the approved design system.

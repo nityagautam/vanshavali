@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Plus, Minus } from 'lucide-react';
 import PersonCard from './PersonCard';
 
-const GEN_COLORS = ['#1a3a6b', '#1a6b3a', '#6b1a4a', '#7a4a00'];
+const GEN_COLORS = ['var(--g1)', 'var(--g2)', 'var(--g3)', 'var(--g4)'];
 
 export default function TreeNode({
   person, personMap, childrenMap,

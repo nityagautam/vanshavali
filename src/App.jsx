@@ -74,17 +74,19 @@ export default function App() {
     localStorage.setItem('vv-view-mode', viewMode);
   }, [viewMode]);
 
+  const isDark = theme ? theme === 'dark' : systemDark;
+
+  // data-theme is always set to the resolved value ('light' | 'dark'); the
+  // stored preference is only the explicit override (null = follow system).
   useEffect(() => {
-    if (theme) {
-      document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('vv-theme', theme);
-    } else {
-      document.documentElement.removeAttribute('data-theme');
-      localStorage.removeItem('vv-theme');
-    }
+    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  }, [isDark]);
+
+  useEffect(() => {
+    if (theme) localStorage.setItem('vv-theme', theme);
+    else localStorage.removeItem('vv-theme');
   }, [theme]);
 
-  const isDark = theme ? theme === 'dark' : systemDark;
   const toggleTheme = () => setTheme(isDark ? 'light' : 'dark');
 
   const handleAuthRequired = (action) => {

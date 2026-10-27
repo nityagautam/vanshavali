@@ -1,114 +1,15 @@
+@import './styles/tokens.css';
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-:root {
-  --toolbar-h: 51px;
-  --saffron: #E85D04;
-  --saffron-light: #F48C06;
-  --deep-red: #9D0208;
-  --gold: #D4A017;
-  --gold-light: #F5E6B8;
-  --cream: #FDF6EC;
-  --cream-dark: #F5EAD7;
-  --brown: #7B4F2E;
-  --brown-dark: #5C3317;
-  --green: #2D6A4F;
-  --text-primary: #1A1008;
-  --text-secondary: #5C3317;
-  --text-muted: #9E7B56;
-  --line-color: #C8A45A;
-  --line-width: 2px;
-  --card-bg: #FFFBF4;
-  --card-border: #DFC98A;
-  --selected-bg: #FFF5E9;
-  --highlight-bg: #F0FBF5;
-  --shadow-sm: 0 1px 4px rgba(123, 79, 46, 0.10);
-  --shadow: 0 2px 12px rgba(123, 79, 46, 0.12);
-  --shadow-hover: 0 4px 20px rgba(123, 79, 46, 0.22);
-  --shadow-md: var(--shadow-hover);
-  --shadow-lg: 0 8px 48px rgba(0, 0, 0, 0.22);
-  --radius-sm: 6px;
-  --radius: 10px;
-  --radius-lg: 16px;
-  --radius-full: 999px;
-  --transition: 0.22s ease;
-
-  /* Spacing scale (4px base) — new code should use these instead of
-     hardcoded px values; existing rules aren't retrofitted. */
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-  --space-8: 32px;
-  --space-10: 40px;
-  --space-12: 48px;
-
-  /* Type scale — matches sizes already in use across the app so it can be
-     adopted incrementally without a visual diff. */
-  --text-xs: 0.72rem;
-  --text-sm: 0.78rem;
-  --text-base: 0.85rem;
-  --text-md: 0.95rem;
-  --text-lg: 1.1rem;
-  --text-xl: 1.4rem;
-  --text-2xl: 1.75rem;
-
-  /* z-index scale — keeps stacking order legible as more overlays get added. */
-  --z-header: 10;
-  --z-popover: 50;
-  --z-modal: 200;
-}
-
-/* ── Dark theme ──────────────────────────────────────────────────────────
-   Three-state: OS preference drives it by default; an explicit .theme-btn
-   choice (persisted in localStorage, applied as data-theme on <html>)
-   always wins over the OS setting in either direction. The saffron/gold/
-   brown accent palette is deliberately left unchanged — those already read
-   fine on a dark surface and are also used in the always-dark header. */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --cream: #1C140B;
-    --cream-dark: #241B10;
-    --text-primary: #F5EAD7;
-    --text-secondary: #D9C2A0;
-    --text-muted: #A68B66;
-    --line-color: #7A5F35;
-    --card-bg: #2A2014;
-    --card-border: #4A3A22;
-    --selected-bg: #3A2A16;
-    --highlight-bg: #1E2A1E;
-    --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.35);
-    --shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
-    --shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.5);
-    --shadow-md: var(--shadow-hover);
-  }
-}
-:root[data-theme="dark"] {
-  --cream: #1C140B;
-  --cream-dark: #241B10;
-  --text-primary: #F5EAD7;
-  --text-secondary: #D9C2A0;
-  --text-muted: #A68B66;
-  --line-color: #7A5F35;
-  --card-bg: #2A2014;
-  --card-border: #4A3A22;
-  --selected-bg: #3A2A16;
-  --highlight-bg: #1E2A1E;
-  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.35);
-  --shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
-  --shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.5);
-  --shadow-md: var(--shadow-hover);
-}
-
 html, body {
   height: 100%;
-  font-family: 'Inter', 'Noto Sans Devanagari', system-ui, sans-serif;
-  background: var(--cream);
+  font-family: var(--ui);
+  background: var(--cream) var(--tex);
   color: var(--text-primary);
   font-size: 14px;
   line-height: 1.5;
@@ -197,12 +98,12 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
 }
 
 .header-title h1 {
-  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
+  font-family: var(--display);
   font-size: 1.75rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   line-height: 1.2;
-  color: var(--gold-light);
+  color: var(--chrome-ink);
   text-shadow: 0 1px 4px rgba(0,0,0,0.3);
 }
 
@@ -703,10 +604,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
   display: flex;
   align-items: center;
   gap: 6px;
-  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
+  font-family: var(--display);
   font-weight: 700;
   font-size: 0.95rem;
-  color: var(--brown-dark);
+  color: var(--ink);
   margin-bottom: 8px;
 }
 .onboarding-list {
@@ -819,7 +720,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
   padding: 6px 12px;
   border-radius: 20px;
   font-size: 0.8rem;
-  color: var(--brown);
+  color: var(--ink-2);
   border: 1.5px solid var(--card-border);
   background: var(--card-bg);
   transition: all var(--transition);
@@ -902,7 +803,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
 
 .sidebar-tool-btn:hover {
   background: var(--gold-light);
-  color: var(--brown-dark);
+  color: var(--ink);
 }
 
 .sidebar-tool-btn.active {
@@ -930,10 +831,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
 }
 
 .sidebar-panel-title {
-  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
+  font-family: var(--display);
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--brown-dark);
+  color: var(--ink);
   padding: 12px 14px 8px;
   border-bottom: 1px solid var(--cream-dark);
   flex-shrink: 0;
@@ -1445,7 +1346,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
 }
 
 .card-name {
-  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
+  font-family: var(--display);
   font-size: 1.15rem;
   font-weight: 600;
   color: var(--text-primary);
@@ -1654,13 +1555,13 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
 
 .photo-lightbox-name {
   color: rgba(255,255,255,0.85);
-  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
+  font-family: var(--display);
   font-size: 1rem;
   text-align: center;
 }
 
 .detail-hero-name {
-  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
+  font-family: var(--display);
   font-size: 0.95rem;
   font-weight: 700;
   color: #fff;
@@ -1818,10 +1719,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
 }
 
 .dip-dynasty-name {
-  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
+  font-family: var(--display);
   font-size: 1.2rem;
   font-weight: 700;
-  color: var(--gold-light);
+  color: var(--chrome-ink);
   letter-spacing: 0.04em;
   text-shadow: 0 1px 4px rgba(0,0,0,0.3);
 }
@@ -1860,10 +1761,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
 }
 
 .dip-stat-num {
-  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
+  font-family: var(--display);
   font-size: 1.4rem;
   font-weight: 700;
-  color: var(--brown-dark);
+  color: var(--ink);
   line-height: 1;
 }
 
@@ -1969,7 +1870,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
   font-size: 0.6rem;
   font-style: italic;
   font-weight: 700;
-  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
+  font-family: var(--display);
   cursor: pointer;
   transition: all var(--transition);
   flex-shrink: 0;
@@ -2015,7 +1916,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
 }
 
 .info-popup-title {
-  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
+  font-family: var(--display);
   font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.03em;
@@ -2835,7 +2736,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
   height: 42px;
   border-radius: 50%;
   background: var(--card-bg);
-  color: var(--brown-dark);
+  color: var(--ink);
   border: 1.5px solid var(--card-border);
   cursor: pointer;
   font-size: 1rem;
@@ -2976,10 +2877,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
   justify-content: space-between;
   padding: 14px 16px 12px;
   border-bottom: 1px solid var(--card-border);
-  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
+  font-family: var(--display);
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--brown-dark);
+  color: var(--ink);
   flex-shrink: 0;
 }
 .fab-modal-header button {
@@ -3090,7 +2991,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
   transition: color var(--transition);
   width: 100%;
 }
-.about-back:hover { color: var(--brown-dark); }
+.about-back:hover { color: var(--ink); }
 
 .about-banner {
   background: linear-gradient(135deg, var(--brown-dark) 0%, var(--brown) 50%, var(--saffron) 100%);
@@ -3099,10 +3000,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
   flex-shrink: 0;
 }
 .about-banner-dynasty {
-  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
+  font-family: var(--display);
   font-size: 1.4rem;
   font-weight: 700;
-  color: var(--gold-light);
+  color: var(--chrome-ink);
   letter-spacing: 0.05em;
   text-shadow: 0 1px 4px rgba(0,0,0,0.3);
 }
@@ -3158,10 +3059,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
   box-shadow: var(--shadow);
 }
 .about-stat-num {
-  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
+  font-family: var(--display);
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--brown-dark);
+  color: var(--ink);
   line-height: 1;
 }
 .about-stat-lbl {
@@ -3366,10 +3267,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
   margin-bottom: 4px;
 }
 .login-title {
-  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
+  font-family: var(--display);
   font-size: 1rem;
   font-weight: 700;
-  color: var(--gold-light);
+  color: var(--chrome-ink);
   letter-spacing: 0.04em;
 }
 .login-subtitle {

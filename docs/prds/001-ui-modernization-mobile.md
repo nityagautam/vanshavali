@@ -77,6 +77,13 @@ Vanshavali is used mostly by family members on phones, but the UI was built desk
 - Measure render time and scroll/zoom FPS on a mid-range Android profile; virtualize or collapse-by-default only if budgets are missed. (A3)
 
 ### Phase 3 — Layout & navigation redesign
+Delivered in slices, each shippable:
+- **3a Tokens & fonts** — Parchment tokens (`src/styles/tokens.css`), single `data-theme` source, Newsreader/Tiro/Hind, legacy variable aliases. *(done)*
+- **3b App bar + search-first toolbar** — flat paper app bar, search pill, overflow menu; remove the gradient header.
+- **3c Bottom bar + canvas controls** — Tree · Filters · (Add, admin only) · More; FAB removed on phones.
+- **3d Filters sheet** — gender/status/marriage/depth in one sheet with active-count badge.
+- **3e Detail bottom sheet** — snap points, swipe to dismiss; side panel on desktop.
+- **3f Toast/banner, skeleton & offline states; Add/Edit form sheet.**
 - Header: compact app bar; search is the primary control; filters/depth/view move into a single "Filters" bottom sheet on mobile. (V2, M6)
 - Detail panel becomes a **bottom sheet** on mobile (drag handle, swipe-down to dismiss, snap points) and stays a side panel on desktop. (M7)
 - Replace the FAB menu with a bottom action bar / overflow menu on mobile; admin actions grouped. (M10)

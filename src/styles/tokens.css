@@ -1,0 +1,133 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Design tokens — "Old paper record", Parchment palette (PRD 001, Phase 0).
+   Spec: docs/prds/001-phase0-design/design-direction.md
+
+   Theme is a single attribute: <html data-theme="light|dark">. It is always
+   resolved by the inline script in index.html (and kept in sync by App.jsx),
+   so there is one dark block here, not a media query plus an override.
+
+   New code uses the semantic tokens (--paper, --ink, --accent …). The legacy
+   names further down (--cream, --gold, --saffron …) are aliases kept while
+   components migrate; delete them once nothing references them.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── Surfaces & ink ── */
+  --paper: #F1E6CC;
+  --paper-sunk: #E6D8B6;
+  --card: #F8F0DB;
+  --ink: #2B2118;
+  --ink-2: #54442F;
+  --ink-3: #6F6049;
+  --line: #D3C095;
+  --line-strong: #B9A370;
+  --accent: #7A2E22;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #E9CDBE;
+  --ok: #2E7D4F;
+  --ok-soft: #DCEBDD;
+  --danger: #9D2A1C;
+
+  /* Generation hues (neel, hara, manjistha, haldi) */
+  --g1: #2F4B7C;
+  --g2: #3F7A5A;
+  --g3: #A23B5C;
+  --g4: #B7791F;
+
+  /* Header / dark-chrome surface: stays dark in both themes */
+  --chrome-from: #2B2118;
+  --chrome-to: #54442F;
+  --chrome-ink: #F1E6CC;
+
+  /* Paper grain (app background only) */
+  --tex: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .36 0 0 0 0 .26 0 0 0 0 .12 0 0 0 .10 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+
+  --shadow-sm: 0 1px 3px rgba(43, 33, 24, 0.10);
+  --shadow: 0 2px 10px rgba(43, 33, 24, 0.12);
+  --shadow-hover: 0 4px 18px rgba(43, 33, 24, 0.18);
+  --shadow-md: var(--shadow-hover);
+  --shadow-lg: 0 8px 32px rgba(43, 33, 24, 0.20);
+  --scrim: rgba(43, 33, 24, 0.38);
+
+  color-scheme: light;
+
+  /* ── Type ── */
+  --display: 'Newsreader', 'Tiro Devanagari Hindi', Georgia, serif;
+  --ui: 'Hind', system-ui, sans-serif;
+  --text-xs: 0.72rem;
+  --text-sm: 0.78rem;
+  --text-base: 0.85rem;
+  --text-md: 0.95rem;
+  --text-lg: 1.1rem;
+  --text-xl: 1.4rem;
+  --text-2xl: 1.75rem;
+
+  /* ── Space (4px base), shape, motion, stacking ── */
+  --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+  --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px; --space-12: 48px;
+  --radius-sm: 8px;
+  --radius: 14px;
+  --radius-lg: 22px;
+  --radius-full: 999px;
+  --transition: 0.2s cubic-bezier(.2, .7, .2, 1);
+  --toolbar-h: 51px;
+  --line-width: 2px;
+  --z-header: 10;
+  --z-popover: 50;
+  --z-modal: 200;
+
+  /* ── Legacy aliases (migrate away, then delete) ── */
+  --cream: var(--paper);
+  --cream-dark: var(--paper-sunk);
+  --card-bg: var(--card);
+  --card-border: var(--line);
+  --text-primary: var(--ink);
+  --text-secondary: var(--ink-2);
+  --text-muted: var(--ink-3);
+  --line-color: var(--line-strong);
+  --selected-bg: var(--accent-soft);
+  --highlight-bg: var(--ok-soft);
+  --saffron: var(--accent);
+  --saffron-light: var(--accent);
+  --gold: var(--line-strong);
+  --gold-light: var(--accent-soft);
+  --brown: var(--chrome-to);
+  --brown-dark: var(--chrome-from);
+  --deep-red: var(--danger);
+  --green: var(--ok);
+}
+
+:root[data-theme="dark"] {
+  --paper: #1B150D;
+  --paper-sunk: #120E08;
+  --card: #251D13;
+  --ink: #EDE0C4;
+  --ink-2: #C9B895;
+  --ink-3: #A39274;
+  --line: #3B2F20;
+  --line-strong: #5A4930;
+  --accent: #D98A6C;
+  --accent-ink: #1B150D;
+  --accent-soft: #3A2419;
+  --ok: #7FBF9A;
+  --ok-soft: #1E2A1E;
+  --danger: #E57A68;
+
+  --g1: #7C9BD6;
+  --g2: #7FBF9A;
+  --g3: #D97A98;
+  --g4: #E2B04A;
+
+  --chrome-from: #120E08;
+  --chrome-to: #3B2F20;
+
+  --tex: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .9 0 0 0 0 .8 0 0 0 0 .6 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  --shadow-hover: 0 4px 18px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --scrim: rgba(0, 0, 0, 0.55);
+
+  color-scheme: dark;
+}

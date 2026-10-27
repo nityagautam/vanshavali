@@ -1,6 +1,11 @@
-import { memo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { Plus, Minus } from 'lucide-react';
 import PersonCard from './PersonCard';
+import { registerReveal } from '../utils/progressiveReveal';
+
+// Generations whose children render in the very first commit; deeper nodes
+// are revealed progressively (see utils/progressiveReveal.js).
+const EAGER_DEPTH = 2;
 
 const GEN_COLORS = ['var(--g1)', 'var(--g2)', 'var(--g3)', 'var(--g4)'];
 
@@ -10,6 +15,7 @@ function TreeNode({
   depth = 0, maxGen = null,
 }) {
   const [collapsed, setCollapsed] = useState(false);
+  const [childrenReady, setChildrenReady] = useState(depth < EAGER_DEPTH);
 
   const children = (childrenMap[person.id] || []).filter(c => !c.spouseIds?.includes(person.id));
   const hasChildren = children.length > 0;
@@ -18,7 +24,12 @@ function TreeNode({
   // maxGen=1 → show only root (depth 0, no children)
   // maxGen=2 → show root + 1 level of children, etc.
   const forceCollapsed = maxGen !== null && depth >= maxGen - 1;
-  const showChildren   = hasChildren && !collapsed && !forceCollapsed;
+  const showChildren   = hasChildren && !collapsed && !forceCollapsed && childrenReady;
+
+  useEffect(() => {
+    if (childrenReady || !hasChildren) return undefined;
+    return registerReveal(depth, () => setChildrenReady(true));
+  }, [childrenReady, hasChildren, depth]);
 
   const spouses = (person.spouseIds || [])
     .map(sid => personMap[sid])

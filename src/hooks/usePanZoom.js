@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { revealAll, hasPendingReveal } from '../utils/progressiveReveal';
 
-export const MIN_ZOOM = 0.1;
+export const MIN_ZOOM = 0.04; // the full tree is ~30,000 px wide at 100%
 export const MAX_ZOOM = 2;
 const DRAG_THRESHOLD = 6; // px before a press becomes a pan (keeps taps/clicks working)
 
@@ -71,29 +72,49 @@ export function usePanZoom({ canvasRef, initialZoom, enabled = true }) {
   const zoomBy = useCallback(delta => zoomTo(zoomRef.current + delta), [zoomTo]);
 
   // Fit the whole tree in the viewport (floored at MIN_ZOOM), scrolled to the top-left of it.
+  // The tree renders progressively, so finish rendering first and measure the
+  // real size once it has laid out.
   const fit = useCallback(() => {
     const canvas = canvasRef.current;
-    if (!canvas || !nat.w) return;
-    const z = clamp(Math.min(
-      (canvas.clientWidth  - 64)  / nat.w,
-      (canvas.clientHeight - 120) / nat.h,
-    ));
-    anchorRef.current = null;
-    zoomRef.current = z;
-    setZoomState(z);
-    requestAnimationFrame(() => {
-      canvas.scrollLeft = (canvas.scrollWidth - canvas.clientWidth) / 2;
-      canvas.scrollTop = 0;
-    });
-  }, [canvasRef, nat.w, nat.h]);
+    if (!canvas) return;
+    interacted.current = true;
+    revealAll();
+    // Wait for React to finish the remaining branches: the tree's width must
+    // stop changing and nothing may be left to reveal.
+    let last = -1, steady = 0, frames = 0;
+    const settle = () => {
+      const w = innerRef.current?.offsetWidth || 0;
+      steady = w === last ? steady + 1 : 0;
+      last = w;
+      if ((steady >= 2 && !hasPendingReveal()) || ++frames > 60) measure();
+      else requestAnimationFrame(settle);
+    };
+    const measure = () => {
+      const inner = innerRef.current;
+      if (!inner || !inner.offsetWidth) return;
+      const z = clamp(Math.min(
+        (canvas.clientWidth  - 64)  / inner.offsetWidth,
+        (canvas.clientHeight - 120) / inner.offsetHeight,
+      ));
+      anchorRef.current = null;
+      zoomRef.current = z;
+      setZoomState(z);
+      requestAnimationFrame(() => {
+        canvas.scrollLeft = (canvas.scrollWidth - canvas.clientWidth) / 2;
+        canvas.scrollTop = 0;
+      });
+    };
+    requestAnimationFrame(settle);
+  }, [canvasRef]);
 
-  // One-time horizontal centring once the tree has been measured.
-  const centred = useRef(false);
+  // Keep the tree centred while it is still growing (progressive render) —
+  // until the user pans/zooms or something scrolls to a specific person.
+  const interacted = useRef(false);
+  const markInteracted = useCallback(() => { interacted.current = true; }, []);
   useLayoutEffect(() => {
     const canvas = canvasRef.current;
-    if (!enabled) { centred.current = false; return; }
-    if (centred.current || !canvas || !nat.w) return;
-    centred.current = true;
+    if (!enabled) { interacted.current = false; return; }
+    if (interacted.current || !canvas || !nat.w) return;
     canvas.scrollLeft = (canvas.scrollWidth - canvas.clientWidth) / 2;
   }, [enabled, nat.w, canvasRef]);
 
@@ -116,6 +137,7 @@ export function usePanZoom({ canvasRef, initialZoom, enabled = true }) {
 
     const onDown = e => {
       if (e.pointerType === 'mouse' && e.button !== 0) return;
+      interacted.current = true;
       stopInertia();
       pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
       if (pts.size === 1) {
@@ -187,6 +209,7 @@ export function usePanZoom({ canvasRef, initialZoom, enabled = true }) {
     };
 
     const onWheel = e => {
+      interacted.current = true;
       if (!(e.ctrlKey || e.metaKey)) return;
       e.preventDefault();
       zoomTo(zoomRef.current * Math.exp(-e.deltaY * 0.01), { fromX: e.clientX, fromY: e.clientY });
@@ -209,5 +232,5 @@ export function usePanZoom({ canvasRef, initialZoom, enabled = true }) {
     };
   }, [enabled, canvasRef, zoomTo]);
 
-  return { zoom, zoomTo, zoomBy, fit, innerRef, boxRef, nat, setZoom: zoomTo };
+  return { zoom, zoomTo, zoomBy, fit, innerRef, boxRef, nat, setZoom: zoomTo, markInteracted };
 }

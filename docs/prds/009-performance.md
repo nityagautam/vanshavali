@@ -1,6 +1,6 @@
 # PRD 009 — Performance
 
-- **Status:** Quick group (A, B, D, F, G) implemented 2026-10-27 — results below; C, E, H, I pending
+- **Status:** Quick group (A, B, D, F, G) and E (progressive render) implemented 2026-10-27 — results below; C, H, I pending
 - **Owner:** Ashutosh Mishra
 - **Method:** production build (`vite preview`) in headless Chrome 155 driven over CDP; phone = 390px, 4× CPU throttle, ~1.6 Mbps / 150 ms network; desktop = 1280px, no throttle; live API/headers via `curl`. Cache disabled for load tests.
 
@@ -38,6 +38,22 @@ API: `GET /api/family` 18 KB (brotli), 460–720 ms TTFB, `x-vercel-cache: MISS`
 | Pan frame worst | 397 → **19 ms** | 250 → 19 ms |
 
 Notes: print output unchanged (26 pages in the headless PDF check; 25 before, +1 for new About text). Selecting a card now costs ~5 ms of script on desktop. The desktop "longest block" is a single React render (~360 ms) plus one full tree layout (~180 ms) — the target of fix E. Image bytes are deferred, not yet reduced: the 7 MB of oversized Blob photos still download as they scroll into view (fix C).
+
+## After E (progressive tree render)
+
+The top three generations render in the first commit; deeper branches register with `src/utils/progressiveReveal.js` and appear in idle slices (24 nodes per slice, shallowest first). Search/filters, deep links, jump-to-person and Fit call `revealAll()` first, so they never miss a card. The tree stays centred while it grows until the user pans/zooms or jumps to someone.
+
+| Metric | Before E → after E |
+|---|---|
+| Desktop LCP | 1,344 → **696 ms** |
+| Desktop longest main-thread block | 877 → **140–154 ms** |
+| Desktop tree fully drawn | one 877 ms block → 344 cards by ~0.5 s |
+| Phone (4× CPU) tree fully drawn | ~1.2 s, in slices; LCP 1.86 s |
+| Phone longest block | ~450 ms — now the app's own start-up, not the tree |
+| CLS | 0.076 → 0.137 desktop (tree is centred and moves as it widens); 0.059 → 0.084 phone |
+
+Trade-off: CLS on desktop is above the 0.1 "good" threshold because the growing tree shifts existing cards sideways. A possible follow-up is to reserve the final width up front.
+Also changed: minimum zoom lowered 10% → 4%, because the full tree is ~31,000 px wide at 100% and Fit could not otherwise show all of it (Fit now waits for the tree to finish rendering before measuring).
 
 ## Findings, ranked by impact
 

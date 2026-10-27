@@ -12,7 +12,8 @@ Every feature or larger change starts as a PRD in this folder, is reviewed and a
 | 006 | [Admin-only writes](./006-admin-only-writes.md) | Implemented (invite-link role open) |
 | 007 | [Record keepers](./007-record-keepers.md) | Implemented (pending review) |
 | 008 | [Add/Edit member form](./008-member-form.md) | Implemented (pending review) |
-| 009 | [Performance](./009-performance.md) | Audit done; fixes pending |
+| 009 | [Performance](./009-performance.md) | Quick wins + progressive render done; C, H, I pending |
+| 010 | [Installable app](./010-installable-app.md) | Implemented |
 
 002–005 were migrated from the former `specs/` folder; their bodies are unchanged apart from the title and status line.
 

@@ -23,6 +23,7 @@ import CommandPalette from './components/CommandPalette';
 import FiltersPanel from './components/FiltersPanel';
 import { isAuthenticated, setAuthenticated, checkSession } from './utils/auth';
 import { usePanZoom } from './hooks/usePanZoom';
+import { revealAll } from './utils/progressiveReveal';
 import { fetchFamilyData, editFamilyMember, moveSibling } from './utils/familyApi';
 import { consumeInvite } from './utils/inviteApi';
 import { useToast } from './components/Toaster';
@@ -36,7 +37,7 @@ const ZOOM_KEY = 'vv-zoom-v2';
 function initialZoom() {
   try {
     const saved = parseFloat(localStorage.getItem(ZOOM_KEY));
-    if (saved >= 0.25 && saved <= 2) return saved;
+    if (saved >= 0.04 && saved <= 2) return saved;
   } catch { /* storage unavailable */ }
   return window.matchMedia('(max-width: 768px)').matches ? 0.85 : 1;
 }
@@ -93,7 +94,7 @@ export default function App() {
   }, []);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [actionsSlot, setActionsSlot] = useState(null);
-  const { zoom, zoomTo, zoomBy, fit, innerRef, boxRef, nat } = usePanZoom({
+  const { zoom, zoomTo, zoomBy, fit, innerRef, boxRef, nat, markInteracted } = usePanZoom({
     canvasRef, initialZoom: initialZoom(), enabled: viewMode === 'tree',
   });
 
@@ -114,6 +115,8 @@ export default function App() {
   // stored preference is only the explicit override (null = follow system).
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    // Browser/status-bar colour follows the theme (also used by the installed app).
+    document.querySelector('meta[name=theme-color]')?.setAttribute('content', isDark ? '#1B150D' : '#F1E6CC');
   }, [isDark]);
 
   useEffect(() => {
@@ -323,11 +326,26 @@ export default function App() {
     );
   }, [search, people, filterGender, filterStatus, filterMarriage, filterKeepers, filtersActive, personMap]);
 
+  // Find a person's card, rendering the rest of the (progressively drawn)
+  // tree first if it isn't there yet, then run `then` with it.
+  const withCard = useCallback((id, then) => {
+    const find = () => canvasRef.current?.querySelector(`[data-person-id="${CSS.escape(id)}"]`);
+    markInteracted(); // an explicit jump takes over from auto-centring
+    const el = find();
+    if (el) { then(el); return; }
+    revealAll();
+    requestAnimationFrame(() => requestAnimationFrame(() => { const late = find(); if (late) then(late); }));
+  }, [markInteracted]);
+
   const scrollToPerson = useCallback((id) => {
-    const el = canvasRef.current?.querySelector(`[data-person-id="${CSS.escape(id)}"]`);
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    el?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center', inline: 'center' });
-  }, []);
+    withCard(id, el => {
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center', inline: 'center' });
+    });
+  }, [withCard]);
+
+  // Searching or filtering needs every card to exist so matches can be highlighted.
+  useEffect(() => { if (highlightIds) revealAll(); }, [highlightIds]);
 
   // Search-to-center: scroll the first text-search match into view. Debounced
   // so the viewport doesn't jump on every keystroke while still typing, and
@@ -343,18 +361,17 @@ export default function App() {
   // ~60%, so park the card in the upper part of the canvas instead of centring.
   const revealPerson = useCallback((id) => {
     if (!window.matchMedia('(max-width: 768px)').matches) { scrollToPerson(id); return; }
-    requestAnimationFrame(() => {
+    withCard(id, el => requestAnimationFrame(() => {
       const canvas = canvasRef.current;
-      const el = canvas?.querySelector(`[data-person-id="${CSS.escape(id)}"]`);
-      if (!canvas || !el) return;
+      if (!canvas) return;
       const c = canvas.getBoundingClientRect(), r = el.getBoundingClientRect();
       canvas.scrollTo({
         top: canvas.scrollTop + (r.top - c.top) - c.height * 0.12,
         left: canvas.scrollLeft + (r.left + r.width / 2) - (c.left + c.width / 2),
         behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
       });
-    });
-  }, [scrollToPerson]);
+    }));
+  }, [scrollToPerson, withCard]);
 
   const handleSelect = useCallback((person) => {
     setSelected(prev => prev?.id === person.id ? null : person);

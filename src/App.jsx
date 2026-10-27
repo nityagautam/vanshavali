@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
-import { Routes, Route, NavLink } from 'react-router-dom';
-import { CheckCircle2, AlertTriangle, Search, RotateCcw, Minus, Plus, Sun, Moon, Network, List, Maximize } from 'lucide-react';
+import { Routes, Route, NavLink, useMatch } from 'react-router-dom';
+import * as Popover from '@radix-ui/react-popover';
+import { CheckCircle2, AlertTriangle, Search, RotateCcw, Minus, Plus, Sun, Moon, Network, List, Maximize, MoreVertical, Compass } from 'lucide-react';
 import initialData from './data/family.json';
 import aboutData   from './data/about.json';
 import FamilyTree  from './components/FamilyTree';
@@ -316,6 +317,36 @@ export default function App() {
     return Math.max(...people.map(p => getDepth(p.id)), 0);
   }, [people, personMap]);
 
+  const onTreeRoute = !!useMatch('/');
+  const headerControls = (
+    <>
+      <NavLink
+        to="/about"
+        className={({ isActive }) => `header-about-link${isActive ? ' active' : ''}`}
+      >
+        About
+      </NavLink>
+      <div className="lang-toggle" role="group" aria-label="Language">
+        {[['hi', 'हिं'], ['both', 'दो'], ['en', 'EN']].map(([val, label]) => (
+          <button
+            key={val}
+            className={`lang-btn${lang === val ? ' active' : ''}`}
+            onClick={() => handleLang(val)}
+            title={val === 'hi' ? 'Hindi only' : val === 'en' ? 'English only' : 'Both languages'}
+          >{label}</button>
+        ))}
+      </div>
+      <button
+        className="theme-toggle-btn"
+        onClick={toggleTheme}
+        title={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
+        aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
+      >
+        {isDark ? <Sun size={16} /> : <Moon size={16} />}
+      </button>
+    </>
+  );
+
   return (
     <div className="app-shell">
       {/* Print view — hidden on screen */}
@@ -363,41 +394,57 @@ export default function App() {
       {/* Header */}
       <header className="app-header">
         <div className="header-inner">
-          <div className="header-title">
-            <h1>{meta.pageTitle || `Vanshavali — ${meta.dynasty} Dynasty`}</h1>
-            <div className="subtitle">
-              Gotra: {meta.gotra}
-              {meta.subgotra && <> &nbsp;·&nbsp; Sub-gotra: {meta.subgotra}</>}
-              {meta.title    && <> &nbsp;·&nbsp; Title: {meta.title}</>}
+          <div className="brand">
+            <span className="brand-mark" aria-hidden="true">व</span>
+            <div className="header-title">
+              <h1>{meta.pageTitle || `Vanshavali — ${meta.dynasty} Dynasty`}</h1>
+              <div className="subtitle">
+                Gotra: {meta.gotra}
+                {meta.subgotra && <> &nbsp;·&nbsp; Sub-gotra: {meta.subgotra}</>}
+                {meta.title    && <> &nbsp;·&nbsp; Title: {meta.title}</>}
+              </div>
             </div>
           </div>
-          <div className="header-meta">
-            <span className="meta-pill">{people.length} members</span>
-            <span className="meta-pill">{totalGen} generations</span>
-            <NavLink
-              to="/about"
-              className={({ isActive }) => `header-about-link${isActive ? ' active' : ''}`}
-            >
-              About
-            </NavLink>
-            <div className="lang-toggle" role="group" aria-label="Language">
-              {[['hi', 'हिं'], ['both', 'दो'], ['en', 'EN']].map(([val, label]) => (
+
+          {onTreeRoute && (
+            <div className="header-search">
+              <div className="search-wrap">
+                <span className="search-icon"><Search size={16} /></span>
+                <input
+                  className="search-input"
+                  type="search"
+                  placeholder="Search by name or occupation…"
+                  aria-label="Search family members"
+                  value={search}
+                  onChange={e => setSearch(e.target.value)}
+                />
                 <button
-                  key={val}
-                  className={`lang-btn${lang === val ? ' active' : ''}`}
-                  onClick={() => handleLang(val)}
-                  title={val === 'hi' ? 'Hindi only' : val === 'en' ? 'English only' : 'Both languages'}
-                >{label}</button>
-              ))}
+                  className="search-jump"
+                  onClick={() => setPaletteOpen(true)}
+                  title="Jump to a family member"
+                  aria-label="Jump to a family member"
+                >
+                  <Compass size={16} className="search-jump-icon" />
+                  <kbd>Ctrl K</kbd>
+                </button>
+              </div>
             </div>
-            <button
-              className="theme-toggle-btn"
-              onClick={toggleTheme}
-              title={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
-              aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
-            >
-              {isDark ? <Sun size={15} /> : <Moon size={15} />}
-            </button>
+          )}
+
+          <div className="header-meta">
+            <span className="meta-text">{people.length} members · {totalGen} generations</span>
+            <div className="header-actions">{headerControls}</div>
+            <Popover.Root>
+              <Popover.Trigger className="header-menu-btn" aria-label="Menu">
+                <MoreVertical size={20} />
+              </Popover.Trigger>
+              <Popover.Portal>
+                <Popover.Content className="header-menu" align="end" sideOffset={8}>
+                  <div className="meta-text header-menu-stat">{people.length} members · {totalGen} generations</div>
+                  <div className="header-menu-row">{headerControls}</div>
+                </Popover.Content>
+              </Popover.Portal>
+            </Popover.Root>
             {googleUser && <UserBadge user={googleUser} />}
           </div>
         </div>
@@ -412,25 +459,6 @@ export default function App() {
               <div className="tree-section">
                 {/* Toolbar */}
                 <div className="toolbar">
-                  <div className="search-wrap">
-                    <span className="search-icon"><Search size={14} /></span>
-                    <input
-                      className="search-input"
-                      type="text"
-                      placeholder="Search by name or occupation…"
-                      value={search}
-                      onChange={e => setSearch(e.target.value)}
-                    />
-                  </div>
-
-                  <button
-                    className="cmdk-trigger"
-                    onClick={() => setPaletteOpen(true)}
-                    title="Jump to a family member"
-                  >
-                    Jump to… <kbd>Ctrl K</kbd>
-                  </button>
-
                   <div style={{ flex: 1 }} />
 
                   {/* Filter pills */}

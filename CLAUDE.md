@@ -5,7 +5,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-npm run dev       # Start dev server (Vite, http://localhost:5173)
+npm run dev       # Front end only (Vite, http://localhost:5173) — NO /api: no login, live data, uploads
+npm run dev:full  # Front end + serverless API via `vercel dev` (needs Vercel CLI, linked project, .env.local) — use this to log in locally
 npm run build     # Production build → dist/
 npm run preview   # Preview production build locally
 ```

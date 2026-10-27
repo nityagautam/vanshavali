@@ -7,6 +7,11 @@ export async function login(password) {
       body: JSON.stringify({ password }),
     });
     if (res.ok) return { ok: true };
+    // A 404 means there is no API here at all (plain `npm run dev` only serves
+    // the front end) — say so instead of pretending the password was wrong.
+    if (res.status === 404) {
+      return { ok: false, error: 'Login service not available on this server. Locally, run `npm run dev:full` (vercel dev) instead of `npm run dev`.' };
+    }
     const data = await res.json().catch(() => ({}));
     return { ok: false, error: data.error || 'Incorrect password.' };
   } catch {

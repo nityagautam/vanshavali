@@ -1,53 +1,36 @@
 import { useState } from 'react';
 
+const HONORIFIC = /^((स्व\.?|श्रीमती|श्री|सुश्री|Late|Shri|Smt\.?|Devi)\s+)+/i;
+const segmenter = typeof Intl !== 'undefined' && Intl.Segmenter
+  ? new Intl.Segmenter('hi', { granularity: 'grapheme' })
+  : null;
+
+function initialsOf(name = '') {
+  const core = name.trim().replace(HONORIFIC, '');
+  const first = core.split(/\s+/)[0] || '';
+  if (/[ऀ-ॿ]/.test(first)) {
+    const graphemes = segmenter ? [...segmenter.segment(first)].map(g => g.segment) : [...first];
+    return graphemes.slice(0, 2).join('');
+  }
+  return core.split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join('');
+}
+
 /**
- * Renders a person's photo if available, falls back to styled initials.
- * Props:
- *   person   – person object (needs .name, .gender, .photo, .tags)
- *   size     – 'sm' (36 px card) | 'lg' (96 px detail panel)
- *   className – extra class
+ * Photo if available, otherwise initials. A ring in the generation hue
+ * (--gen-color, set by the nearest tree node / detail head) marks the
+ * generation. size: 'xs' 28 | 'sm' 36 (cards) | 'md' 40 | 'lg' 60 (detail).
  */
 export default function Avatar({ person, size = 'sm', className = '' }) {
   const [imgError, setImgError] = useState(false);
-
   const isPlaceholder = person.tags?.includes('placeholder');
-
-  const hasDevanagari = /[\u0900-\u097F]/.test(person.name);
-
-  const initials = isPlaceholder
-    ? '?'
-    : hasDevanagari
-    ? (person.gender === 'female' ? 'श्रीमती' : 'श्री')
-    : person.name
-        .replace(/^(Late |Shri |Devi |Shrimati |Smt\. ?)/gi, '')
-        .split(' ')
-        .filter(Boolean)
-        .slice(0, 2)
-        .map(w => w[0]?.toUpperCase() || '')
-        .join('');
-
-  const px = size === 'lg' ? 96 : size === 'sm' ? 50 : 36;
-  const isSrimati = hasDevanagari && person.gender === 'female' && !isPlaceholder;
-  const fontSize = size === 'lg'
-    ? (isSrimati ? '0.85rem' : hasDevanagari ? '1.1rem' : '2rem')
-    : (isSrimati ? '0.42rem' : hasDevanagari ? '0.55rem' : '1rem');
-
   const showImg = person.photo && !imgError && !isPlaceholder;
 
   return (
-    <div
-      className={`avatar avatar-${size} avatar-${person.gender} ${className}`}
-      style={{ width: px, height: px, fontSize }}
-    >
+    <div className={`avatar avatar-${size} ${className}`} aria-hidden="true">
       {showImg ? (
-        <img
-          src={person.photo}
-          alt={person.name}
-          onError={() => setImgError(true)}
-          draggable={false}
-        />
+        <img src={person.photo} alt="" onError={() => setImgError(true)} draggable={false} />
       ) : (
-        <span>{initials}</span>
+        <span>{isPlaceholder ? '?' : initialsOf(person.name)}</span>
       )}
     </div>
   );

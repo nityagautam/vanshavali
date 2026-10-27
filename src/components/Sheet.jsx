@@ -3,12 +3,15 @@ import * as Dialog from '@radix-ui/react-dialog';
 
 const DISMISS_DISTANCE = 90;  // px dragged down before release closes the sheet
 const DISMISS_VELOCITY = 0.6; // px/ms flick
+const SNAP_DISTANCE = 50;     // px dragged before release changes snap point
 
 /**
  * Bottom sheet (Radix Dialog). Drag the handle/header down to dismiss.
+ * With `snap` ('half' | 'full') + `onSnapChange`, dragging up expands it and
+ * dragging down from full returns to half before a further drag dismisses.
  * Used on phones for filters, "more" actions, and (later) member details.
  */
-export default function Sheet({ open, onOpenChange, title, children }) {
+export default function Sheet({ open, onOpenChange, title, hideTitle = false, snap, onSnapChange, children }) {
   const contentRef = useRef(null);
   const drag = useRef(null);
 
@@ -21,7 +24,9 @@ export default function Sheet({ open, onOpenChange, title, children }) {
     const d = drag.current;
     if (!d) return;
     const now = performance.now();
-    const dy = Math.max(0, e.clientY - d.y);
+    const raw = e.clientY - d.y;
+    const dy = Math.max(0, raw);
+    d.raw = raw;
     d.v = (dy - d.dy) / Math.max(1, now - d.t);
     d.dy = dy; d.t = now;
     const el = contentRef.current;
@@ -34,6 +39,10 @@ export default function Sheet({ open, onOpenChange, title, children }) {
     if (!d || !el) return;
     el.style.transition = '';
     el.style.transform = '';
+    if (snap && onSnapChange) {
+      if (d.raw < -SNAP_DISTANCE && snap === 'half') { onSnapChange('full'); return; }
+      if (snap === 'full' && (d.dy > SNAP_DISTANCE || d.v > DISMISS_VELOCITY)) { onSnapChange('half'); return; }
+    }
     if (d.dy > DISMISS_DISTANCE || d.v > DISMISS_VELOCITY) onOpenChange(false);
   };
 
@@ -41,7 +50,12 @@ export default function Sheet({ open, onOpenChange, title, children }) {
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
         <Dialog.Overlay className="sheet-overlay" />
-        <Dialog.Content className="sheet" ref={contentRef} aria-describedby={undefined}>
+        <Dialog.Content
+          className="sheet"
+          data-snap={snap}
+          ref={contentRef}
+          aria-describedby={undefined}
+        >
           <div
             className="sheet-grab"
             onPointerDown={onPointerDown}
@@ -50,7 +64,7 @@ export default function Sheet({ open, onOpenChange, title, children }) {
             onPointerCancel={onPointerUp}
           >
             <span className="sheet-handle" aria-hidden="true" />
-            <Dialog.Title className="sheet-title">{title}</Dialog.Title>
+            <Dialog.Title className={hideTitle ? 'sr-only' : 'sheet-title'}>{title}</Dialog.Title>
           </div>
           <div className="sheet-body">{children}</div>
         </Dialog.Content>

@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { Routes, Route, NavLink, useMatch } from 'react-router-dom';
 import * as Popover from '@radix-ui/react-popover';
-import { CheckCircle2, AlertTriangle, Search, RotateCcw, Minus, Plus, Sun, Moon, Network, List, Maximize, MoreVertical, Compass } from 'lucide-react';
+import { CheckCircle2, AlertTriangle, Search, Minus, Plus, Sun, Moon, Network, List, Maximize, MoreVertical, Compass } from 'lucide-react';
 import initialData from './data/family.json';
 import aboutData   from './data/about.json';
 import FamilyTree  from './components/FamilyTree';
@@ -18,7 +18,7 @@ import UserBadge    from './components/UserBadge';
 import AddMemberForm from './components/AddMemberForm';
 import Modal from './components/Modal';
 import CommandPalette from './components/CommandPalette';
-import FiltersPanel, { filterGroups, stepDepth } from './components/FiltersPanel';
+import FiltersPanel from './components/FiltersPanel';
 import { isAuthenticated, setAuthenticated, checkSession } from './utils/auth';
 import { usePanZoom } from './hooks/usePanZoom';
 import { fetchFamilyData, editFamilyMember, moveSibling } from './utils/familyApi';
@@ -27,13 +27,13 @@ import { consumeInvite } from './utils/inviteApi';
 // A 343-person tree is thousands of px wide, so "fit to width" is unreadable.
 // Start at a readable scale instead (phones a bit larger), and remember the
 // user's last zoom per device.
-const ZOOM_KEY = 'vv-zoom';
+const ZOOM_KEY = 'vv-zoom-v2';
 function initialZoom() {
   try {
     const saved = parseFloat(localStorage.getItem(ZOOM_KEY));
     if (saved >= 0.25 && saved <= 2) return saved;
   } catch { /* storage unavailable */ }
-  return window.matchMedia('(max-width: 768px)').matches ? 0.7 : 0.6;
+  return window.matchMedia('(max-width: 768px)').matches ? 0.85 : 1;
 }
 
 export default function App() {
@@ -62,6 +62,7 @@ export default function App() {
   const [viewMode,       setViewMode]       = useState(() => localStorage.getItem('vv-view-mode') || 'tree');
   const canvasRef = useRef(null);
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [actionsSlot, setActionsSlot] = useState(null);
   const { zoom, zoomTo, zoomBy, fit, innerRef, boxRef, nat } = usePanZoom({
     canvasRef, initialZoom: initialZoom(), enabled: viewMode === 'tree',
   });
@@ -298,6 +299,20 @@ export default function App() {
 
   const handleSelect = (person) => {
     setSelected(prev => prev?.id === person.id ? null : person);
+    // On phones the detail sheet covers the lower ~60% — park the card above it.
+    if (window.matchMedia('(max-width: 768px)').matches) {
+      requestAnimationFrame(() => {
+        const canvas = canvasRef.current;
+        const el = canvas?.querySelector(`[data-person-id="${CSS.escape(person.id)}"]`);
+        if (!canvas || !el) return;
+        const c = canvas.getBoundingClientRect(), r = el.getBoundingClientRect();
+        canvas.scrollTo({
+          top: canvas.scrollTop + (r.top - c.top) - c.height * 0.12,
+          left: canvas.scrollLeft + (r.left + r.width / 2) - (c.left + c.width / 2),
+          behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+        });
+      });
+    }
   };
 
   // Command-palette jump: the target may be off-screen, so select *and* scroll.
@@ -439,7 +454,7 @@ export default function App() {
           )}
 
           <div className="header-meta">
-            <span className="meta-text">{people.length} members · {totalGen} generations</span>
+            <div className="header-slot" ref={setActionsSlot} />
             <div className="header-actions">{headerControls}</div>
             <Popover.Root>
               <Popover.Trigger className="header-menu-btn" aria-label="Menu">
@@ -464,77 +479,6 @@ export default function App() {
           <Route path="/" element={
             <div className="app-body">
               <div className="tree-section">
-                {/* Toolbar */}
-                <div className="toolbar">
-                  <div style={{ flex: 1 }} />
-
-                  {/* Filter pills */}
-                  <div className="filter-pills">
-                    {filterGroups(lang).map(g => (
-                      <div className="filter-pill-group" key={g.key} role="group" aria-label={g.title}>
-                        {g.options.map(([v, short]) => (
-                          <button key={v} className={`filter-pill-btn${filterValues[g.key] === v ? ' active' : ''}`}
-                            onClick={() => setFilter(g.key, v)}>{short}</button>
-                        ))}
-                      </div>
-                    ))}
-                    {filtersActive && (
-                      <button className="filter-reset"
-                        onClick={resetFilters}
-                        title="Reset all filters"><RotateCcw size={13} /></button>
-                    )}
-                  </div>
-
-                  {highlightIds && (
-                    <div className="toolbar-info" style={{ marginLeft: 0 }}>
-                      {highlightIds.size} match{highlightIds.size !== 1 ? 'es' : ''}
-                      {search && (
-                        <button onClick={() => setSearch('')}
-                          style={{ marginLeft: 8, color: 'var(--saffron)', fontSize: '0.75rem', textDecoration: 'underline', background: 'none', border: 'none', cursor: 'pointer' }}>
-                          Clear
-                        </button>
-                      )}
-                    </div>
-                  )}
-
-                  {/* Depth control */}
-                  <div className="gen-controls">
-                    <span className="gen-label">Depth</span>
-                    <button className="gen-btn"
-                      onClick={() => setMaxGen(g => stepDepth(g, totalGen, -1))}
-                      disabled={maxGen === 1} title="Show one fewer generation"><Minus size={13} /></button>
-                    <span className="gen-value">{maxGen ?? 'All'}</span>
-                    <button className="gen-btn"
-                      onClick={() => setMaxGen(g => stepDepth(g, totalGen, +1))}
-                      disabled={maxGen === null} title="Show one more generation"><Plus size={13} /></button>
-                    {maxGen !== null && (
-                      <button className="gen-reset" onClick={() => setMaxGen(null)} title="Show all generations"><RotateCcw size={13} /></button>
-                    )}
-                  </div>
-
-                  {/* Zoom control — not applicable to the drill-down list view */}
-                  {viewMode === 'tree' && (
-                    <div className="zoom-controls">
-                      <button className="zoom-btn" onClick={() => adjustZoom(-0.15)} title="Zoom out (Ctrl+−)"><Minus size={15} /></button>
-                      <button className="zoom-level" onClick={() => zoomTo(1)} title="Reset zoom (Ctrl+0)">
-                        {Math.round(zoom * 100)}%
-                      </button>
-                      <button className="zoom-btn" onClick={() => adjustZoom(+0.15)} title="Zoom in (Ctrl+=)"><Plus size={15} /></button>
-                      <button className="zoom-btn" onClick={fit} title="Fit whole tree" aria-label="Fit whole tree"><Maximize size={15} /></button>
-                    </div>
-                  )}
-
-                  {/* View mode toggle */}
-                  <button
-                    className="view-mode-btn"
-                    onClick={() => setViewMode(m => m === 'tree' ? 'list' : 'tree')}
-                    title={viewMode === 'tree' ? 'Switch to list (drill-down) view' : 'Switch to tree view'}
-                    aria-label={viewMode === 'tree' ? 'Switch to list (drill-down) view' : 'Switch to tree view'}
-                  >
-                    {viewMode === 'tree' ? <List size={15} /> : <Network size={15} />}
-                  </button>
-                </div>
-
                 {viewMode === 'list' ? (
                   <MobileTreeView
                     people={people}
@@ -567,13 +511,26 @@ export default function App() {
 
                     <MiniMap canvasRef={canvasRef} zoom={zoom} />
 
-                    <div className="canvas-controls" role="group" aria-label="Zoom">
-                      <button className="icon-btn" onClick={fit} aria-label="Fit whole tree"><Maximize size={20} /></button>
-                      <button className="icon-btn" onClick={() => adjustZoom(+0.15)} aria-label="Zoom in"><Plus size={20} /></button>
-                      <button className="icon-btn" onClick={() => adjustZoom(-0.15)} aria-label="Zoom out"><Minus size={20} /></button>
-                    </div>
                   </>
                 )}
+                <div className={`canvas-controls${viewMode === 'list' ? ' cc-list' : ''}`} role="group" aria-label="View controls">
+                  {viewMode === 'tree' && (
+                    <>
+                      <button className="icon-btn" onClick={() => adjustZoom(-0.15)} aria-label="Zoom out"><Minus size={20} /></button>
+                      <button className="cc-pct" onClick={() => zoomTo(1)} title="Reset zoom (Ctrl+0)">{Math.round(zoom * 100)}%</button>
+                      <button className="icon-btn" onClick={() => adjustZoom(+0.15)} aria-label="Zoom in"><Plus size={20} /></button>
+                      <button className="icon-btn" onClick={fit} aria-label="Fit whole tree" title="Fit whole tree"><Maximize size={20} /></button>
+                    </>
+                  )}
+                  <button
+                    className="icon-btn cc-view"
+                    onClick={() => setViewMode(m => m === 'tree' ? 'list' : 'tree')}
+                    aria-label={viewMode === 'tree' ? 'Switch to list view' : 'Switch to tree view'}
+                    title={viewMode === 'tree' ? 'Switch to list view' : 'Switch to tree view'}
+                  >
+                    {viewMode === 'tree' ? <List size={20} /> : <Network size={20} />}
+                  </button>
+                </div>
                 {highlightIds && (
                   <div className="match-chip" role="status">
                     {highlightIds.size} match{highlightIds.size !== 1 ? 'es' : ''}
@@ -601,6 +558,7 @@ export default function App() {
                   onEdit={setEditingPerson}
                   onReorder={handleReorder}
                   isAdmin={isAdmin}
+                  suspended={!!editingPerson}
                 />
               )}
 
@@ -616,6 +574,7 @@ export default function App() {
                 isAdmin={isAdmin}
                 onAuthRequired={handleAuthRequired}
                 onLogout={() => { setIsLoggedIn(false); setGoogleUser(null); setIsAdmin(false); }}
+                actionsSlot={actionsSlot}
                 viewMode={viewMode}
                 onToggleView={() => setViewMode(m => m === 'tree' ? 'list' : 'tree')}
                 activeFilterCount={activeFilterCount}

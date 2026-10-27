@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
-import { X, Pencil, ZoomIn, ArrowUp, ArrowDown } from 'lucide-react';
+import { X, Pencil, ArrowUp, ArrowDown } from 'lucide-react';
 import Avatar from './Avatar';
-import { getTagStyle } from '../utils/tagColor';
+import Sheet from './Sheet';
+import { usePhone } from '../hooks/useMediaQuery';
 
 // Fields already rendered explicitly — excluded from the dynamic "extra" section
 const KNOWN_FIELDS = new Set([
@@ -27,7 +28,8 @@ const LABELS = {
     living: 'जीवित', deceased: 'स्वर्गीय',
     father: 'पिता', mother: 'माता', spouse: 'जीवनसाथी',
     child: 'संतान', sibling: 'भाई/बहन',
-    present: 'वर्तमान',
+    present: 'वर्तमान', children: 'संतान', siblings: 'भाई/बहन',
+    moveUp: 'ऊपर', moveDown: 'नीचे', edit: 'संपादित करें',
     moreSiblings: (n) => `+${n} और भाई/बहन`,
     noDetails: 'अभी कोई विवरण नहीं।',
   },
@@ -38,30 +40,65 @@ const LABELS = {
     living: 'Living', deceased: 'Deceased',
     father: 'Father', mother: 'Mother', spouse: 'Spouse',
     child: 'Child', sibling: 'Sibling',
-    present: 'present',
+    present: 'present', children: 'Children', siblings: 'Siblings',
+    moveUp: 'Move up', moveDown: 'Move down', edit: 'Edit',
     moreSiblings: (n) => `+${n} more siblings`,
     noDetails: 'No details yet. Update family.json to add information.',
   },
 };
 
-export default function DetailPanel({ person, personMap, people, onClose, onSelect, onEdit, onReorder, isAdmin, lang = 'hi' }) {
+const GEN_VARS = ['var(--g1)', 'var(--g2)', 'var(--g3)', 'var(--g4)'];
+
+// Generation = steps up the parentId chain; spouses take their partner's.
+function generationOf(person, personMap, people) {
+  const depthOf = p => { let d = 0, cur = p; while (cur?.parentId && d < 50) { cur = personMap[cur.parentId]; d++; } return d; };
+  let d = depthOf(person);
+  if (!person.parentId) {
+    const partner = people.find(o => (o.spouseIds || []).includes(person.id) && o.parentId);
+    if (partner) d = depthOf(partner);
+  }
+  return d;
+}
+
+export default function DetailPanel({ suspended = false, ...props }) {
+  const isPhone = usePhone();
+  const [snap, setSnap] = useState('half');
+  const { person, onClose } = props;
+
+  if (isPhone) {
+    return (
+      <Sheet
+        key={person.id}
+        open={!suspended}
+        onOpenChange={o => { if (!o) onClose(); }}
+        title={person.name}
+        hideTitle
+        snap={snap}
+        onSnapChange={setSnap}
+      >
+        <DetailContent {...props} variant="sheet" />
+      </Sheet>
+    );
+  }
+  return (
+    <aside className="panel" aria-label={`${person.name} details`}>
+      <DetailContent {...props} variant="panel" />
+    </aside>
+  );
+}
+
+function DetailContent({ person, personMap, people, onClose, onSelect, onEdit, onReorder, isAdmin, lang = 'hi', variant }) {
   const [lightbox, setLightbox] = useState(false);
 
-  const formatDate = (d) => {
-    if (!d) return null;
-    if (typeof d === 'number') return d.toString();
-    return d;
-  };
+  const formatDate = (d) => (d === null || d === undefined || d === '' ? null : String(d));
+  const born = formatDate(person.born);
+  const died = formatDate(person.died);
+  const dom  = formatDate(person.dom);
 
-  const born     = formatDate(person.born);
-  const died     = formatDate(person.died);
-  const dom      = formatDate(person.dom);
-
-  // Collect any extra fields not in the known set
   const extraFields = Object.entries(person).filter(
     ([key, val]) => !KNOWN_FIELDS.has(key) && val !== null && val !== undefined && val !== ''
   );
-  const spouses  = (person.spouseIds || []).map(id => personMap[id]).filter(Boolean);
+  const spouses = (person.spouseIds || []).map(id => personMap[id]).filter(Boolean);
   // parentId is always the father/primary parent, so it alone can't tell a
   // wife's own children apart from her co-wives'. If this person is ever
   // listed as parentId for someone, they're the primary side — show every
@@ -71,14 +108,11 @@ export default function DetailPanel({ person, personMap, people, onClose, onSele
   const children = childrenAsPrimary.length > 0
     ? childrenAsPrimary
     : people.filter(p => p.motherId === person.id);
-  const father   = person.parentId ? personMap[person.parentId] : null;
-  const mother   = person.motherId ? personMap[person.motherId] : null;
+  const father = person.parentId ? personMap[person.parentId] : null;
+  const mother = person.motherId ? personMap[person.motherId] : null;
   // parentId===null covers three unrelated cases: genuine unattached roots,
   // married-in spouses, and placeholder spouses. Only true roots have real
-  // "siblings" — a married-in spouse has no blood relatives here at all, so
-  // grouping them by shared null parentId would wrongly show every spouse
-  // in the whole tree as everyone else's sibling. Mirrors FamilyTree.jsx's
-  // own root-detection logic.
+  // "siblings". Mirrors FamilyTree.jsx's own root-detection logic.
   const isGenuineRoot = (p) => {
     if (p.parentId) return false;
     const isSpouseOfLineageMember = people.some(other => other.parentId && (other.spouseIds || []).includes(p.id));
@@ -91,8 +125,8 @@ export default function DetailPanel({ person, personMap, people, onClose, onSele
 
   // Position among ALL same-parent siblings (including self) in sort_order —
   // used to disable Move Up/Down at the boundaries. sortOrder is undefined
-  // for the bundled build-time snapshot before the live datastore responds;
-  // treat that as "unknown position" and just leave the buttons enabled.
+  // for the bundled snapshot before the live datastore responds; treat that
+  // as "unknown position" and leave the buttons enabled.
   const orderedSiblings = [...siblings, person].sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
   const ownIndex = orderedSiblings.findIndex(p => p.id === person.id);
   const canMoveUp   = person.sortOrder !== undefined && ownIndex > 0;
@@ -100,153 +134,113 @@ export default function DetailPanel({ person, personMap, people, onClose, onSele
 
   const isPlaceholder = person.tags?.includes('placeholder');
   const isDeceased    = person.alive !== true && !isPlaceholder;
+  const t = lang === 'en' ? LABELS.en : LABELS.hi; // 'both' uses Hindi labels (Hindi-first app)
 
-  // 'both' uses Hindi labels since the app is Hindi-first
-  const t = lang === 'en' ? LABELS.en : LABELS.hi;
+  const gen = generationOf(person, personMap, people);
+  const years = (born || died)
+    ? `${born || '?'}${isDeceased ? ` – ${died || '?'}` : ` – ${t.present}`}`
+    : null;
+  const status = isPlaceholder ? null : isDeceased ? t.deceased : t.living;
+
+  const Person = ({ p }) => (
+    <button type="button" className="link-person" onClick={() => onSelect(p)}>{p.name}</button>
+  );
+  const rows = [
+    father && [t.father, <Person key="f" p={father} />],
+    mother && [t.mother, <Person key="m" p={mother} />],
+    spouses.length > 0 && [t.spouse, spouses.map((sp, i) => <span key={sp.id}>{i > 0 && ', '}<Person p={sp} /></span>)],
+    born && [t.born, born],
+    died && [t.died, died],
+    dom && [t.married, dom],
+    person.occupation && !isPlaceholder && [t.occupation, person.occupation],
+    person.location && [t.location, person.location],
+    ...extraFields.map(([key, val]) => [toLabel(key), Array.isArray(val) ? val.join(', ') : String(val)]),
+    isAdmin && person.sortOrder !== undefined && ['Sort Order', person.sortOrder],
+  ].filter(Boolean);
+
+  const Kid = ({ p }) => (
+    <button type="button" className="kid" onClick={() => onSelect(p)}>
+      <Avatar person={p} size="xs" />
+      <span className="kid-text">
+        <span className="kid-name">{p.name}</span>
+        {p.born && <span className="kid-meta">b. {String(p.born).slice(0, 4)}</span>}
+      </span>
+    </button>
+  );
 
   return (
-    <aside className="detail-panel">
-      {/* ── Photo hero ── */}
-      <div className="detail-photo-hero">
-        <button className="detail-close" onClick={onClose} title="Close"><X size={16} /></button>
-        {isAdmin && (
-          <button className="detail-edit" onClick={() => onEdit(person)} title="Edit member"><Pencil size={14} /></button>
-        )}
-        {isAdmin && siblings.length > 0 && (
-          <>
-            <button
-              className="detail-move-up"
-              onClick={() => onReorder(person, 'up')}
-              disabled={!canMoveUp}
-              title="Move up (earlier among siblings)"
-            >
-              <ArrowUp size={14} />
-            </button>
-            <button
-              className="detail-move-down"
-              onClick={() => onReorder(person, 'down')}
-              disabled={!canMoveDown}
-              title="Move down (later among siblings)"
-            >
-              <ArrowDown size={14} />
-            </button>
-          </>
-        )}
-        <div
-          className={`detail-photo-avatar-wrap${person.photo ? ' has-photo' : ''}`}
-          onClick={() => person.photo && setLightbox(true)}
-          title={person.photo ? 'Click to enlarge photo' : undefined}
+    <div className={`detail detail-${variant}`}>
+      <button className="detail-close" onClick={onClose} aria-label="Close"><X size={20} /></button>
+
+      <div className="detail-head" style={{ '--gen-color': GEN_VARS[gen % GEN_VARS.length] }}>
+        <button
+          type="button"
+          className={`detail-avatar${person.photo && !isPlaceholder ? ' has-photo' : ''}`}
+          onClick={() => person.photo && !isPlaceholder && setLightbox(true)}
+          aria-label={person.photo ? `Enlarge photo of ${person.name}` : undefined}
+          tabIndex={person.photo && !isPlaceholder ? 0 : -1}
         >
-          <Avatar person={person} size="lg" className="detail-photo-avatar" />
-          {person.photo && <span className="detail-photo-zoom-hint"><ZoomIn size={18} /></span>}
-        </div>
-        <div className="detail-hero-name">{person.name}</div>
-        <div className="detail-hero-sub">
-          {person.occupation && !isPlaceholder && (
-            <span className="detail-hero-occupation">{person.occupation}</span>
-          )}
-          {(born || died) && (
-            <span className="detail-hero-years">
-              {born || '?'}{isDeceased ? ` – ${died || '?'}` : born ? ` – ${t.present}` : ''}
-            </span>
-          )}
-        </div>
-        {/* Status + tags */}
-        <div className="detail-hero-tags">
-          {person.alive === true && !isPlaceholder && (
-            <span className="card-tag" style={{ background: 'rgba(209,250,229,0.9)', color: '#065F46', border: '1px solid rgba(110,231,183,0.6)' }}>{t.living}</span>
-          )}
-          {isDeceased && (
-            <span className="card-tag" style={{ background: 'rgba(243,244,246,0.9)', color: '#4B5563', border: '1px solid rgba(209,213,219,0.6)' }}>{t.deceased}</span>
-          )}
-          {(person.tags || []).filter(t => t !== 'root').map(tag => (
-            <span key={tag} className="card-tag" style={getTagStyle(tag)}>{tag}</span>
-          ))}
+          <Avatar person={person} size="lg" />
+        </button>
+        <div className="detail-id">
+          <h3>{person.name}</h3>
+          {(years || status) && <div className="years">{[years, status].filter(Boolean).join(' · ')}</div>}
         </div>
       </div>
 
-      <div className="detail-body">
-        {/* Details */}
-        <div className="detail-section">
-          <div className="detail-section-title">{t.details}</div>
-          {born && (
-            <div className="detail-row">
-              <span className="label">{t.born}</span>
-              <span className="value">{born}</span>
-            </div>
-          )}
-          {died && (
-            <div className="detail-row">
-              <span className="label">{t.died}</span>
-              <span className="value">{died}</span>
-            </div>
-          )}
-          {dom && (
-            <div className="detail-row">
-              <span className="label">{t.married}</span>
-              <span className="value">{dom}</span>
-            </div>
-          )}
-          {person.occupation && !isPlaceholder && (
-            <div className="detail-row">
-              <span className="label">{t.occupation}</span>
-              <span className="value">{person.occupation}</span>
-            </div>
-          )}
-          {person.location && (
-            <div className="detail-row">
-              <span className="label">{t.location}</span>
-              <span className="value">{person.location}</span>
-            </div>
-          )}
-          {extraFields.map(([key, val]) => (
-            <div key={key} className="detail-row">
-              <span className="label">{toLabel(key)}</span>
-              <span className="value">
-                {Array.isArray(val) ? val.join(', ') : String(val)}
-              </span>
-            </div>
-          ))}
-          {isAdmin && person.sortOrder !== undefined && (
-            <div className="detail-row" style={{ color: 'var(--text-muted)' }}>
-              <span className="label">Sort Order</span>
-              <span className="value">{person.sortOrder}</span>
-            </div>
-          )}
-          {!born && !died && !dom && !person.occupation && !person.location && extraFields.length === 0 && (
-            <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-              {t.noDetails}
-            </div>
+      {isAdmin && (
+        <div className="detail-actions">
+          <button className="btn-ghost" onClick={() => onEdit(person)}><Pencil size={16} /> {t.edit}</button>
+          {siblings.length > 0 && (
+            <>
+              <button className="btn-ghost" onClick={() => onReorder(person, 'up')} disabled={!canMoveUp}
+                title={t.moveUp} aria-label={t.moveUp}><ArrowUp size={16} /></button>
+              <button className="btn-ghost" onClick={() => onReorder(person, 'down')} disabled={!canMoveDown}
+                title={t.moveDown} aria-label={t.moveDown}><ArrowDown size={16} /></button>
+            </>
           )}
         </div>
+      )}
 
-        {/* Bio */}
-        {person.bio && (
-          <div className="detail-section">
-            <div className="detail-section-title">{t.about}</div>
-            <div className="detail-bio">{person.bio}</div>
-          </div>
-        )}
+      {rows.length > 0 ? (
+        <dl>
+          {rows.map(([k, v]) => (<div key={k} className="dl-row"><dt>{k}</dt><dd>{v}</dd></div>))}
+        </dl>
+      ) : (
+        <p className="detail-empty">{t.noDetails}</p>
+      )}
 
-        {/* Family */}
-        {(father || mother || spouses.length > 0 || children.length > 0 || siblings.length > 0) && (
-          <div className="detail-section">
-            <div className="detail-section-title">{t.family}</div>
-            <div className="detail-relations">
-              {father && <RelationChip label={t.father} person={father} onSelect={onSelect} personMap={personMap} />}
-              {mother && <RelationChip label={t.mother} person={mother} onSelect={onSelect} personMap={personMap} />}
-              {spouses.map(s   => <RelationChip key={s.id}  label={t.spouse}  person={s}   onSelect={onSelect} personMap={personMap} />)}
-              {children.map(c  => <RelationChip key={c.id}  label={t.child}   person={c}   onSelect={onSelect} personMap={personMap} />)}
-              {siblings.slice(0, 5).map(s => <RelationChip key={s.id} label={t.sibling} person={s} onSelect={onSelect} personMap={personMap} />)}
-              {siblings.length > 5 && (
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', padding: '4px 10px' }}>
-                  {t.moreSiblings(siblings.length - 5)}
-                </div>
-              )}
-            </div>
+      {person.bio && (
+        <>
+          <h4 className="group-title">{t.about}</h4>
+          <p className="detail-bio">{person.bio}</p>
+        </>
+      )}
+
+      {(person.tags || []).filter(x => x !== 'root' && x !== 'placeholder').length > 0 && (
+        <div className="detail-tags">
+          {(person.tags || []).filter(x => x !== 'root' && x !== 'placeholder').map(tag => (
+            <span key={tag} className="tag">{tag}</span>
+          ))}
+        </div>
+      )}
+
+      {children.length > 0 && (
+        <>
+          <h4 className="group-title">{t.children} · {children.length}</h4>
+          <div className="kids">{children.map(c => <Kid key={c.id} p={c} />)}</div>
+        </>
+      )}
+
+      {siblings.length > 0 && (
+        <>
+          <h4 className="group-title">{t.siblings} · {siblings.length}</h4>
+          <div className="kids">
+            {siblings.slice(0, 5).map(sb => <Kid key={sb.id} p={sb} />)}
+            {siblings.length > 5 && <div className="detail-more">{t.moreSiblings(siblings.length - 5)}</div>}
           </div>
-        )}
-      </div>
+        </>
+      )}
 
       {/* ── Photo lightbox ── */}
       <Dialog.Root open={lightbox} onOpenChange={setLightbox}>
@@ -265,16 +259,6 @@ export default function DetailPanel({ person, personMap, people, onClose, onSele
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
-    </aside>
-  );
-}
-
-function RelationChip({ label, person, onSelect, personMap }) {
-  return (
-    <button className="relation-chip" onClick={() => onSelect(person)}>
-      <Avatar person={person} size="xs" className="rel-avatar" />
-      <span className="rel-label">{label}</span>
-      <span className="rel-name">{person.name}</span>
-    </button>
+    </div>
   );
 }

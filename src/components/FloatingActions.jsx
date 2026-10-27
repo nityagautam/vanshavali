@@ -1,9 +1,12 @@
 import { useState } from 'react';
-import { Lock, Unlock, Plus, Link2, Download, Printer, LayoutGrid, X, Settings, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { createPortal } from 'react-dom';
+import { Lock, Unlock, Plus, Link2, Download, Printer, LayoutGrid, CheckCircle2, AlertTriangle } from 'lucide-react';
 import Modal from './Modal';
 import AddMemberForm from './AddMemberForm';
 import InviteManager from './InviteManager';
 import MobileBar from './MobileBar';
+import DesktopActions from './DesktopActions';
+import { usePhone } from '../hooks/useMediaQuery';
 import { exportJSON } from '../utils/exportJSON';
 import { printTree, resetScrollForPrint } from '../utils/printTree';
 import { clearAuth }  from '../utils/auth';
@@ -13,8 +16,9 @@ export default function FloatingActions({
   people, familyData, meta, about, lang, onAddMember,
   isLoggedIn, isAdmin, onAuthRequired, onLogout,
   viewMode, onToggleView, filtersContent, activeFilterCount, filtersOpen, setFiltersOpen,
+  actionsSlot,
 }) {
-  const [open, setOpen]               = useState(false);
+  const isPhone = usePhone();
   const [showAddMember, setShowAddMember] = useState(false);
   const [showInvite, setShowInvite]   = useState(false);
   const [toast, setToast]             = useState(null);
@@ -25,13 +29,11 @@ export default function FloatingActions({
   };
 
   const guard = (fn) => () => {
-    setOpen(false);
     if (!isLoggedIn) { onAuthRequired(fn); return; }
     fn();
   };
 
   const handleLogout = () => {
-    setOpen(false);
     clearAuth();
     onLogout();
     showToast('ok', 'Logged out');
@@ -41,7 +43,7 @@ export default function FloatingActions({
     // Auth action: Login when logged out, Logout when logged in
     isLoggedIn
       ? { id: 'logout',     icon: Unlock, label: 'Logout',      onClick: handleLogout }
-      : { id: 'login',      icon: Lock,   label: 'Login',       onClick: () => { setOpen(false); onAuthRequired(null); } },
+      : { id: 'login',      icon: Lock,   label: 'Login',       onClick: () => onAuthRequired(null) },
     // Adding members is admin-only; hide it once a non-admin session is confirmed.
     ...(!isLoggedIn || isAdmin ? [{
       id: 'add', icon: Plus, label: 'Add Member',
@@ -68,6 +70,9 @@ export default function FloatingActions({
     },
   ];
 
+  const addAction  = isAdmin ? actions.find(a => a.id === 'add') : null;
+  const moreActions = actions.filter(a => a.id !== 'add');
+
   const handleAddMember = async (newPerson, insertAfterId) => {
     try {
       const { people: updated } = await addFamilyMember(newPerson, insertAfterId);
@@ -81,49 +86,29 @@ export default function FloatingActions({
 
   return (
     <>
-      {/* FAB */}
-      <div className="fab-container">
-        {open && (
-          <div className="fab-actions">
-            {actions.map((a, i) => (
-              <div
-                key={a.id}
-                className="fab-action-item"
-                style={{ animationDelay: `${i * 40}ms` }}
-              >
-                <span className="fab-action-label">{a.label}</span>
-                <button className="fab-action" onClick={a.onClick} title={a.label}>
-                  <a.icon size={18} />
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
-        <button
-          className={`fab-main${open ? ' open' : ''}`}
-          onClick={() => setOpen(o => !o)}
-          title={open ? 'Close' : 'Actions'}
-          aria-expanded={open}
-        >
-          {open ? <X size={20} /> : <Settings size={20} />}
-          {!isLoggedIn && <span className="fab-lock-badge"><Lock size={11} /></span>}
-        </button>
-      </div>
-
-      {/* Phone bottom bar (hidden ≥769px by CSS). Add is admin-only. */}
-      <MobileBar
-        viewMode={viewMode}
-        onToggleView={onToggleView}
-        addAction={isAdmin ? actions.find(a => a.id === 'add') : null}
-        moreActions={actions.filter(a => a.id !== 'add')}
-        filtersContent={filtersContent}
-        activeFilterCount={activeFilterCount}
-        filtersOpen={filtersOpen}
-        setFiltersOpen={setFiltersOpen}
-      />
-
-      {/* Click-away backdrop */}
-      {open && <div className="fab-backdrop" onClick={() => setOpen(false)} />}
+      {/* Phones: bottom bar + sheets. Wider screens: app-bar controls (portalled into the header). */}
+      {isPhone ? (
+        <MobileBar
+          viewMode={viewMode}
+          onToggleView={onToggleView}
+          addAction={addAction}
+          moreActions={moreActions}
+          filtersContent={filtersContent}
+          activeFilterCount={activeFilterCount}
+          filtersOpen={filtersOpen}
+          setFiltersOpen={setFiltersOpen}
+        />
+      ) : actionsSlot && createPortal(
+        <DesktopActions
+          addAction={addAction}
+          moreActions={moreActions}
+          filtersContent={filtersContent}
+          activeFilterCount={activeFilterCount}
+          filtersOpen={filtersOpen}
+          setFiltersOpen={setFiltersOpen}
+        />,
+        actionsSlot,
+      )}
 
       {/* Add Member modal */}
       <Modal open={showAddMember} onOpenChange={setShowAddMember} title="Add Family Member">

@@ -71,7 +71,7 @@
   --radius-full: 999px;
   --transition: 0.2s cubic-bezier(.2, .7, .2, 1);
   --toolbar-h: 51px;
-  --line-width: 2px;
+  --line-width: 1.5px;
   --z-header: 10;
   --z-popover: 50;
   --z-modal: 200;

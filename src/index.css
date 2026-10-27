@@ -3932,3 +3932,5 @@ button, a, [role="button"], .person-card, .mobile-child-row { touch-action: mani
   .photo-framer-side { align-items: center; text-align: center; }
   .link-btn { align-self: center; }
 }
+
+.form-loading { padding: 32px 20px; text-align: center; color: var(--ink-3); font-size: 0.9rem; }

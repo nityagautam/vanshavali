@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { Plus, Minus } from 'lucide-react';
 import PersonCard from './PersonCard';
 
 const GEN_COLORS = ['var(--g1)', 'var(--g2)', 'var(--g3)', 'var(--g4)'];
 
-export default function TreeNode({
+function TreeNode({
   person, personMap, childrenMap,
-  selectedId, onSelect, highlightIds,
+  onSelect, highlightIds,
   depth = 0, maxGen = null,
 }) {
   const [collapsed, setCollapsed] = useState(false);
@@ -43,20 +43,18 @@ export default function TreeNode({
           <div className="couple-bubble-inner">
             <PersonCard
               person={person}
-              selected={selectedId === person.id}
               highlighted={isHighlighted && !isDimmed}
               dimmed={false}
-              onClick={() => onSelect(person)}
+              onSelect={onSelect}
             />
             {spouses.map(spouse => (
               <div key={spouse.id} className="couple-bubble-pair">
                 <div className="couple-badge" aria-hidden="true">⚭</div>
                 <PersonCard
                   person={spouse}
-                  selected={selectedId === spouse.id}
                   highlighted={isHighlighted && !isDimmed}
                   dimmed={false}
-                  onClick={() => onSelect(spouse)}
+              onSelect={onSelect}
                   isSpouse
                 />
               </div>
@@ -79,10 +77,9 @@ export default function TreeNode({
         <div className="single-node">
           <PersonCard
             person={person}
-            selected={selectedId === person.id}
             highlighted={isHighlighted && !isDimmed}
             dimmed={isDimmed}
-            onClick={() => onSelect(person)}
+              onSelect={onSelect}
           />
           {canToggle && (
             <button
@@ -109,7 +106,6 @@ export default function TreeNode({
                 person={child}
                 personMap={personMap}
                 childrenMap={childrenMap}
-                selectedId={selectedId}
                 onSelect={onSelect}
                 highlightIds={highlightIds}
                 depth={depth + 1}
@@ -129,3 +125,5 @@ export default function TreeNode({
     </li>
   );
 }
+
+export default memo(TreeNode);

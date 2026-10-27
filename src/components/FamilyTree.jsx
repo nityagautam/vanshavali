@@ -1,7 +1,7 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import TreeNode from './TreeNode';
 
-export default function FamilyTree({ people, personMap, selectedId, onSelect, highlightIds, maxGen }) {
+function FamilyTree({ people, personMap, onSelect, highlightIds, maxGen }) {
   // Build a map: parentId -> [children]
   const childrenMap = useMemo(() => {
     const map = {};
@@ -50,7 +50,6 @@ export default function FamilyTree({ people, personMap, selectedId, onSelect, hi
             person={root}
             personMap={personMap}
             childrenMap={childrenMap}
-            selectedId={selectedId}
             onSelect={onSelect}
             highlightIds={highlightIds}
             depth={0}
@@ -61,3 +60,5 @@ export default function FamilyTree({ people, personMap, selectedId, onSelect, hi
     </div>
   );
 }
+
+export default memo(FamilyTree);

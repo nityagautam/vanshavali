@@ -1,10 +1,13 @@
+import { memo } from 'react';
 import { ScrollText } from 'lucide-react';
 import Avatar from './Avatar';
 import { isRecordKeeper } from '../utils/recordKeeper';
+import { useIsSelected } from '../utils/selectionStore';
 
 const yearOf = y => (!y ? null : typeof y === 'number' ? y : y.toString().slice(0, 4));
 
-export default function PersonCard({ person, selected, highlighted, dimmed, onClick }) {
+function PersonCard({ person, highlighted, dimmed, onSelect }) {
+  const selected = useIsSelected(person.id);
   const isPlaceholder = person.tags?.includes('placeholder');
   const isDeceased = person.alive !== true && !isPlaceholder;
 
@@ -34,7 +37,7 @@ export default function PersonCard({ person, selected, highlighted, dimmed, onCl
     <button
       type="button"
       className={cls}
-      onClick={onClick}
+      onClick={() => onSelect(person)}
       title={person.name}
       aria-label={ariaLabel}
       aria-pressed={selected}
@@ -50,3 +53,5 @@ export default function PersonCard({ person, selected, highlighted, dimmed, onCl
     </button>
   );
 }
+
+export default memo(PersonCard);

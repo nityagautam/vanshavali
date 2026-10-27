@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import { createPortal } from 'react-dom';
 import { Lock, Unlock, Plus, Link2, Download, Printer, LayoutGrid } from 'lucide-react';
 import Modal from './Modal';
-import AddMemberForm from './AddMemberForm';
+const AddMemberForm = lazy(() => import('./AddMemberForm'));
 import InviteManager from './InviteManager';
 import MobileBar from './MobileBar';
 import DesktopActions from './DesktopActions';
@@ -108,11 +108,13 @@ export default function FloatingActions({
 
       {/* Add Member modal */}
       <Modal wide open={showAddMember} onOpenChange={setShowAddMember} title="Add family member">
+        <Suspense fallback={<div className="form-loading">Loading…</div>}>
         <AddMemberForm
           people={people}
           onSubmit={handleAddMember}
           onCancel={() => setShowAddMember(false)}
         />
+        </Suspense>
       </Modal>
 
       {/* Invite link modal */}

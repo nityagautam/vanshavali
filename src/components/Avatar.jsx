@@ -30,7 +30,7 @@ export default function Avatar({ person, size = 'sm', className = '' }) {
   return (
     <div className={`avatar avatar-${size} ${className}`} aria-hidden="true">
       {showImg ? (
-        <img src={src} alt="" style={{ objectPosition: `${x}% ${y}%` }} onError={() => setImgError(true)} draggable={false} />
+        <img src={src} alt="" loading={size === 'lg' ? 'eager' : 'lazy'} decoding="async" style={{ objectPosition: `${x}% ${y}%` }} onError={() => setImgError(true)} draggable={false} />
       ) : (
         <span>{isPlaceholder ? '?' : initialsOf(person.name)}</span>
       )}

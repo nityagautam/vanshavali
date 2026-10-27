@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { X, Pencil, ArrowUp, ArrowDown, ScrollText } from 'lucide-react';
 import Avatar from './Avatar';
@@ -72,7 +72,6 @@ export default function DetailPanel({ suspended = false, ...props }) {
   if (isPhone) {
     return (
       <Sheet
-        key={person.id}
         open={!suspended}
         onOpenChange={o => { if (!o) onClose(); }}
         title={person.name}
@@ -93,6 +92,14 @@ export default function DetailPanel({ suspended = false, ...props }) {
 
 function DetailContent({ person, personMap, people, onClose, onSelect, onEdit, onReorder, isAdmin, lang = 'hi', variant }) {
   const [lightbox, setLightbox] = useState(false);
+  const rootRef = useRef(null);
+
+  // The phone sheet stays mounted when you jump between people (re-opening a
+  // modal dialog is the expensive part), so reset its scroll ourselves.
+  useEffect(() => {
+    rootRef.current?.closest('.sheet-body, .panel')?.scrollTo?.(0, 0);
+    setLightbox(false);
+  }, [person.id]);
 
   const formatDate = (d) => (d === null || d === undefined || d === '' ? null : String(d));
   const born = formatDate(person.born);
@@ -173,7 +180,7 @@ function DetailContent({ person, personMap, people, onClose, onSelect, onEdit, o
   );
 
   return (
-    <div className={`detail detail-${variant}`}>
+    <div className={`detail detail-${variant}`} ref={rootRef}>
       <button className="detail-close" onClick={onClose} aria-label="Close"><X size={20} /></button>
 
       <div className="detail-head" style={{ '--gen-color': GEN_VARS[gen % GEN_VARS.length] }}>

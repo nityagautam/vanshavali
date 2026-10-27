@@ -1,4 +1,5 @@
-import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
+import { useState, useMemo, useEffect, useLayoutEffect, useRef, useCallback, lazy, Suspense } from 'react';
+import { flushSync } from 'react-dom';
 import { Routes, Route, NavLink, useMatch, useLocation, useNavigate } from 'react-router-dom';
 import * as Popover from '@radix-ui/react-popover';
 import { Search, Minus, Plus, Sun, Moon, Network, List, Maximize, MoreVertical, Compass, WifiOff, X } from 'lucide-react';
@@ -10,12 +11,13 @@ import PrintView   from './components/PrintView';
 import MiniMap     from './components/MiniMap';
 import MobileTreeView from './components/MobileTreeView';
 import OnboardingLegend from './components/OnboardingLegend';
-import AboutPage   from './components/AboutPage';
+const AboutPage = lazy(() => import('./components/AboutPage'));
 
 import FloatingActions from './components/FloatingActions';
 import LoginModal  from './components/LoginModal';
 import UserBadge    from './components/UserBadge';
-import AddMemberForm from './components/AddMemberForm';
+// Admin-only form: pulls in the photo-upload client (+jose), so load on demand.
+const AddMemberForm = lazy(() => import('./components/AddMemberForm'));
 import Modal from './components/Modal';
 import CommandPalette from './components/CommandPalette';
 import FiltersPanel from './components/FiltersPanel';
@@ -25,6 +27,7 @@ import { fetchFamilyData, editFamilyMember, moveSibling } from './utils/familyAp
 import { consumeInvite } from './utils/inviteApi';
 import { useToast } from './components/Toaster';
 import { isRecordKeeper } from './utils/recordKeeper';
+import { createSelectionStore, SelectionContext } from './utils/selectionStore';
 
 // A 343-person tree is thousands of px wide, so "fit to width" is unreadable.
 // Start at a readable scale instead (phones a bit larger), and remember the
@@ -65,6 +68,29 @@ export default function App() {
   // screen size. Persisted like the theme choice.
   const [viewMode,       setViewMode]       = useState(() => localStorage.getItem('vv-view-mode') || 'tree');
   const canvasRef = useRef(null);
+
+  // Selection lives in an external store so selecting re-renders two cards, not 344.
+  const selectionStore = useRef(null);
+  if (!selectionStore.current) selectionStore.current = createSelectionStore();
+  useLayoutEffect(() => { selectionStore.current.set(selectedPerson?.id ?? null); }, [selectedPerson]);
+
+  // The print report is ~2,100 DOM nodes and hidden on screen, so it only
+  // exists while printing (beforeprint → mounted synchronously, afterprint → removed).
+  const [printing, setPrinting] = useState(false);
+  useEffect(() => {
+    const on  = () => flushSync(() => setPrinting(true));
+    const off = () => setPrinting(false);
+    const mq = window.matchMedia('print');
+    const onMq = e => (e.matches ? on() : off());
+    window.addEventListener('beforeprint', on);
+    window.addEventListener('afterprint', off);
+    mq.addEventListener('change', onMq);
+    return () => {
+      window.removeEventListener('beforeprint', on);
+      window.removeEventListener('afterprint', off);
+      mq.removeEventListener('change', onMq);
+    };
+  }, []);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [actionsSlot, setActionsSlot] = useState(null);
   const { zoom, zoomTo, zoomBy, fit, innerRef, boxRef, nat } = usePanZoom({
@@ -315,7 +341,7 @@ export default function App() {
 
   // Bring a person into view. On phones the detail sheet covers the lower
   // ~60%, so park the card in the upper part of the canvas instead of centring.
-  const revealPerson = (id) => {
+  const revealPerson = useCallback((id) => {
     if (!window.matchMedia('(max-width: 768px)').matches) { scrollToPerson(id); return; }
     requestAnimationFrame(() => {
       const canvas = canvasRef.current;
@@ -328,12 +354,12 @@ export default function App() {
         behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
       });
     });
-  };
+  }, [scrollToPerson]);
 
-  const handleSelect = (person) => {
+  const handleSelect = useCallback((person) => {
     setSelected(prev => prev?.id === person.id ? null : person);
     if (window.matchMedia('(max-width: 768px)').matches) revealPerson(person.id);
-  };
+  }, [revealPerson]);
 
   // Deep link: /?person=<id> (used by links in the About text) selects that
   // member and scrolls the tree to them once it has mounted.
@@ -405,7 +431,7 @@ export default function App() {
   return (
     <div className="app-shell">
       {/* Print view — hidden on screen */}
-      <PrintView people={people} meta={meta} about={about} lang={lang} />
+      {printing && <PrintView people={people} meta={meta} about={about} lang={lang} />}
 
       {/* Login modal */}
       <LoginModal
@@ -423,12 +449,14 @@ export default function App() {
         title={editingPerson ? `Edit ${editingPerson.name}` : ''}
       >
         {editingPerson && (
+          <Suspense fallback={<div className="form-loading">Loading…</div>}>
           <AddMemberForm
             people={people}
             person={editingPerson}
             onSubmit={handleEditMember}
             onCancel={() => setEditingPerson(null)}
           />
+          </Suspense>
         )}
       </Modal>
 
@@ -511,6 +539,7 @@ export default function App() {
 
       {/* Main content (routes) */}
       <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+        <Suspense fallback={<div className="form-loading">Loading…</div>}>
         <Routes>
           {/* ── Tree view ── */}
           <Route path="/" element={
@@ -534,14 +563,15 @@ export default function App() {
                         style={nat.w ? { width: nat.w * zoom, height: nat.h * zoom } : undefined}
                       >
                         <div className="tree-zoom-inner" ref={innerRef} style={{ transform: `scale(${zoom})` }}>
+                          <SelectionContext.Provider value={selectionStore.current}>
                           <FamilyTree
                             people={people}
                             personMap={personMap}
-                            selectedId={selectedPerson?.id}
                             onSelect={handleSelect}
                             highlightIds={highlightIds}
                             maxGen={maxGen}
                           />
+                          </SelectionContext.Provider>
                         </div>
                       </div>
                     </div>
@@ -658,6 +688,7 @@ export default function App() {
             />
           } />
         </Routes>
+        </Suspense>
       </div>
 
     </div>

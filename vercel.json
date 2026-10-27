@@ -1,10 +1,50 @@
 {
   "rewrites": [
-    { "source": "/about", "destination": "/index.html" },
-    { "source": "/api/invite/status", "destination": "/api/invite?action=status" },
-    { "source": "/api/invite/generate", "destination": "/api/invite?action=generate" },
-    { "source": "/api/invite/reset", "destination": "/api/invite?action=reset" },
-    { "source": "/api/invite/consume", "destination": "/api/invite?action=consume" }
+    {
+      "source": "/about",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/api/invite/status",
+      "destination": "/api/invite?action=status"
+    },
+    {
+      "source": "/api/invite/generate",
+      "destination": "/api/invite?action=generate"
+    },
+    {
+      "source": "/api/invite/reset",
+      "destination": "/api/invite?action=reset"
+    },
+    {
+      "source": "/api/invite/consume",
+      "destination": "/api/invite?action=consume"
+    }
   ],
-  "crons": [{ "path": "/api/cron/backup", "schedule": "0 3 * * *" }]
+  "crons": [
+    {
+      "path": "/api/cron/backup",
+      "schedule": "0 3 * * *"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/photos/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
+      ]
+    }
+  ]
 }

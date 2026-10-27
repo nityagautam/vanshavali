@@ -312,7 +312,7 @@ export default function App() {
   }, [people, personMap]);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+    <div className="app-shell">
       {/* Print view — hidden on screen */}
       <PrintView people={people} meta={meta} about={about} lang={lang} />
 

@@ -120,6 +120,12 @@ html, body {
   flex-direction: column;
 }
 
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
 /* ── Accessibility utilities ── */
 .sr-only {
   position: absolute;
@@ -2140,8 +2146,15 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
   .tree-canvas,
   .mini-map,
   .onboarding-card,
-  .tree-credit {
+  .tree-credit,
+  .fab-container,
+  .fab-backdrop {
     display: none !important;
+  }
+
+  .app-shell {
+    display: block !important;
+    height: auto !important;
   }
 
   /* Reset page shell */

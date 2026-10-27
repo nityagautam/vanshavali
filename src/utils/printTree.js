@@ -4,6 +4,12 @@ function pickLang(hindi, english, lang) {
   return              { primary: hindi,   secondary: english };
 }
 
+// Scroll offsets leak into print layout in some browsers; zero them first.
+export function resetScrollForPrint() {
+  window.scrollTo(0, 0);
+  document.querySelectorAll('.tree-canvas').forEach(el => { el.scrollTop = 0; el.scrollLeft = 0; });
+}
+
 export function printTree({ people, meta, about, lang, showToast }) {
   showToast?.('ok', 'Building tree…');
 
@@ -160,10 +166,12 @@ export function printTree({ people, meta, about, lang, showToast }) {
   wrap.innerHTML = header + divs.join('') + footer;
   document.body.appendChild(wrap);
 
-  window.print();
-
-  setTimeout(() => {
+  const cleanup = () => {
     document.getElementById(OVERLAY_ID)?.remove();
     document.getElementById(STYLE_ID)?.remove();
-  }, 2000);
+  };
+  window.addEventListener('afterprint', cleanup, { once: true });
+
+  resetScrollForPrint();
+  window.print();
 }

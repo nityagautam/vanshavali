@@ -4,7 +4,7 @@ import Modal from './Modal';
 import AddMemberForm from './AddMemberForm';
 import InviteManager from './InviteManager';
 import { exportJSON } from '../utils/exportJSON';
-import { printTree }  from '../utils/printTree';
+import { printTree, resetScrollForPrint } from '../utils/printTree';
 import { clearAuth }  from '../utils/auth';
 import { addFamilyMember } from '../utils/familyApi';
 
@@ -57,7 +57,7 @@ export default function FloatingActions({
     },
     {
       id: 'print', icon: Printer, label: 'Print Data',
-      onClick: guard(() => window.print()),
+      onClick: guard(() => { resetScrollForPrint(); window.print(); }),
     },
     {
       id: 'print-tree', icon: LayoutGrid, label: 'Print Tree',

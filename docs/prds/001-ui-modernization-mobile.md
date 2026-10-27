@@ -61,7 +61,7 @@ Vanshavali is used mostly by family members on phones, but the UI was built desk
 
 ### Phase 0 — Design direction (new, from decision Q2: full redesign)
 - Produce a new visual language before any Phase 3/4 layout work: palette (light + dark), type system (incl. Devanagari pairing), elevation, radii, iconography, tree-card and generation-colour treatment, motion principles.
-- Deliverable: a design-token spec and mocks for tree, detail sheet, search, forms, About, and print-safe colours, reviewed and approved as an addendum to this PRD.
+- Deliverable (approved: Parchment): [`001-phase0-design/design-direction.md`](./001-phase0-design/design-direction.md) and [`mocks.html`](./001-phase0-design/mocks.html). Scope: a design-token spec and mocks for tree, detail sheet, search, forms, About, and print-safe colours, reviewed and approved as an addendum to this PRD.
 - Phase 1 changes are token-agnostic (layout/touch/viewport), so they can ship in parallel with Phase 0.
 
 ### Phase 1 — Mobile foundations (low risk, highest impact)
@@ -104,9 +104,10 @@ Vanshavali is used mostly by family members on phones, but the UI was built desk
 
 ## 7. Decisions (resolved open questions)
 1. **Default view on phones: tree everywhere.** The list view stays as an optional toggle only. Consequence: Phase 2 (pinch/pan/fit-to-screen, readable first paint) is the make-or-break item and must ship before the redesign is considered mobile-complete.
-2. **Visual direction: full redesign.** The saffron/gold identity is not binding. Consequence: new Phase 0 (design direction), token migration becomes mandatory rather than opportunistic, and dark-mode tokens, generation colours and print colours must be re-derived from the new system.
+2. **Visual direction: full redesign, old-paper record theme** (aged paper surfaces, ink-coloured accent, light + dark; **Parchment** chosen as the palette; Archival/Vellum kept as fallbacks — see Phase 0 design direction). The saffron/gold identity is not binding. Consequence: new Phase 0 (design direction), token migration becomes mandatory rather than opportunistic, and dark-mode tokens, generation colours and print colours must be re-derived from the new system.
 3. **Support floor: last ~2 years** (iOS 16+, Android Chrome 110+). `dvh`, pointer events, `env(safe-area-inset-*)`, `:has()` and `overscroll-behavior` may be used without fallbacks.
 4. **Dataset size:** 343 people, 9 generations in the bundled snapshot. Small enough that virtualization is not expected to be needed; Phase 2 still measures pan/zoom frame rate before ruling it out.
+5. **Write actions are admin-only** (Add, Edit, Move, Invite). The UI hides them from non-admins; the backend change (and what invite links mean afterwards) is a separate PRD.
 
 ## 8. Rollout
 Each phase ships independently via `vercel --prod` after a preview check on a real phone. Order: Phase 1 and Phase 0 in parallel, then Phase 2, then Phase 3 and 4 on the approved design system.

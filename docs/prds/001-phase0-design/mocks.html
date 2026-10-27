@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en" data-paper="parchment" data-role="admin">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vanshavali — Phase 0 design mocks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600&family=Newsreader:wght@500;600&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
+<style>
+:root {
+  --tex-l:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .36 0 0 0 0 .26 0 0 0 0 .12 0 0 0 .10 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --tex-d:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .9 0 0 0 0 .8 0 0 0 0 .6 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --display:'Newsreader','Tiro Devanagari Hindi',Georgia,serif;
+  --ui:'Hind',system-ui,sans-serif;
+}
+:root[data-paper="parchment"] { --paper:#F1E6CC;--paper-sunk:#E6D8B6;--card:#F8F0DB;--ink:#2B2118;--ink-2:#54442F;--ink-3:#6F6049;--line:#D3C095;--accent:#7A2E22;--accent-soft:#E9CDBE;--bg-page:#E2D5B4;--accent-ink:#fff;--scrim:rgba(43,33,24,.38);--shadow2:0 8px 32px rgba(43,33,24,.18);--tex:var(--tex-l);color-scheme:light;--g1:#2F4B7C;--g2:#3F7A5A;--g3:#A23B5C;--g4:#B7791F; }
+:root[data-paper="parchment"][data-theme="dark"] { --paper:#1B150D;--paper-sunk:#120E08;--card:#251D13;--ink:#EDE0C4;--ink-2:#C9B895;--ink-3:#A39274;--line:#3B2F20;--accent:#D98A6C;--accent-soft:#3A2419;--bg-page:#0E0A06;--accent-ink:#1B150D;--scrim:rgba(0,0,0,.55);--shadow2:0 8px 32px rgba(0,0,0,.5);--tex:var(--tex-d);color-scheme:dark;--g1:#7C9BD6;--g2:#7FBF9A;--g3:#D97A98;--g4:#E2B04A; }
+:root[data-paper="archival"] { --paper:#ECE8D9;--paper-sunk:#E0DBC8;--card:#F5F2E6;--ink:#1F2421;--ink-2:#434A44;--ink-3:#5F6760;--line:#C9C4AC;--accent:#1F5A5A;--accent-soft:#CFE0DC;--bg-page:#DCD7C3;--accent-ink:#fff;--scrim:rgba(43,33,24,.38);--shadow2:0 8px 32px rgba(43,33,24,.18);--tex:var(--tex-l);color-scheme:light;--g1:#2F4B7C;--g2:#3F7A5A;--g3:#A23B5C;--g4:#B7791F; }
+:root[data-paper="archival"][data-theme="dark"] { --paper:#141816;--paper-sunk:#0D100F;--card:#1C211E;--ink:#E6E8DC;--ink-2:#BFC4B4;--ink-3:#98A092;--line:#2D352F;--accent:#6FB5AD;--accent-soft:#1C3532;--bg-page:#0A0C0B;--accent-ink:#141816;--scrim:rgba(0,0,0,.55);--shadow2:0 8px 32px rgba(0,0,0,.5);--tex:var(--tex-d);color-scheme:dark;--g1:#7C9BD6;--g2:#7FBF9A;--g3:#D97A98;--g4:#E2B04A; }
+:root[data-paper="vellum"] { --paper:#F5F0E1;--paper-sunk:#EBE4D0;--card:#FBF8EE;--ink:#1E1B16;--ink-2:#4A443A;--ink-3:#6E6454;--line:#DAD1B8;--accent:#23406B;--accent-soft:#D5DEEC;--bg-page:#E9E2CC;--accent-ink:#fff;--scrim:rgba(43,33,24,.38);--shadow2:0 8px 32px rgba(43,33,24,.18);--tex:var(--tex-l);color-scheme:light;--g1:#2F4B7C;--g2:#3F7A5A;--g3:#A23B5C;--g4:#B7791F; }
+:root[data-paper="vellum"][data-theme="dark"] { --paper:#15130F;--paper-sunk:#0E0C09;--card:#1E1B15;--ink:#EFE8D6;--ink-2:#C8BFA8;--ink-3:#A0967F;--line:#332E24;--accent:#7E9FD6;--accent-soft:#1D2A40;--bg-page:#0B0A07;--accent-ink:#15130F;--scrim:rgba(0,0,0,.55);--shadow2:0 8px 32px rgba(0,0,0,.5);--tex:var(--tex-d);color-scheme:dark;--g1:#7C9BD6;--g2:#7FBF9A;--g3:#D97A98;--g4:#E2B04A; }
+* { box-sizing:border-box; margin:0; }
+body { font-family:var(--ui); background:var(--bg-page) var(--tex); color:var(--ink); font-size:15px; line-height:1.5; padding:0 16px 64px; }
+.page-head { max-width:1260px; margin:0 auto; padding:32px 0 8px; display:flex; flex-wrap:wrap; gap:12px 24px; align-items:flex-end; justify-content:space-between; }
+.page-head h1 { font-family:var(--display); font-weight:600; font-size:28px; line-height:1.2; }
+.page-head p { color:var(--ink-2); max-width:60ch; }
+.controls { display:flex; flex-wrap:wrap; gap:10px; }
+.seg { display:inline-flex; border:1px solid var(--line); border-radius:999px; background:var(--card); padding:3px; }
+.seg button { font:500 14px var(--ui); border:0; background:none; color:var(--ink-2); padding:0 14px; min-height:40px; border-radius:999px; cursor:pointer; }
+.seg button.on { background:var(--ink); color:var(--paper); }
+[data-role="viewer"] .admin-only { display:none !important; }
+.toggle { font:inherit; font-weight:500; padding:10px 16px; border-radius:999px; border:1px solid var(--line); background:var(--card); color:var(--ink); cursor:pointer; min-height:44px; }
+h2 { font-family:var(--display); font-weight:600; font-size:20px; margin:40px auto 4px; max-width:1180px; }
+.sub { max-width:1180px; margin:0 auto 16px; color:var(--ink-2); }
+.row { max-width:1260px; margin:0 auto; display:flex; flex-wrap:wrap; gap:28px; align-items:flex-start; }
+.row > div:not(.desktop) { width:390px; max-width:100%; }
+.cap { font-size:12.5px; color:var(--ink-3); margin-top:8px; text-align:center; }
+
+/* ---- device frames ---- */
+.phone { width:390px; height:780px; border-radius:36px; border:1px solid var(--line); background:var(--paper) var(--tex); position:relative; overflow:hidden; box-shadow:var(--shadow2); display:flex; flex-direction:column; }
+.desktop { width:1180px; max-width:100%; height:620px; border-radius:14px; border:1px solid var(--line); background:var(--paper) var(--tex); position:relative; overflow:hidden; box-shadow:var(--shadow2); display:flex; flex-direction:column; }
+
+/* ---- app bar ---- */
+.appbar { height:56px; padding:0 12px 0 16px; display:flex; align-items:center; gap:10px; flex-shrink:0; }
+.mark { width:28px; height:28px; border-radius:8px; background:var(--ink); color:var(--paper); display:grid; place-items:center; font-family:var(--display); font-size:16px; }
+.title { font-family:var(--display); font-weight:600; font-size:20px; letter-spacing:.01em; flex:1; }
+.icon-btn { width:44px; height:44px; border-radius:50%; border:0; background:none; color:var(--ink-2); display:grid; place-items:center; cursor:pointer; }
+.icon-btn:hover { background:var(--paper-sunk); }
+svg.i { width:22px; height:22px; stroke:currentColor; fill:none; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
+.search { margin:0 12px 8px; height:48px; border-radius:999px; background:var(--paper-sunk); color:var(--ink-3); display:flex; align-items:center; gap:10px; padding:0 16px; flex-shrink:0; }
+.search kbd { margin-left:auto; font:500 12px var(--ui); border:1px solid var(--line); border-radius:6px; padding:1px 6px; background:var(--card); }
+
+/* ---- canvas + tree ---- */
+.canvas { flex:1; position:relative; overflow:hidden; background:transparent; }
+.tree { position:absolute; left:50%; top:20px; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; }
+.level { display:flex; gap:14px; position:relative; }
+.stem { width:1.5px; height:22px; background:var(--line); }
+.bar { height:1.5px; background:var(--line); }
+.col { display:flex; flex-direction:column; align-items:center; }
+.person { width:136px; background:var(--card); border:1.5px solid var(--line); border-radius:14px; padding:8px 10px; display:flex; gap:8px; align-items:center; position:relative; --gc:var(--g1); }
+.person.g2 { --gc:var(--g2); } .person.g3 { --gc:var(--g3); } .person.g4 { --gc:var(--g4); }
+.av { width:36px; height:36px; border-radius:50%; flex-shrink:0; display:grid; place-items:center; font-family:var(--display); font-size:15px; color:var(--gc); background:var(--paper-sunk); box-shadow:0 0 0 2px var(--card), 0 0 0 3.5px var(--gc); }
+.nm { font-family:var(--display); font-size:15px; line-height:1.2; min-width:0; }
+.mt { display:block; font-family:var(--ui); font-size:12px; color:var(--ink-3); }
+.person.sel { border-color:var(--accent); background:var(--accent-soft); box-shadow:0 1px 2px rgba(0,0,0,.12); }
+.person.dim { opacity:.35; }
+.person.dead .nm { color:var(--ink-3); }
+.spouse { position:absolute; right:-6px; bottom:-10px; font-size:11px; background:var(--card); border:1px solid var(--line); border-radius:999px; padding:0 8px; color:var(--ink-2); }
+.hit { position:absolute; top:-4px; right:-4px; width:10px; height:10px; border-radius:50%; background:var(--accent); border:2px solid var(--paper); }
+
+/* ---- canvas controls ---- */
+.ctl { position:absolute; right:12px; bottom:12px; background:var(--card); border:1px solid var(--line); border-radius:999px; padding:4px; display:flex; flex-direction:column; box-shadow:var(--shadow2); }
+.ctl.left { right:auto; left:16px; flex-direction:row; }
+.ctl .icon-btn { width:40px; height:40px; }
+
+/* ---- bottom bar ---- */
+.tabbar { height:64px; border-top:1px solid var(--line); background:var(--card); display:flex; align-items:center; justify-content:space-around; padding:0 8px 6px; flex-shrink:0; }
+.tab { display:flex; flex-direction:column; align-items:center; gap:2px; font-size:11.5px; font-weight:500; color:var(--ink-3); min-width:64px; min-height:44px; justify-content:center; position:relative; }
+.tab.on { color:var(--ink); }
+.tab.on::before { content:''; position:absolute; top:-9px; width:28px; height:3px; border-radius:3px; background:var(--accent); }
+.tab .badge { position:absolute; top:-2px; right:14px; background:var(--accent); color:var(--accent-ink); font-size:10.5px; font-weight:600; border-radius:999px; min-width:16px; height:16px; display:grid; place-items:center; padding:0 4px; }
+.tab.add .pill { width:48px; height:32px; border-radius:999px; background:var(--accent); color:var(--accent-ink); display:grid; place-items:center; }
+.tab.add { color:var(--ink); }
+
+/* ---- sheets ---- */
+.scrim { position:absolute; inset:0; background:var(--scrim); }
+.sheet { position:absolute; left:0; right:0; bottom:0; background:var(--card); border-radius:22px 22px 0 0; box-shadow:var(--shadow2); padding:8px 20px 20px; }
+.grab { width:36px; height:4px; border-radius:4px; background:var(--line); margin:0 auto 14px; }
+.sheet h3 { font-family:var(--display); font-weight:600; font-size:22px; line-height:1.25; }
+.sheet .years { color:var(--ink-3); font-size:14px; }
+.head { display:flex; gap:14px; align-items:center; margin-bottom:14px; }
+.av.lg { width:60px; height:60px; font-size:24px; }
+.chips { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; }
+.chip { border:1px solid var(--line); border-radius:999px; padding:6px 14px; font-weight:500; font-size:14px; color:var(--ink-2); background:var(--card); min-height:36px; display:inline-flex; align-items:center; }
+.chip.on { background:var(--ink); color:var(--paper); border-color:var(--ink); }
+dl { display:grid; grid-template-columns:96px 1fr; gap:10px 12px; margin:14px 0; }
+dt { color:var(--ink-3); font-size:13px; } dd { font-size:15px; }
+.kids { display:flex; flex-direction:column; gap:8px; margin-top:6px; }
+.kid { display:flex; align-items:center; gap:12px; background:var(--paper-sunk); border-radius:14px; padding:10px 12px; min-height:52px; }
+.kid .av { width:32px; height:32px; font-size:13px; }
+.btn { font:600 15px var(--ui); height:48px; border-radius:999px; border:0; padding:0 22px; cursor:pointer; }
+.btn.primary { background:var(--accent); color:var(--accent-ink); }
+.btn.ghost { background:var(--paper-sunk); color:var(--ink); }
+.actions { display:flex; gap:10px; margin-top:16px; } .actions .btn { flex:1; }
+.group { margin:16px 0 4px; font-size:13px; font-weight:600; color:var(--ink-3); letter-spacing:.04em; text-transform:uppercase; }
+.stepper { display:inline-flex; align-items:center; border:1px solid var(--line); border-radius:999px; }
+.stepper b { min-width:44px; text-align:center; font-weight:600; }
+
+/* ---- desktop ---- */
+.dbody { flex:1; display:flex; min-height:0; }
+.dbody .canvas { flex:1; }
+.panel { width:360px; border-left:1px solid var(--line); background:var(--card); padding:20px; overflow:hidden; }
+.dbar { height:64px; padding:0 20px; display:flex; align-items:center; gap:16px; border-bottom:1px solid var(--line); }
+.dbar .search { margin:0; width:420px; height:44px; }
+.mm { position:absolute; right:16px; bottom:16px; width:168px; height:84px; border-radius:10px; background:var(--card); border:1px solid var(--line); box-shadow:var(--shadow2); }
+.mm i { position:absolute; left:48px; top:18px; width:46px; height:28px; border:1.5px solid var(--accent); background:var(--accent-soft); border-radius:4px; }
+
+/* ---- tokens ---- */
+.sw { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:12px; max-width:1180px; margin:0 auto; }
+.sw div { border:1px solid var(--line); border-radius:14px; overflow:hidden; background:var(--card); font-size:13px; }
+.sw span { display:block; height:56px; }
+.sw p { padding:8px 10px; } .sw code { font-size:12px; color:var(--ink-3); display:block; }
+.type { max-width:1180px; margin:0 auto; display:grid; gap:10px; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px; }
+.type .t { display:flex; gap:16px; align-items:baseline; flex-wrap:wrap; } .type small { color:var(--ink-3); width:150px; flex-shrink:0; }
+@media (max-width: 460px) { .phone { width:100%; } }
+</style>
+</head>
+<body>
+
+<header class="page-head">
+  <div>
+    <h1>Vanshavali — design direction “Old paper record”</h1>
+    <p>Phase 0 mocks for PRD 001. Aged-paper surfaces with ink-coloured accents, in light and dark. Switch between three paper palettes, light/dark, and Admin/Viewer (viewers never see Add, Edit or Move). Static illustrations, not the live app.</p>
+  </div>
+  <div class="controls">
+    <div class="seg" role="group" aria-label="Paper"><button data-paper="parchment" class="on">Parchment</button><button data-paper="archival">Archival</button><button data-paper="vellum">Vellum</button></div>
+    <div class="seg" role="group" aria-label="Mode"><button data-mode="light" class="on">Light</button><button data-mode="dark">Dark</button></div>
+    <div class="seg" role="group" aria-label="Role"><button data-role="admin" class="on">Admin</button><button data-role="viewer">Viewer</button></div>
+  </div>
+</header>
+
+<h2>1 · Phone</h2>
+<p class="sub">Search is the primary control. Controls live in the bottom third. Detail and filters are sheets, not drawers. “Add” is the one filled button and is shown to admins only.</p>
+<div class="row">
+
+  <!-- Tree -->
+  <div>
+  <div class="phone">
+    <div class="appbar"><div class="mark">व</div><div class="title">वंशावली</div>
+      <button class="icon-btn" aria-label="Menu"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg></button></div>
+    <div class="search"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>नाम खोजें · Search 343 members</div>
+    <div class="canvas">
+      <div class="tree">
+        <div class="person"><div class="av">ल</div><div class="nm">लक्ष्मण प्रसाद<span class="mt">1890 – 1962</span></div><span class="spouse">⚭ 1</span></div>
+        <div class="stem"></div>
+        <div class="level" style="gap:10px">
+          <div class="col"><div class="stem" style="height:0"></div></div>
+        </div>
+        <div style="width:300px;height:1.5px;background:var(--line)"></div>
+        <div class="level" style="gap:12px;margin-top:0">
+          <div class="col"><div class="stem" style="height:14px"></div><div class="person g2 sel" style="width:128px"><div class="av">रा</div><div class="nm">राम प्रसाद<span class="mt">1920 – 1988</span></div></div>
+            <div class="stem" style="height:22px"></div>
+            <div class="person g3" style="width:128px"><div class="av">मो</div><div class="nm">मोहन<span class="mt">1950</span></div><span class="hit"></span></div></div>
+          <div class="col"><div class="stem" style="height:14px"></div><div class="person g2 dead" style="width:128px"><div class="av">श्या</div><div class="nm">स्व. श्याम<span class="mt">1924 – 1990</span></div></div>
+            <div class="stem" style="height:22px"></div>
+            <div class="person g3 dim" style="width:128px"><div class="av">गी</div><div class="nm">गीता<span class="mt">1953</span></div></div></div>
+        </div>
+      </div>
+      <div class="ctl">
+        <button class="icon-btn" aria-label="Fit"><svg class="i" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+        <button class="icon-btn" aria-label="Zoom in"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+        <button class="icon-btn" aria-label="Zoom out"><svg class="i" viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button>
+      </div>
+    </div>
+    <nav class="tabbar">
+      <div class="tab on"><svg class="i" viewBox="0 0 24 24"><path d="M12 4v5M5 20v-5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v5M12 9v4"/><rect x="9" y="2" width="6" height="4" rx="1"/><rect x="2" y="17" width="6" height="4" rx="1"/><rect x="16" y="17" width="6" height="4" rx="1"/></svg>Tree</div>
+      <div class="tab"><svg class="i" viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg>Filters<span class="badge">2</span></div>
+      <div class="tab add admin-only"><span class="pill"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>Add</div>
+      <div class="tab"><svg class="i" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="19" cy="12" r="1.2"/></svg>More</div>
+    </nav>
+  </div><div class="cap">Tree · selected person, search match dot, dimmed non-match, deceased “स्व.”</div></div>
+
+  <!-- Detail sheet -->
+  <div>
+  <div class="phone">
+    <div class="appbar"><div class="mark">व</div><div class="title">वंशावली</div></div>
+    <div class="canvas"><div class="tree" style="opacity:.9">
+      <div class="person g2 sel" style="width:128px"><div class="av">रा</div><div class="nm">राम प्रसाद<span class="mt">1920 – 1988</span></div></div></div></div>
+    <div class="scrim"></div>
+    <div class="sheet" style="height:560px">
+      <div class="grab"></div>
+      <div class="head"><div class="av lg g2" style="--gc:var(--g2)">रा</div><div><h3>राम प्रसाद</h3><div class="years">1920 – 1988 · स्वर्गीय</div></div></div>
+      <div class="actions admin-only" style="margin-top:0"><button class="btn ghost">Edit</button><button class="btn ghost">Move ↑↓</button></div>
+      <dl><dt>Father</dt><dd>लक्ष्मण प्रसाद</dd><dt>Spouse</dt><dd>सावित्री देवी</dd><dt>Occupation</dt><dd>शिक्षक</dd><dt>Location</dt><dd>वाराणसी</dd></dl>
+      <div class="group">Children · 3</div>
+      <div class="kids">
+        <div class="kid"><div class="av g3" style="--gc:var(--g3)">मो</div><div class="nm">मोहन<span class="mt">b. 1950</span></div></div>
+        <div class="kid"><div class="av g3" style="--gc:var(--g3)">सु</div><div class="nm">सुरेश<span class="mt">b. 1953</span></div></div>
+      </div>
+    </div>
+  </div><div class="cap">Detail bottom sheet (half snap). Swipe down to dismiss; drag up for bio and full list.</div></div>
+
+  <!-- Filters sheet -->
+  <div>
+  <div class="phone">
+    <div class="appbar"><div class="mark">व</div><div class="title">वंशावली</div></div>
+    <div class="canvas"></div>
+    <div class="scrim"></div>
+    <div class="sheet">
+      <div class="grab"></div>
+      <h3 style="margin-bottom:4px">Filters</h3>
+      <div class="group">Gender</div><div class="chips"><span class="chip on">All</span><span class="chip">Male</span><span class="chip">Female</span></div>
+      <div class="group">Status</div><div class="chips"><span class="chip">All</span><span class="chip on">Living</span><span class="chip">Deceased</span></div>
+      <div class="group">Marriage</div><div class="chips"><span class="chip on">All</span><span class="chip">Married</span><span class="chip">Unmarried</span></div>
+      <div class="group">Generations shown</div><div class="stepper"><button class="icon-btn" aria-label="Fewer">−</button><b>All</b><button class="icon-btn" aria-label="More">+</button></div>
+      <div class="actions"><button class="btn ghost">Reset</button><button class="btn primary">Show 118 people</button></div>
+    </div>
+  </div><div class="cap">Filters and depth consolidated into one sheet; badge on the bar shows what’s active.</div></div>
+
+</div>
+
+<h2>2 · Desktop</h2>
+<p class="sub">Same app bar with inline search; detail is a side panel (not an overlay); controls bottom-left; minimap stays on desktop only.</p>
+<div class="row">
+  <div class="desktop">
+    <div class="dbar"><div class="mark">व</div><div class="title" style="flex:none">वंशावली</div>
+      <div class="search"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>नाम खोजें · Search<kbd>⌘K</kbd></div>
+      <span style="flex:1"></span>
+      <span class="chip">Filters · 2</span><span class="chip">हिं / EN</span><span class="chip">About</span><button class="btn primary admin-only" style="height:40px">+ Add member</button></div>
+    <div class="dbody">
+      <div class="canvas">
+        <div class="tree" style="top:36px">
+          <div class="person" style="width:170px"><div class="av">ल</div><div class="nm">लक्ष्मण प्रसाद<span class="mt">1890 – 1962</span></div><span class="spouse">⚭ 1</span></div>
+          <div class="stem"></div><div style="width:420px;height:1.5px;background:var(--line)"></div>
+          <div class="level" style="gap:60px">
+            <div class="col"><div class="stem" style="height:14px"></div><div class="person g2 sel" style="width:170px"><div class="av">रा</div><div class="nm">राम प्रसाद<span class="mt">1920 – 1988</span></div></div><div class="stem"></div>
+              <div class="level" style="gap:16px"><div class="person g3" style="width:140px"><div class="av">मो</div><div class="nm">मोहन<span class="mt">1950</span></div><span class="hit"></span></div><div class="person g3" style="width:140px"><div class="av">सु</div><div class="nm">सुरेश<span class="mt">1953</span></div></div></div></div>
+            <div class="col"><div class="stem" style="height:14px"></div><div class="person g2 dead" style="width:170px"><div class="av">श्या</div><div class="nm">स्व. श्याम<span class="mt">1924 – 1990</span></div></div><div class="stem"></div>
+              <div class="person g3 dim" style="width:140px"><div class="av">गी</div><div class="nm">गीता<span class="mt">1953</span></div></div></div>
+          </div>
+        </div>
+        <div class="ctl left"><button class="icon-btn"><svg class="i" viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button><span style="align-self:center;font-weight:500;padding:0 6px">60%</span><button class="icon-btn"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><button class="icon-btn"><svg class="i" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button></div>
+        <div class="mm"><i></i></div>
+      </div>
+      <aside class="panel">
+        <div class="head"><div class="av lg" style="--gc:var(--g2)">रा</div><div><h3 style="font-family:var(--display);font-size:22px">राम प्रसाद</h3><div class="years">1920 – 1988 · स्वर्गीय</div></div></div>
+        <div class="actions admin-only" style="margin-top:0"><button class="btn ghost">Edit</button><button class="btn ghost">Move ↑↓</button></div>
+        <dl><dt>Father</dt><dd>लक्ष्मण प्रसाद</dd><dt>Spouse</dt><dd>सावित्री देवी</dd><dt>Occupation</dt><dd>शिक्षक</dd></dl>
+        <div class="group">Children · 3</div>
+        <div class="kids"><div class="kid"><div class="av" style="--gc:var(--g3)">मो</div><div class="nm">मोहन<span class="mt">b. 1950</span></div></div><div class="kid"><div class="av" style="--gc:var(--g3)">सु</div><div class="nm">सुरेश<span class="mt">b. 1953</span></div></div></div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<h2>3 · Tokens</h2>
+<p class="sub">Swatches follow the current theme. Generation hues are used only for rings and tree stems.</p>
+<div class="sw">
+  <div><span style="background:var(--paper)"></span><p>paper<code>--paper</code></p></div>
+  <div><span style="background:var(--paper-sunk)"></span><p>paper-sunk<code>--paper-sunk</code></p></div>
+  <div><span style="background:var(--card)"></span><p>card<code>--card</code></p></div>
+  <div><span style="background:var(--ink)"></span><p>ink<code>--ink</code></p></div>
+  <div><span style="background:var(--ink-2)"></span><p>ink-2<code>--ink-2</code></p></div>
+  <div><span style="background:var(--ink-3)"></span><p>ink-3<code>--ink-3</code></p></div>
+  <div><span style="background:var(--line)"></span><p>line<code>--line</code></p></div>
+  <div><span style="background:var(--accent)"></span><p>accent · ink<code>--accent</code></p></div>
+  <div><span style="background:var(--accent-soft)"></span><p>accent-soft<code>--accent-soft</code></p></div>
+  <div><span style="background:var(--g1)"></span><p>gen 1 · neel<code>--g1</code></p></div>
+  <div><span style="background:var(--g2)"></span><p>gen 2 · hara<code>--g2</code></p></div>
+  <div><span style="background:var(--g3)"></span><p>gen 3 · manjistha<code>--g3</code></p></div>
+  <div><span style="background:var(--g4)"></span><p>gen 4 · haldi<code>--g4</code></p></div>
+</div>
+
+<h2>4 · Type</h2>
+<p class="sub">Newsreader + Tiro Devanagari Hindi for names and headings; Hind for UI in both scripts.</p>
+<div class="type">
+  <div class="t"><small>Title 22/28</small><span style="font-family:var(--display);font-weight:600;font-size:22px">वंशावली · Vanshavali</span></div>
+  <div class="t"><small>Person name 15/20</small><span style="font-family:var(--display);font-size:15px">लक्ष्मण प्रसाद · Lakshman Prasad</span></div>
+  <div class="t"><small>Body 15/22</small><span>जन्म 1890, वाराणसी — शिक्षक · Born 1890, Varanasi — teacher</span></div>
+  <div class="t"><small>Label 14/20 · 500</small><span style="font-weight:500;font-size:14px">Add member · सदस्य जोड़ें</span></div>
+  <div class="t"><small>Meta 12.5/16</small><span style="color:var(--ink-3);font-size:12.5px">1920 – 1988 · स्वर्गीय</span></div>
+</div>
+
+<script>
+const root = document.documentElement;
+document.querySelectorAll('.seg').forEach(seg => seg.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  seg.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
+  if (b.dataset.paper) root.dataset.paper = b.dataset.paper;
+  if (b.dataset.mode)  root.dataset.theme = b.dataset.mode;
+  if (b.dataset.role)  root.dataset.role  = b.dataset.role;
+}));
+</script>
+</body>
+</html>

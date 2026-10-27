@@ -1,6 +1,6 @@
-# Spec: Login / Access Control
+# PRD: Login / Access Control
 
-**Status**: Ready  
+**Status**: Implemented, then superseded. Auth is now server-side sessions (password, Google OAuth, invite links), not the client-side SHA-256 check described below. See `CLAUDE.md` > Auth.
 **Priority**: P1  
 **Dependencies**: Floating Action Button spec (FAB must exist to gate)
 

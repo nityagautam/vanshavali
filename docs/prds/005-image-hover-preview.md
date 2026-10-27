@@ -1,6 +1,6 @@
-# Spec: Image Hover Preview
+# PRD: Image Hover Preview
 
-**Status**: Ready  
+**Status**: Implemented. Current behaviour is documented in `CLAUDE.md`.
 **Priority**: P2  
 **Dependencies**: None (independent, can be done anytime)
 

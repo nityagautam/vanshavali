@@ -47,6 +47,10 @@ node --env-file=.env.local scripts/migrate-to-postgres.js            # ⚠ DROPs
 
 Run the JSON pair in order (`backfill-motherid` → `add-placeholder-spouses`) after regenerating `family.json` from `member-base.js`. All are idempotent except `migrate-to-postgres.js`, which is destructive by design (see its docstring). To target production specifically rather than whatever `.env.local` points at: `vercel env pull .env.production.local --environment=production` first, then pass that file to `--env-file`.
 
+## Workflow: PRD-first
+
+Features and larger changes start as a PRD in `docs/prds/` (`NNN-short-slug.md`, index in `docs/prds/README.md`). Write or update the PRD and get it approved before implementing; update its status when work ships. The former `specs/` folder was migrated there.
+
 ## Architecture
 
 **Vanshavali** is a React + Vite SPA for visualising and managing a Hindu family genealogy (वंशावली), backed by Vercel Serverless Functions, Neon Postgres, Upstash Redis, and Vercel Blob. Routing via `react-router-dom` (`BrowserRouter` in `main.jsx`), with a `vercel.json` rewrite so `/about` doesn't 404 and four rewrites aliasing the invite routes onto `api/invite.js` (see the function-cap note above).

@@ -1,6 +1,6 @@
-# Spec: About Page + Navigation
+# PRD: About Page + Navigation
 
-**Status**: Ready  
+**Status**: Implemented. Current behaviour is documented in `CLAUDE.md`.
 **Priority**: P0  
 **Dependencies**: None
 

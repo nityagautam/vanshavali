@@ -1,6 +1,6 @@
-# Spec: Floating Action Button
+# PRD: Floating Action Button
 
-**Status**: Ready  
+**Status**: Implemented. Current behaviour is documented in `CLAUDE.md`.
 **Priority**: P1  
 **Dependencies**: About Page spec (sidebar must be removed first)
 

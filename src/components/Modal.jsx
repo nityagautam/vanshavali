@@ -7,7 +7,7 @@ import { usePhone } from '../hooks/useMediaQuery';
 // click-outside-to-close, and ARIA wiring for free. On phones the same
 // content opens as a full-height bottom sheet (sticky actions, keyboard-aware
 // scrolling); on wider screens it stays a centred card.
-export default function Modal({ open, onOpenChange, title, children }) {
+export default function Modal({ open, onOpenChange, title, wide = false, children }) {
   const isPhone = usePhone();
 
   if (isPhone) {
@@ -22,7 +22,7 @@ export default function Modal({ open, onOpenChange, title, children }) {
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
         <Dialog.Overlay className="fab-modal-overlay" />
-        <Dialog.Content className="fab-modal" aria-describedby={undefined}>
+        <Dialog.Content className={`fab-modal${wide ? ' fab-modal-wide' : ''}`} aria-describedby={undefined}>
           <div className="fab-modal-header">
             <Dialog.Title asChild><span>{title}</span></Dialog.Title>
             <Dialog.Close asChild>

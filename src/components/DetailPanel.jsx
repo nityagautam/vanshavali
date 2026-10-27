@@ -5,6 +5,7 @@ import Avatar from './Avatar';
 import Sheet from './Sheet';
 import { usePhone } from '../hooks/useMediaQuery';
 import { isRecordKeeper, HIDDEN_TAGS } from '../utils/recordKeeper';
+import { photoSrc } from '../utils/photoFocus';
 
 // Fields already rendered explicitly — excluded from the dynamic "extra" section
 const KNOWN_FIELDS = new Set([
@@ -264,7 +265,7 @@ function DetailContent({ person, personMap, people, onClose, onSelect, onEdit, o
             <Dialog.Close asChild>
               <button className="photo-lightbox-close" title="Close (Esc)"><X size={22} /></button>
             </Dialog.Close>
-            <img src={person.photo} alt={person.name} className="photo-lightbox-img" />
+            <img src={photoSrc(person.photo)} alt={person.name} className="photo-lightbox-img" />
             <div className="photo-lightbox-name">{person.name}</div>
           </Dialog.Content>
         </Dialog.Portal>

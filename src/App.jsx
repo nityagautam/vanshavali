@@ -417,6 +417,7 @@ export default function App() {
 
       {/* Edit member modal — admin only */}
       <Modal
+        wide
         open={!!editingPerson}
         onOpenChange={(o) => !o && setEditingPerson(null)}
         title={editingPerson ? `Edit ${editingPerson.name}` : ''}

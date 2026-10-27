@@ -107,7 +107,7 @@ export default function FloatingActions({
       )}
 
       {/* Add Member modal */}
-      <Modal open={showAddMember} onOpenChange={setShowAddMember} title="Add Family Member">
+      <Modal wide open={showAddMember} onOpenChange={setShowAddMember} title="Add family member">
         <AddMemberForm
           people={people}
           onSubmit={handleAddMember}

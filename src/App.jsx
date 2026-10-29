@@ -23,7 +23,7 @@ import CommandPalette from './components/CommandPalette';
 import FiltersPanel from './components/FiltersPanel';
 import { isAuthenticated, setAuthenticated, checkSession } from './utils/auth';
 import { usePanZoom } from './hooks/usePanZoom';
-import { revealAll } from './utils/progressiveReveal';
+import { revealAll, hasPendingReveal } from './utils/progressiveReveal';
 import { fetchFamilyData, editFamilyMember, moveSibling } from './utils/familyApi';
 import { consumeInvite } from './utils/inviteApi';
 import { useToast } from './components/Toaster';
@@ -69,6 +69,9 @@ export default function App() {
   // screen size. Persisted like the theme choice.
   const [viewMode,       setViewMode]       = useState(() => localStorage.getItem('vv-view-mode') || 'tree');
   const canvasRef = useRef(null);
+  // The canvas element is destroyed when you leave the tree (e.g. open About) and
+  // rebuilt when you return, so the pan/zoom listeners must re-bind with the route.
+  const onTreeRoute = !!useMatch('/');
 
   // Selection lives in an external store so selecting re-renders two cards, not 344.
   const selectionStore = useRef(null);
@@ -94,8 +97,8 @@ export default function App() {
   }, []);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [actionsSlot, setActionsSlot] = useState(null);
-  const { zoom, zoomTo, zoomBy, fit, innerRef, boxRef, nat, markInteracted } = usePanZoom({
-    canvasRef, initialZoom: initialZoom(), enabled: viewMode === 'tree',
+  const { zoom, zoomTo, zoomBy, fit, innerRef, boxRef, nat, markInteracted, afterSettled } = usePanZoom({
+    canvasRef, initialZoom: initialZoom(), enabled: viewMode === 'tree' && onTreeRoute,
   });
 
   useEffect(() => {
@@ -332,10 +335,11 @@ export default function App() {
     const find = () => canvasRef.current?.querySelector(`[data-person-id="${CSS.escape(id)}"]`);
     markInteracted(); // an explicit jump takes over from auto-centring
     const el = find();
-    if (el) { then(el); return; }
+    if (el && !hasPendingReveal()) { then(el); return; }
+    // The card may not exist yet, or the tree may still be growing under it.
     revealAll();
-    requestAnimationFrame(() => requestAnimationFrame(() => { const late = find(); if (late) then(late); }));
-  }, [markInteracted]);
+    afterSettled(() => { const late = find(); if (late) then(late); });
+  }, [markInteracted, afterSettled]);
 
   const scrollToPerson = useCallback((id) => {
     withCard(id, el => {
@@ -415,7 +419,6 @@ export default function App() {
   const resetFilters = () => { setFilterGender('all'); setFilterStatus('all'); setFilterMarriage('all'); setFilterKeepers(false); };
   const activeFilterCount = [filterGender !== 'all', filterStatus !== 'all', filterMarriage !== 'all', filterKeepers, maxGen !== null].filter(Boolean).length;
   const clearSearch = () => setSearch('');
-  const onTreeRoute = !!useMatch('/');
   const headerControls = (
     <>
       <NavLink

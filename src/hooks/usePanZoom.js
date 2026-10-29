@@ -71,6 +71,23 @@ export function usePanZoom({ canvasRef, initialZoom, enabled = true }) {
 
   const zoomBy = useCallback(delta => zoomTo(zoomRef.current + delta), [zoomTo]);
 
+  // Run `cb` once the tree has stopped changing size: nothing left to reveal,
+  // its width steady for a few frames, and the scroll box sized to match.
+  // Scrolling to a card before this makes the card move out from under the scroll.
+  const afterSettled = useCallback((cb) => {
+    let last = -1, steady = 0, frames = 0;
+    const tick = () => {
+      const w = innerRef.current?.offsetWidth || 0;
+      const boxW = boxRef.current?.getBoundingClientRect().width || 0;
+      const boxOk = Math.abs(boxW - w * zoomRef.current) < 2;
+      steady = (w === last && boxOk) ? steady + 1 : 0;
+      last = w;
+      if ((steady >= 3 && !hasPendingReveal()) || ++frames > 90) cb();
+      else requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }, []);
+
   // Fit the whole tree in the viewport (floored at MIN_ZOOM), scrolled to the top-left of it.
   // The tree renders progressively, so finish rendering first and measure the
   // real size once it has laid out.
@@ -79,16 +96,6 @@ export function usePanZoom({ canvasRef, initialZoom, enabled = true }) {
     if (!canvas) return;
     interacted.current = true;
     revealAll();
-    // Wait for React to finish the remaining branches: the tree's width must
-    // stop changing and nothing may be left to reveal.
-    let last = -1, steady = 0, frames = 0;
-    const settle = () => {
-      const w = innerRef.current?.offsetWidth || 0;
-      steady = w === last ? steady + 1 : 0;
-      last = w;
-      if ((steady >= 2 && !hasPendingReveal()) || ++frames > 60) measure();
-      else requestAnimationFrame(settle);
-    };
     const measure = () => {
       const inner = innerRef.current;
       if (!inner || !inner.offsetWidth) return;
@@ -104,8 +111,8 @@ export function usePanZoom({ canvasRef, initialZoom, enabled = true }) {
         canvas.scrollTop = 0;
       });
     };
-    requestAnimationFrame(settle);
-  }, [canvasRef]);
+    afterSettled(measure);
+  }, [canvasRef, afterSettled]);
 
   // Keep the tree centred while it is still growing (progressive render) —
   // until the user pans/zooms or something scrolls to a specific person.
@@ -127,6 +134,16 @@ export function usePanZoom({ canvasRef, initialZoom, enabled = true }) {
     let pan = null, pinch = null, suppressClick = false, raf = 0;
 
     const stopInertia = () => { cancelAnimationFrame(raf); raf = 0; };
+    // A pointer can go down without ever reporting "up": the app is backgrounded
+    // mid-touch, a dialog/sheet takes over, a system gesture steals the touch.
+    // Left alone, that ghost makes every later drag look like a two-finger pinch
+    // (wild zoom/scroll jumps that never recover). So gesture state is wiped
+    // whenever a new first finger lands, and whenever the page loses focus.
+    const resetGesture = () => {
+      pts.clear(); pan = null; pinch = null; suppressClick = false;
+      stopInertia();
+      canvas.classList.remove('is-panning');
+    };
     const centreOf = () => {
       const [a, b] = [...pts.values()];
       return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2, d: Math.hypot(a.x - b.x, a.y - b.y) || 1 };
@@ -138,6 +155,7 @@ export function usePanZoom({ canvasRef, initialZoom, enabled = true }) {
     const onDown = e => {
       if (e.pointerType === 'mouse' && e.button !== 0) return;
       interacted.current = true;
+      if (e.isPrimary) resetGesture(); // a first finger means no other touch can be active
       stopInertia();
       pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
       if (pts.size === 1) {
@@ -215,6 +233,10 @@ export function usePanZoom({ canvasRef, initialZoom, enabled = true }) {
       zoomTo(zoomRef.current * Math.exp(-e.deltaY * 0.01), { fromX: e.clientX, fromY: e.clientY });
     };
 
+    const onHidden = () => { if (document.visibilityState === 'hidden') resetGesture(); };
+    window.addEventListener('blur', resetGesture);
+    window.addEventListener('pagehide', resetGesture);
+    document.addEventListener('visibilitychange', onHidden);
     canvas.addEventListener('pointerdown', onDown);
     canvas.addEventListener('pointermove', onMove);
     canvas.addEventListener('pointerup', onUp);
@@ -223,6 +245,9 @@ export function usePanZoom({ canvasRef, initialZoom, enabled = true }) {
     canvas.addEventListener('wheel', onWheel, { passive: false });
     return () => {
       stopInertia();
+      window.removeEventListener('blur', resetGesture);
+      window.removeEventListener('pagehide', resetGesture);
+      document.removeEventListener('visibilitychange', onHidden);
       canvas.removeEventListener('pointerdown', onDown);
       canvas.removeEventListener('pointermove', onMove);
       canvas.removeEventListener('pointerup', onUp);
@@ -232,5 +257,5 @@ export function usePanZoom({ canvasRef, initialZoom, enabled = true }) {
     };
   }, [enabled, canvasRef, zoomTo]);
 
-  return { zoom, zoomTo, zoomBy, fit, innerRef, boxRef, nat, setZoom: zoomTo, markInteracted };
+  return { zoom, zoomTo, zoomBy, fit, innerRef, boxRef, nat, setZoom: zoomTo, markInteracted, afterSettled };
 }
